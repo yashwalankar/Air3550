@@ -10,11 +10,16 @@ using System.Windows.Forms;
 
 namespace Air3550
 {
-    public partial class Form1 : Form
+    public partial class landing_page : Form
     {
-        public Form1()
+        public landing_page()
         {
             InitializeComponent();
+        }
+
+        private void welcome_label_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
