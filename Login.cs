@@ -33,9 +33,18 @@ namespace Air3550
             // type 4 = marketing manager
             // type 5 = accountant
 
-            this.Visible = false;
-            landing_page s = new landing_page();
-            s.Visible = true;
+            string userID = userID_textbox.Text;
+
+            string userPassword = pass_textbox.Text;
+            string encryptedPassword = textToSHA512(userPassword);
+
+            bool userExists = passwordCheck(userID, encryptedPassword);
+
+            Console.WriteLine("User " + userPassword + " exists = " + userExists);
+
+            //this.Visible = false;
+            //landing_page s = new landing_page();
+            //s.Visible = true;
 
         }
 
@@ -47,6 +56,7 @@ namespace Air3550
             Signup s = new Signup();  
             s.Visible = true;
         }
+
 
         //-----------------------------Page methods----------------------------
         
@@ -76,7 +86,9 @@ namespace Air3550
             SqlConnection sqlConnection = new SqlConnection(dbString);
             if (sqlConnection.State != ConnectionState.Open) sqlConnection.Open();
 
-            using (SqlCommand sqlCommand = new SqlCommand("SELECT COUNT(*) FROM UserAccountData WHERE UserID LIKE @username AND Password LIKE @password", sqlConnection))
+            using (SqlCommand sqlCommand = new SqlCommand("SELECT COUNT(*) FROM UserAccountData " +
+                                                          "WHERE UserID LIKE @username " +
+                                                          "AND Password LIKE @password", sqlConnection))
             {
                 sqlCommand.Parameters.AddWithValue("@username", username);
                 sqlCommand.Parameters.AddWithValue("@password", encryptedPassword);
@@ -101,7 +113,9 @@ namespace Air3550
 
             User info = new User();
 
-            using (SqlCommand sqlCommand = new SqlCommand("SELECT * FROM UserAccountData WHERE UserID LIKE @username AND Password LIKE @password", sqlConnection))
+            using (SqlCommand sqlCommand = new SqlCommand("SELECT * FROM UserAccountData " +
+                                                          "WHERE UserID LIKE @username " +
+                                                          "AND Password LIKE @password", sqlConnection))
             {
                 sqlCommand.Parameters.AddWithValue("@username", username);
                 sqlCommand.Parameters.AddWithValue("@password", encryptedPassword);
