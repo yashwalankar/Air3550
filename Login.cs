@@ -36,11 +36,17 @@ namespace Air3550
             string userID = userID_textbox.Text;
 
             string userPassword = pass_textbox.Text;
-            string encryptedPassword = textToSHA512(userPassword);
+            string encryptedPassword = TextToSHA512(userPassword);
 
-            bool userExists = passwordCheck(userID, encryptedPassword);
+            bool userExists = PasswordCheck(userID, encryptedPassword);
 
-            Console.WriteLine("User " + userPassword + " exists = " + userExists);
+            if (userExists == true)
+            {
+                User userData = AccountInformation(userID, encryptedPassword);
+
+                Console.WriteLine(userData.id.ToString() + " " + userData.firstName.ToString());
+
+            }
 
             //this.Visible = false;
             //landing_page s = new landing_page();
@@ -61,7 +67,7 @@ namespace Air3550
         //-----------------------------Page methods----------------------------
         
         // Text to SHA512 for password encryption
-        public string textToSHA512(string password)
+        public string TextToSHA512(string password)
         {
             string encryptedPassword = null;
             SHA512 hasher = SHA512.Create();
@@ -79,7 +85,7 @@ namespace Air3550
         
         // Search DB for account existing with correct password,
         // returns true if exists and false if info incorrect or nonexisting
-        public bool passwordCheck(string username, string encryptedPassword)
+        public bool PasswordCheck(string username, string encryptedPassword)
         {
             bool passwordGood = false;
             string dbString = Properties.Settings.Default.Air3550DBConnectionString;
@@ -119,17 +125,22 @@ namespace Air3550
             {
                 sqlCommand.Parameters.AddWithValue("@username", username);
                 sqlCommand.Parameters.AddWithValue("@password", encryptedPassword);
-                SqlDataReader reader = sqlCommand.ExecuteReader();
+                SqlDataAdapter adapter = new SqlDataAdapter();
+                adapter.SelectCommand = sqlCommand;
 
-                if (reader.HasRows)
-                {
-                    
-                }
-                else
-                {
-                    return null;
-                }
+                DataTable userDataSet = new DataTable();
+                adapter.Fill(userDataSet);
 
+                info.id = userDataSet.Rows[0].Field<string>("UserID");
+                info.type = userDataSet.Rows[0].Field<string>("Type");
+                info.age = userDataSet.Rows[0].Field<string>("Age");
+                info.rewardBalance = userDataSet.Rows[0].Field<string>("RewardBalance");
+                info.userHistoryID = userDataSet.Rows[0].Field<string>("UserHistID");
+                info.passwordHash = userDataSet.Rows[0].Field<string>("FirstName");
+                info.firstName = userDataSet.Rows[0].Field<string>("FirstName");
+                info.lastName = userDataSet.Rows[0].Field<string>("LastName");
+                info.address = userDataSet.Rows[0].Field<string>("Address");
+                info.cardNumber = userDataSet.Rows[0].Field<string>("CardNum");
             }
 
             return info;
