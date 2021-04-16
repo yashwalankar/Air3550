@@ -439,6 +439,10 @@ namespace Air3550 {
             
             private global::System.Data.DataColumn columnLastName;
             
+            private global::System.Data.DataColumn columnEmail;
+            
+            private global::System.Data.DataColumn columnPhone;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public UserAccountDataDataTable() {
@@ -554,6 +558,22 @@ namespace Air3550 {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn EmailColumn {
+                get {
+                    return this.columnEmail;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn PhoneColumn {
+                get {
+                    return this.columnPhone;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -589,7 +609,7 @@ namespace Air3550 {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public UserAccountDataRow AddUserAccountDataRow(string UserID, string Password, byte Type, int Age, string Address, string CardNum, int RewardBalance, int UserHistID, string FirstName, string LastName) {
+            public UserAccountDataRow AddUserAccountDataRow(string UserID, string Password, byte Type, int Age, string Address, string CardNum, int RewardBalance, int UserHistID, string FirstName, string LastName, string Email, string Phone) {
                 UserAccountDataRow rowUserAccountDataRow = ((UserAccountDataRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         UserID,
@@ -601,7 +621,9 @@ namespace Air3550 {
                         RewardBalance,
                         UserHistID,
                         FirstName,
-                        LastName};
+                        LastName,
+                        Email,
+                        Phone};
                 rowUserAccountDataRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowUserAccountDataRow);
                 return rowUserAccountDataRow;
@@ -641,6 +663,8 @@ namespace Air3550 {
                 this.columnUserHistID = base.Columns["UserHistID"];
                 this.columnFirstName = base.Columns["FirstName"];
                 this.columnLastName = base.Columns["LastName"];
+                this.columnEmail = base.Columns["Email"];
+                this.columnPhone = base.Columns["Phone"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -666,6 +690,10 @@ namespace Air3550 {
                 base.Columns.Add(this.columnFirstName);
                 this.columnLastName = new global::System.Data.DataColumn("LastName", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnLastName);
+                this.columnEmail = new global::System.Data.DataColumn("Email", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnEmail);
+                this.columnPhone = new global::System.Data.DataColumn("Phone", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnPhone);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
                                 this.columnUserID}, true));
                 this.columnUserID.AllowDBNull = false;
@@ -676,6 +704,8 @@ namespace Air3550 {
                 this.columnCardNum.MaxLength = 16;
                 this.columnFirstName.MaxLength = 2147483647;
                 this.columnLastName.MaxLength = 2147483647;
+                this.columnEmail.MaxLength = 2147483647;
+                this.columnPhone.MaxLength = 10;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -2504,6 +2534,38 @@ namespace Air3550 {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public string Email {
+                get {
+                    try {
+                        return ((string)(this[this.tableUserAccountData.EmailColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'Email\' in table \'UserAccountData\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableUserAccountData.EmailColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public string Phone {
+                get {
+                    try {
+                        return ((string)(this[this.tableUserAccountData.PhoneColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'Phone\' in table \'UserAccountData\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableUserAccountData.PhoneColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public bool IsPasswordNull() {
                 return this.IsNull(this.tableUserAccountData.PasswordColumn);
             }
@@ -2608,6 +2670,30 @@ namespace Air3550 {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public void SetLastNameNull() {
                 this[this.tableUserAccountData.LastNameColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsEmailNull() {
+                return this.IsNull(this.tableUserAccountData.EmailColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetEmailNull() {
+                this[this.tableUserAccountData.EmailColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsPhoneNull() {
+                return this.IsNull(this.tableUserAccountData.PhoneColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetPhoneNull() {
+                this[this.tableUserAccountData.PhoneColumn] = global::System.Convert.DBNull;
             }
         }
         
@@ -3423,10 +3509,12 @@ namespace Air3550.Air3550DBDataSetTableAdapters {
             tableMapping.ColumnMappings.Add("UserHistID", "UserHistID");
             tableMapping.ColumnMappings.Add("FirstName", "FirstName");
             tableMapping.ColumnMappings.Add("LastName", "LastName");
+            tableMapping.ColumnMappings.Add("Email", "Email");
+            tableMapping.ColumnMappings.Add("Phone", "Phone");
             this._adapter.TableMappings.Add(tableMapping);
             this._adapter.DeleteCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.DeleteCommand.Connection = this.Connection;
-            this._adapter.DeleteCommand.CommandText = @"DELETE FROM [UserAccountData] WHERE (([UserID] = @Original_UserID) AND ([Type] = @Original_Type) AND ((@IsNull_Age = 1 AND [Age] IS NULL) OR ([Age] = @Original_Age)) AND ((@IsNull_CardNum = 1 AND [CardNum] IS NULL) OR ([CardNum] = @Original_CardNum)) AND ((@IsNull_RewardBalance = 1 AND [RewardBalance] IS NULL) OR ([RewardBalance] = @Original_RewardBalance)) AND ((@IsNull_UserHistID = 1 AND [UserHistID] IS NULL) OR ([UserHistID] = @Original_UserHistID)))";
+            this._adapter.DeleteCommand.CommandText = @"DELETE FROM [UserAccountData] WHERE (([UserID] = @Original_UserID) AND ([Type] = @Original_Type) AND ((@IsNull_Age = 1 AND [Age] IS NULL) OR ([Age] = @Original_Age)) AND ((@IsNull_CardNum = 1 AND [CardNum] IS NULL) OR ([CardNum] = @Original_CardNum)) AND ((@IsNull_RewardBalance = 1 AND [RewardBalance] IS NULL) OR ([RewardBalance] = @Original_RewardBalance)) AND ((@IsNull_UserHistID = 1 AND [UserHistID] IS NULL) OR ([UserHistID] = @Original_UserHistID)) AND ((@IsNull_Phone = 1 AND [Phone] IS NULL) OR ([Phone] = @Original_Phone)))";
             this._adapter.DeleteCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_UserID", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "UserID", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Type", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Type", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
@@ -3438,10 +3526,12 @@ namespace Air3550.Air3550DBDataSetTableAdapters {
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_RewardBalance", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "RewardBalance", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_UserHistID", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "UserHistID", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_UserHistID", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "UserHistID", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_Phone", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Phone", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Phone", global::System.Data.SqlDbType.NChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Phone", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.InsertCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.InsertCommand.Connection = this.Connection;
-            this._adapter.InsertCommand.CommandText = @"INSERT INTO [UserAccountData] ([UserID], [Password], [Type], [Age], [Address], [CardNum], [RewardBalance], [UserHistID], [FirstName], [LastName]) VALUES (@UserID, @Password, @Type, @Age, @Address, @CardNum, @RewardBalance, @UserHistID, @FirstName, @LastName);
-SELECT UserID, Password, Type, Age, Address, CardNum, RewardBalance, UserHistID, FirstName, LastName FROM UserAccountData WHERE (UserID = @UserID)";
+            this._adapter.InsertCommand.CommandText = @"INSERT INTO [UserAccountData] ([UserID], [Password], [Type], [Age], [Address], [CardNum], [RewardBalance], [UserHistID], [FirstName], [LastName], [Email], [Phone]) VALUES (@UserID, @Password, @Type, @Age, @Address, @CardNum, @RewardBalance, @UserHistID, @FirstName, @LastName, @Email, @Phone);
+SELECT UserID, Password, Type, Age, Address, CardNum, RewardBalance, UserHistID, FirstName, LastName, Email, Phone FROM UserAccountData WHERE (UserID = @UserID)";
             this._adapter.InsertCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@UserID", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "UserID", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Password", global::System.Data.SqlDbType.Text, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Password", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
@@ -3453,10 +3543,12 @@ SELECT UserID, Password, Type, Age, Address, CardNum, RewardBalance, UserHistID,
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@UserHistID", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "UserHistID", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@FirstName", global::System.Data.SqlDbType.Text, 0, global::System.Data.ParameterDirection.Input, 0, 0, "FirstName", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@LastName", global::System.Data.SqlDbType.Text, 0, global::System.Data.ParameterDirection.Input, 0, 0, "LastName", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Email", global::System.Data.SqlDbType.Text, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Email", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Phone", global::System.Data.SqlDbType.NChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Phone", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.UpdateCommand.Connection = this.Connection;
-            this._adapter.UpdateCommand.CommandText = @"UPDATE [UserAccountData] SET [UserID] = @UserID, [Password] = @Password, [Type] = @Type, [Age] = @Age, [Address] = @Address, [CardNum] = @CardNum, [RewardBalance] = @RewardBalance, [UserHistID] = @UserHistID, [FirstName] = @FirstName, [LastName] = @LastName WHERE (([UserID] = @Original_UserID) AND ([Type] = @Original_Type) AND ((@IsNull_Age = 1 AND [Age] IS NULL) OR ([Age] = @Original_Age)) AND ((@IsNull_CardNum = 1 AND [CardNum] IS NULL) OR ([CardNum] = @Original_CardNum)) AND ((@IsNull_RewardBalance = 1 AND [RewardBalance] IS NULL) OR ([RewardBalance] = @Original_RewardBalance)) AND ((@IsNull_UserHistID = 1 AND [UserHistID] IS NULL) OR ([UserHistID] = @Original_UserHistID)));
-SELECT UserID, Password, Type, Age, Address, CardNum, RewardBalance, UserHistID, FirstName, LastName FROM UserAccountData WHERE (UserID = @UserID)";
+            this._adapter.UpdateCommand.CommandText = @"UPDATE [UserAccountData] SET [UserID] = @UserID, [Password] = @Password, [Type] = @Type, [Age] = @Age, [Address] = @Address, [CardNum] = @CardNum, [RewardBalance] = @RewardBalance, [UserHistID] = @UserHistID, [FirstName] = @FirstName, [LastName] = @LastName, [Email] = @Email, [Phone] = @Phone WHERE (([UserID] = @Original_UserID) AND ([Type] = @Original_Type) AND ((@IsNull_Age = 1 AND [Age] IS NULL) OR ([Age] = @Original_Age)) AND ((@IsNull_CardNum = 1 AND [CardNum] IS NULL) OR ([CardNum] = @Original_CardNum)) AND ((@IsNull_RewardBalance = 1 AND [RewardBalance] IS NULL) OR ([RewardBalance] = @Original_RewardBalance)) AND ((@IsNull_UserHistID = 1 AND [UserHistID] IS NULL) OR ([UserHistID] = @Original_UserHistID)) AND ((@IsNull_Phone = 1 AND [Phone] IS NULL) OR ([Phone] = @Original_Phone)));
+SELECT UserID, Password, Type, Age, Address, CardNum, RewardBalance, UserHistID, FirstName, LastName, Email, Phone FROM UserAccountData WHERE (UserID = @UserID)";
             this._adapter.UpdateCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@UserID", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "UserID", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Password", global::System.Data.SqlDbType.Text, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Password", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
@@ -3468,6 +3560,8 @@ SELECT UserID, Password, Type, Age, Address, CardNum, RewardBalance, UserHistID,
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@UserHistID", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "UserHistID", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@FirstName", global::System.Data.SqlDbType.Text, 0, global::System.Data.ParameterDirection.Input, 0, 0, "FirstName", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@LastName", global::System.Data.SqlDbType.Text, 0, global::System.Data.ParameterDirection.Input, 0, 0, "LastName", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Email", global::System.Data.SqlDbType.Text, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Email", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Phone", global::System.Data.SqlDbType.NChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Phone", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_UserID", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "UserID", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Type", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Type", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_Age", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Age", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
@@ -3478,6 +3572,8 @@ SELECT UserID, Password, Type, Age, Address, CardNum, RewardBalance, UserHistID,
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_RewardBalance", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "RewardBalance", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_UserHistID", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "UserHistID", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_UserHistID", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "UserHistID", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_Phone", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Phone", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Phone", global::System.Data.SqlDbType.NChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Phone", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -3494,7 +3590,7 @@ SELECT UserID, Password, Type, Age, Address, CardNum, RewardBalance, UserHistID,
             this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[0].Connection = this.Connection;
             this._commandCollection[0].CommandText = "SELECT UserID, Password, Type, Age, Address, CardNum, RewardBalance, UserHistID, " +
-                "FirstName, LastName FROM UserAccountData";
+                "FirstName, LastName, Email, Phone FROM UserAccountData";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
         }
         
@@ -3555,7 +3651,7 @@ SELECT UserID, Password, Type, Age, Address, CardNum, RewardBalance, UserHistID,
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Delete, true)]
-        public virtual int Delete(int Original_UserID, int Original_Type, global::System.Nullable<int> Original_Age, string Original_CardNum, global::System.Nullable<int> Original_RewardBalance, global::System.Nullable<int> Original_UserHistID) {
+        public virtual int Delete(int Original_UserID, int Original_Type, global::System.Nullable<int> Original_Age, string Original_CardNum, global::System.Nullable<int> Original_RewardBalance, global::System.Nullable<int> Original_UserHistID, string Original_Phone) {
             this.Adapter.DeleteCommand.Parameters[0].Value = ((int)(Original_UserID));
             this.Adapter.DeleteCommand.Parameters[1].Value = ((int)(Original_Type));
             if ((Original_Age.HasValue == true)) {
@@ -3590,6 +3686,14 @@ SELECT UserID, Password, Type, Age, Address, CardNum, RewardBalance, UserHistID,
                 this.Adapter.DeleteCommand.Parameters[8].Value = ((object)(1));
                 this.Adapter.DeleteCommand.Parameters[9].Value = global::System.DBNull.Value;
             }
+            if ((Original_Phone == null)) {
+                this.Adapter.DeleteCommand.Parameters[10].Value = ((object)(1));
+                this.Adapter.DeleteCommand.Parameters[11].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.DeleteCommand.Parameters[10].Value = ((object)(0));
+                this.Adapter.DeleteCommand.Parameters[11].Value = ((string)(Original_Phone));
+            }
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.DeleteCommand.Connection.State;
             if (((this.Adapter.DeleteCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -3610,7 +3714,7 @@ SELECT UserID, Password, Type, Age, Address, CardNum, RewardBalance, UserHistID,
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Insert, true)]
-        public virtual int Insert(int UserID, string Password, int Type, global::System.Nullable<int> Age, string Address, string CardNum, global::System.Nullable<int> RewardBalance, global::System.Nullable<int> UserHistID, string FirstName, string LastName) {
+        public virtual int Insert(int UserID, string Password, int Type, global::System.Nullable<int> Age, string Address, string CardNum, global::System.Nullable<int> RewardBalance, global::System.Nullable<int> UserHistID, string FirstName, string LastName, string Email, string Phone) {
             this.Adapter.InsertCommand.Parameters[0].Value = ((int)(UserID));
             if ((Password == null)) {
                 throw new global::System.ArgumentNullException("Password");
@@ -3661,6 +3765,18 @@ SELECT UserID, Password, Type, Age, Address, CardNum, RewardBalance, UserHistID,
             else {
                 this.Adapter.InsertCommand.Parameters[9].Value = ((string)(LastName));
             }
+            if ((Email == null)) {
+                this.Adapter.InsertCommand.Parameters[10].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.InsertCommand.Parameters[10].Value = ((string)(Email));
+            }
+            if ((Phone == null)) {
+                this.Adapter.InsertCommand.Parameters[11].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.InsertCommand.Parameters[11].Value = ((string)(Phone));
+            }
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.InsertCommand.Connection.State;
             if (((this.Adapter.InsertCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -3692,12 +3808,15 @@ SELECT UserID, Password, Type, Age, Address, CardNum, RewardBalance, UserHistID,
                     global::System.Nullable<int> UserHistID, 
                     string FirstName, 
                     string LastName, 
+                    string Email, 
+                    string Phone, 
                     int Original_UserID, 
                     int Original_Type, 
                     global::System.Nullable<int> Original_Age, 
                     string Original_CardNum, 
                     global::System.Nullable<int> Original_RewardBalance, 
-                    global::System.Nullable<int> Original_UserHistID) {
+                    global::System.Nullable<int> Original_UserHistID, 
+                    string Original_Phone) {
             this.Adapter.UpdateCommand.Parameters[0].Value = ((int)(UserID));
             if ((Password == null)) {
                 throw new global::System.ArgumentNullException("Password");
@@ -3748,39 +3867,59 @@ SELECT UserID, Password, Type, Age, Address, CardNum, RewardBalance, UserHistID,
             else {
                 this.Adapter.UpdateCommand.Parameters[9].Value = ((string)(LastName));
             }
-            this.Adapter.UpdateCommand.Parameters[10].Value = ((int)(Original_UserID));
-            this.Adapter.UpdateCommand.Parameters[11].Value = ((int)(Original_Type));
-            if ((Original_Age.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[12].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[13].Value = ((int)(Original_Age.Value));
+            if ((Email == null)) {
+                this.Adapter.UpdateCommand.Parameters[10].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[12].Value = ((object)(1));
-                this.Adapter.UpdateCommand.Parameters[13].Value = global::System.DBNull.Value;
+                this.Adapter.UpdateCommand.Parameters[10].Value = ((string)(Email));
             }
-            if ((Original_CardNum == null)) {
+            if ((Phone == null)) {
+                this.Adapter.UpdateCommand.Parameters[11].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[11].Value = ((string)(Phone));
+            }
+            this.Adapter.UpdateCommand.Parameters[12].Value = ((int)(Original_UserID));
+            this.Adapter.UpdateCommand.Parameters[13].Value = ((int)(Original_Type));
+            if ((Original_Age.HasValue == true)) {
+                this.Adapter.UpdateCommand.Parameters[14].Value = ((object)(0));
+                this.Adapter.UpdateCommand.Parameters[15].Value = ((int)(Original_Age.Value));
+            }
+            else {
                 this.Adapter.UpdateCommand.Parameters[14].Value = ((object)(1));
                 this.Adapter.UpdateCommand.Parameters[15].Value = global::System.DBNull.Value;
             }
-            else {
-                this.Adapter.UpdateCommand.Parameters[14].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[15].Value = ((string)(Original_CardNum));
-            }
-            if ((Original_RewardBalance.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[16].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[17].Value = ((int)(Original_RewardBalance.Value));
-            }
-            else {
+            if ((Original_CardNum == null)) {
                 this.Adapter.UpdateCommand.Parameters[16].Value = ((object)(1));
                 this.Adapter.UpdateCommand.Parameters[17].Value = global::System.DBNull.Value;
             }
-            if ((Original_UserHistID.HasValue == true)) {
+            else {
+                this.Adapter.UpdateCommand.Parameters[16].Value = ((object)(0));
+                this.Adapter.UpdateCommand.Parameters[17].Value = ((string)(Original_CardNum));
+            }
+            if ((Original_RewardBalance.HasValue == true)) {
                 this.Adapter.UpdateCommand.Parameters[18].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[19].Value = ((int)(Original_UserHistID.Value));
+                this.Adapter.UpdateCommand.Parameters[19].Value = ((int)(Original_RewardBalance.Value));
             }
             else {
                 this.Adapter.UpdateCommand.Parameters[18].Value = ((object)(1));
                 this.Adapter.UpdateCommand.Parameters[19].Value = global::System.DBNull.Value;
+            }
+            if ((Original_UserHistID.HasValue == true)) {
+                this.Adapter.UpdateCommand.Parameters[20].Value = ((object)(0));
+                this.Adapter.UpdateCommand.Parameters[21].Value = ((int)(Original_UserHistID.Value));
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[20].Value = ((object)(1));
+                this.Adapter.UpdateCommand.Parameters[21].Value = global::System.DBNull.Value;
+            }
+            if ((Original_Phone == null)) {
+                this.Adapter.UpdateCommand.Parameters[22].Value = ((object)(1));
+                this.Adapter.UpdateCommand.Parameters[23].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[22].Value = ((object)(0));
+                this.Adapter.UpdateCommand.Parameters[23].Value = ((string)(Original_Phone));
             }
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.UpdateCommand.Connection.State;
             if (((this.Adapter.UpdateCommand.Connection.State & global::System.Data.ConnectionState.Open) 
@@ -3802,8 +3941,26 @@ SELECT UserID, Password, Type, Age, Address, CardNum, RewardBalance, UserHistID,
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
-        public virtual int Update(string Password, int Type, global::System.Nullable<int> Age, string Address, string CardNum, global::System.Nullable<int> RewardBalance, global::System.Nullable<int> UserHistID, string FirstName, string LastName, int Original_UserID, int Original_Type, global::System.Nullable<int> Original_Age, string Original_CardNum, global::System.Nullable<int> Original_RewardBalance, global::System.Nullable<int> Original_UserHistID) {
-            return this.Update(Original_UserID, Password, Type, Age, Address, CardNum, RewardBalance, UserHistID, FirstName, LastName, Original_UserID, Original_Type, Original_Age, Original_CardNum, Original_RewardBalance, Original_UserHistID);
+        public virtual int Update(
+                    string Password, 
+                    int Type, 
+                    global::System.Nullable<int> Age, 
+                    string Address, 
+                    string CardNum, 
+                    global::System.Nullable<int> RewardBalance, 
+                    global::System.Nullable<int> UserHistID, 
+                    string FirstName, 
+                    string LastName, 
+                    string Email, 
+                    string Phone, 
+                    int Original_UserID, 
+                    int Original_Type, 
+                    global::System.Nullable<int> Original_Age, 
+                    string Original_CardNum, 
+                    global::System.Nullable<int> Original_RewardBalance, 
+                    global::System.Nullable<int> Original_UserHistID, 
+                    string Original_Phone) {
+            return this.Update(Original_UserID, Password, Type, Age, Address, CardNum, RewardBalance, UserHistID, FirstName, LastName, Email, Phone, Original_UserID, Original_Type, Original_Age, Original_CardNum, Original_RewardBalance, Original_UserHistID, Original_Phone);
         }
     }
     

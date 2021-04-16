@@ -17,6 +17,8 @@ namespace Air3550
         public string firstName { get; set; }
         public string lastName { get; set; }
         public string address { get; set; }
+        public string email { get; set; }
+        public string phone { get; set; }
         public string cardNumber { get; set; }
 
         List<string> bookedFlights;

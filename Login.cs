@@ -59,7 +59,7 @@ namespace Air3550
             
             //Go to sign up page
             this.Visible = false;     
-            Signup s = new Signup();  
+            Signup s = new Signup(this);  
             s.Visible = true;
         }
 
@@ -106,6 +106,8 @@ namespace Air3550
                 }
             }
 
+            sqlConnection.Close();
+
             return passwordGood;
         }
 
@@ -142,6 +144,8 @@ namespace Air3550
                 info.address = userDataSet.Rows[0].Field<string>("Address");
                 info.cardNumber = userDataSet.Rows[0].Field<string>("CardNum");
             }
+
+            sqlConnection.Close();
 
             return info;
         }
