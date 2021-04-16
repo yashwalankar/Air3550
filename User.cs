@@ -8,11 +8,11 @@ namespace Air3550
 {
     public class User
     {
-        public string id { get; set; }
-        public string type { get; set; }
-        public string age { get; set; }
-        public string rewardBalance { get; set; }
-        public string userHistoryID { get; set; }
+        public int id { get; set; }
+        public int type { get; set; }
+        public int age { get; set; }
+        public int rewardBalance { get; set; }
+        public int userHistoryID { get; set; }
         public string passwordHash { get; set; }
         public string firstName { get; set; }
         public string lastName { get; set; }

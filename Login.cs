@@ -131,11 +131,11 @@ namespace Air3550
                 DataTable userDataSet = new DataTable();
                 adapter.Fill(userDataSet);
 
-                info.id = userDataSet.Rows[0].Field<string>("UserID");
-                info.type = userDataSet.Rows[0].Field<string>("Type");
-                info.age = userDataSet.Rows[0].Field<string>("Age");
-                info.rewardBalance = userDataSet.Rows[0].Field<string>("RewardBalance");
-                info.userHistoryID = userDataSet.Rows[0].Field<string>("UserHistID");
+                info.id = userDataSet.Rows[0].Field<int>("UserID");
+                info.type = userDataSet.Rows[0].Field<int>("Type");
+                info.age = userDataSet.Rows[0].Field<int>("Age");
+                info.rewardBalance = userDataSet.Rows[0].Field<int>("RewardBalance");
+                info.userHistoryID = userDataSet.Rows[0].Field<int>("UserHistID");
                 info.passwordHash = userDataSet.Rows[0].Field<string>("FirstName");
                 info.firstName = userDataSet.Rows[0].Field<string>("FirstName");
                 info.lastName = userDataSet.Rows[0].Field<string>("LastName");

@@ -61,6 +61,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Air3550DBDataSet.cs">
+      <DependentUpon>Air3550DBDataSet.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Air3550DBDataSet.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
