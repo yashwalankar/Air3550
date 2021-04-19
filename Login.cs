@@ -45,9 +45,9 @@ namespace Air3550
                 User userData = AccountInformation(userID, encryptedPassword);
             }
 
-            //this.Visible = false;
-            //landing_page s = new landing_page();
-            //s.Visible = true;
+            this.Visible = false;
+            landing_page s = new landing_page();
+            s.Visible = true;
 
         }
 
@@ -133,15 +133,17 @@ namespace Air3550
                     adapter.Fill(userDataSet);
 
                     info.id = userDataSet.Rows[0].Field<int>("UserID");
+                    info.passwordHash = encryptedPassword;
                     info.type = userDataSet.Rows[0].Field<int>("Type");
-                    info.age = userDataSet.Rows[0].Field<int>("Age");
-                    info.rewardBalance = userDataSet.Rows[0].Field<int>("RewardBalance");
-                    info.userHistoryID = userDataSet.Rows[0].Field<int>("UserHistID");
-                    info.passwordHash = userDataSet.Rows[0].Field<string>("FirstName");
-                    info.firstName = userDataSet.Rows[0].Field<string>("FirstName");
-                    info.lastName = userDataSet.Rows[0].Field<string>("LastName");
-                    info.address = userDataSet.Rows[0].Field<string>("Address");
-                    info.cardNumber = userDataSet.Rows[0].Field<string>("CardNum");
+                    if (!(userDataSet.Rows[0][5].Equals(DBNull.Value)))  info.age           = userDataSet.Rows[0].Field<int>("Age");
+                    if (!(userDataSet.Rows[0][8].Equals(DBNull.Value)))  info.address       = userDataSet.Rows[0].Field<string>("Address");
+                    if (!(userDataSet.Rows[0][9].Equals(DBNull.Value))) info.cardNumber    = userDataSet.Rows[0].Field<string>("CardNum");
+                    if (!(userDataSet.Rows[0][10].Equals(DBNull.Value))) info.rewardBalance = userDataSet.Rows[0].Field<int>("RewardBalance");
+                    if (!(userDataSet.Rows[0][11].Equals(DBNull.Value))) info.userHistoryID = userDataSet.Rows[0].Field<int>("UserHistID");
+                    if (!(userDataSet.Rows[0][3].Equals(DBNull.Value)))  info.passwordHash  = userDataSet.Rows[0].Field<string>("FirstName");
+                    if (!(userDataSet.Rows[0][4].Equals(DBNull.Value)))  info.lastName      = userDataSet.Rows[0].Field<string>("LastName");
+                    if (!(userDataSet.Rows[0][6].Equals(DBNull.Value)))  info.email         = userDataSet.Rows[0].Field<string>("Email");
+                    if (!(userDataSet.Rows[0][7].Equals(DBNull.Value)))  info.phone         = userDataSet.Rows[0].Field<string>("Phone");
                 }
 
                 return info;
