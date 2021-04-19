@@ -61,12 +61,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Air3550DBDataSet.cs">
+      <DependentUpon>Air3550DBDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Air3550DBDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Air3550DBDataSet.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Class1.cs" />
-    <Compile Include="landing_page.cs">
+    <Compile Include="UserLandingPage.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="landing_page.Designer.cs">
-      <DependentUpon>landing_page.cs</DependentUpon>
+    <Compile Include="UserLandingPage.Designer.cs">
+      <DependentUpon>UserLandingPage.cs</DependentUpon>
     </Compile>
     <Compile Include="User.cs" />
     <Compile Include="Signup.cs">
@@ -83,8 +91,8 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="landing_page.resx">
-      <DependentUpon>landing_page.cs</DependentUpon>
+    <EmbeddedResource Include="UserLandingPage.resx">
+      <DependentUpon>UserLandingPage.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Login.resx">
       <DependentUpon>Login.cs</DependentUpon>
@@ -101,6 +109,17 @@
     <EmbeddedResource Include="Signup.resx">
       <DependentUpon>Signup.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="Air3550DBDataSet.xsc">
+      <DependentUpon>Air3550DBDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="Air3550DBDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>Air3550DBDataSet.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Air3550DBDataSet.xss">
+      <DependentUpon>Air3550DBDataSet.xsd</DependentUpon>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -125,6 +144,15 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Air3550DB.mdf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Air3550DB_log.ldf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <DependentUpon>Air3550DB.mdf</DependentUpon>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -6,15 +6,33 @@ using System.Threading.Tasks;
 
 namespace Air3550
 {
-    class User
+    public class User
     {
-        int id;
-        String name;
-        String pass_hash;
-        String add;
-        double point_balance;
+        public int id { get; set; }
+        public int type { get; set; }
+        public int age { get; set; }
+        public int rewardBalance { get; set; }
+        public int userHistoryID { get; set; }
+        public string passwordHash { get; set; }
+        public string firstName { get; set; }
+        public string lastName { get; set; }
+        public string address { get; set; }
+        public string email { get; set; }
+        public string phone { get; set; }
+        public string cardNumber { get; set; }
+
+        List<string> bookedFlights;
+        List<string> takenFlights;
+        List<string> canceledFlights;
+
+        public User()
+        {
+
+        }
+
+        // Information Methods
+
 
     }
 
-    
 }
