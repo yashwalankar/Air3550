@@ -70,11 +70,11 @@
       <DependentUpon>Air3550DBDataSet.xsd</DependentUpon>
     </Compile>
     <Compile Include="Class1.cs" />
-    <Compile Include="landing_page.cs">
+    <Compile Include="UserLandingPage.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="landing_page.Designer.cs">
-      <DependentUpon>landing_page.cs</DependentUpon>
+    <Compile Include="UserLandingPage.Designer.cs">
+      <DependentUpon>UserLandingPage.cs</DependentUpon>
     </Compile>
     <Compile Include="User.cs" />
     <Compile Include="Signup.cs">
@@ -91,8 +91,8 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="landing_page.resx">
-      <DependentUpon>landing_page.cs</DependentUpon>
+    <EmbeddedResource Include="UserLandingPage.resx">
+      <DependentUpon>UserLandingPage.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Login.resx">
       <DependentUpon>Login.cs</DependentUpon>

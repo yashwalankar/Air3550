@@ -19,11 +19,6 @@ namespace Air3550
             InitializeComponent();
         }
 
-        private void textBox2_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
         private void login_btn_Click(object sender, EventArgs e)
         {
             //go to individual user landing page based on returned user type
@@ -32,23 +27,57 @@ namespace Air3550
             // type 3 = flight manager
             // type 4 = marketing manager
             // type 5 = accountant
+            // type 99 = error in user creation
 
             string userID = userID_textbox.Text;
 
             string userPassword = pass_textbox.Text;
             string encryptedPassword = TextToSHA512(userPassword);
 
+            User userData = new User();
+
             bool userExists = PasswordCheck(userID, encryptedPassword);
 
             if (userExists == true)
             {
-                User userData = AccountInformation(userID, encryptedPassword);
+                userData = AccountInformation(userID, encryptedPassword);
+            }
+            else
+            {
+                userData.type = 99;
             }
 
-            this.Visible = false;
-            landing_page s = new landing_page();
-            s.Visible = true;
-
+            switch (userData.type)
+            {
+                case 1:
+                    this.Visible = false;
+                    UserLandingPage s = new UserLandingPage(userData);
+                    s.Visible = true;
+                    break;
+                case 2:
+                    this.Visible = false;
+                    //LoadEngLandingPage s = new LoadEngLandingPage();
+                    //s.Visible = true;
+                    break;
+                case 3:
+                    this.Visible = false;
+                    //FlightManLandingPage s = new FlightManLandingPage();
+                    //s.Visible = true;
+                    break;
+                case 4:
+                    this.Visible = false;
+                    //MarketingLandingPage s = new MarketingLandingPage();
+                    //s.Visible = true;
+                    break;
+                case 5:
+                    this.Visible = false;
+                    //AccountantLandingPage s = new AccountantLandingPage();
+                    //s.Visible = true;
+                    break;
+                default:
+                    //error code here
+                    break;
+            }
         }
 
         private void signup_btn_Click(object sender, EventArgs e)
@@ -137,7 +166,7 @@ namespace Air3550
                     info.type = userDataSet.Rows[0].Field<int>("Type");
                     if (!(userDataSet.Rows[0][5].Equals(DBNull.Value)))  info.age           = userDataSet.Rows[0].Field<int>("Age");
                     if (!(userDataSet.Rows[0][8].Equals(DBNull.Value)))  info.address       = userDataSet.Rows[0].Field<string>("Address");
-                    if (!(userDataSet.Rows[0][9].Equals(DBNull.Value))) info.cardNumber    = userDataSet.Rows[0].Field<string>("CardNum");
+                    if (!(userDataSet.Rows[0][9].Equals(DBNull.Value))) info.cardNumber     = userDataSet.Rows[0].Field<string>("CardNum");
                     if (!(userDataSet.Rows[0][10].Equals(DBNull.Value))) info.rewardBalance = userDataSet.Rows[0].Field<int>("RewardBalance");
                     if (!(userDataSet.Rows[0][11].Equals(DBNull.Value))) info.userHistoryID = userDataSet.Rows[0].Field<int>("UserHistID");
                     if (!(userDataSet.Rows[0][3].Equals(DBNull.Value)))  info.passwordHash  = userDataSet.Rows[0].Field<string>("FirstName");

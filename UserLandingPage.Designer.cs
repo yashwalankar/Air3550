@@ -1,7 +1,7 @@
 ﻿
 namespace Air3550
 {
-    partial class landing_page
+    partial class UserLandingPage
     {
         /// <summary>
         /// Required designer variable.
