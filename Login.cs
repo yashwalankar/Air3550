@@ -43,9 +43,6 @@ namespace Air3550
             if (userExists == true)
             {
                 User userData = AccountInformation(userID, encryptedPassword);
-
-                Console.WriteLine(userData.id.ToString() + " " + userData.firstName.ToString());
-
             }
 
             //this.Visible = false;
@@ -89,26 +86,26 @@ namespace Air3550
         {
             bool passwordGood = false;
             string dbString = Properties.Settings.Default.Air3550DBConnectionString;
-            SqlConnection sqlConnection = new SqlConnection(dbString);
-            if (sqlConnection.State != ConnectionState.Open) sqlConnection.Open();
 
-            using (SqlCommand sqlCommand = new SqlCommand("SELECT COUNT(*) FROM UserAccountData " +
-                                                          "WHERE UserID LIKE @username " +
-                                                          "AND Password LIKE @password", sqlConnection))
-            {
-                sqlCommand.Parameters.AddWithValue("@username", username);
-                sqlCommand.Parameters.AddWithValue("@password", encryptedPassword);
-                int userCount = (int)sqlCommand.ExecuteScalar();
+            using (SqlConnection sqlConnection = new SqlConnection(dbString)){
+                if (sqlConnection.State != ConnectionState.Open) sqlConnection.Open();
 
-                if (userCount > 0)
+                using (SqlCommand sqlCommand = new SqlCommand("SELECT COUNT(*) FROM UserAccountData " +
+                                                              "WHERE UserID LIKE @username " +
+                                                              "AND Password LIKE @password", sqlConnection))
                 {
-                    passwordGood = true;
+                    sqlCommand.Parameters.AddWithValue("@username", username);
+                    sqlCommand.Parameters.AddWithValue("@password", encryptedPassword);
+                    int userCount = (int)sqlCommand.ExecuteScalar();
+
+                    if (userCount > 0)
+                    {
+                        passwordGood = true;
+                    }
                 }
+
+                return passwordGood;
             }
-
-            sqlConnection.Close();
-
-            return passwordGood;
         }
 
         // Package User Data into a Table for use in selecting landing page
@@ -116,38 +113,39 @@ namespace Air3550
         public User AccountInformation(string username, string encryptedPassword)
         {
             string dbString = Properties.Settings.Default.Air3550DBConnectionString;
-            SqlConnection sqlConnection = new SqlConnection(dbString);
-            if (sqlConnection.State != ConnectionState.Open) sqlConnection.Open();
 
-            User info = new User();
-
-            using (SqlCommand sqlCommand = new SqlCommand("SELECT * FROM UserAccountData " +
-                                                          "WHERE UserID LIKE @username " +
-                                                          "AND Password LIKE @password", sqlConnection))
+            using (SqlConnection sqlConnection = new SqlConnection(dbString))
             {
-                sqlCommand.Parameters.AddWithValue("@username", username);
-                sqlCommand.Parameters.AddWithValue("@password", encryptedPassword);
-                SqlDataAdapter adapter = new SqlDataAdapter();
-                adapter.SelectCommand = sqlCommand;
+                if (sqlConnection.State != ConnectionState.Open) sqlConnection.Open();
 
-                DataTable userDataSet = new DataTable();
-                adapter.Fill(userDataSet);
+                User info = new User();
 
-                info.id = userDataSet.Rows[0].Field<int>("UserID");
-                info.type = userDataSet.Rows[0].Field<int>("Type");
-                info.age = userDataSet.Rows[0].Field<int>("Age");
-                info.rewardBalance = userDataSet.Rows[0].Field<int>("RewardBalance");
-                info.userHistoryID = userDataSet.Rows[0].Field<int>("UserHistID");
-                info.passwordHash = userDataSet.Rows[0].Field<string>("FirstName");
-                info.firstName = userDataSet.Rows[0].Field<string>("FirstName");
-                info.lastName = userDataSet.Rows[0].Field<string>("LastName");
-                info.address = userDataSet.Rows[0].Field<string>("Address");
-                info.cardNumber = userDataSet.Rows[0].Field<string>("CardNum");
+                using (SqlCommand sqlCommand = new SqlCommand("SELECT * FROM UserAccountData " +
+                                                              "WHERE UserID LIKE @username " +
+                                                              "AND Password LIKE @password", sqlConnection))
+                {
+                    sqlCommand.Parameters.AddWithValue("@username", username);
+                    sqlCommand.Parameters.AddWithValue("@password", encryptedPassword);
+                    SqlDataAdapter adapter = new SqlDataAdapter();
+                    adapter.SelectCommand = sqlCommand;
+
+                    DataTable userDataSet = new DataTable();
+                    adapter.Fill(userDataSet);
+
+                    info.id = userDataSet.Rows[0].Field<int>("UserID");
+                    info.type = userDataSet.Rows[0].Field<int>("Type");
+                    info.age = userDataSet.Rows[0].Field<int>("Age");
+                    info.rewardBalance = userDataSet.Rows[0].Field<int>("RewardBalance");
+                    info.userHistoryID = userDataSet.Rows[0].Field<int>("UserHistID");
+                    info.passwordHash = userDataSet.Rows[0].Field<string>("FirstName");
+                    info.firstName = userDataSet.Rows[0].Field<string>("FirstName");
+                    info.lastName = userDataSet.Rows[0].Field<string>("LastName");
+                    info.address = userDataSet.Rows[0].Field<string>("Address");
+                    info.cardNumber = userDataSet.Rows[0].Field<string>("CardNum");
+                }
+
+                return info;
             }
-
-            sqlConnection.Close();
-
-            return info;
         }
     }
 

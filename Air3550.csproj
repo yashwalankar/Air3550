@@ -147,10 +147,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Air3550DB.mdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Air3550DB_log.ldf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <DependentUpon>Air3550DB.mdf</DependentUpon>
     </Content>
   </ItemGroup>

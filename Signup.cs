@@ -83,31 +83,31 @@ namespace Air3550
             int count = 0;
 
             string dbString = Properties.Settings.Default.Air3550DBConnectionString;
-            SqlConnection sqlConnection = new SqlConnection(dbString);
-            if (sqlConnection.State != ConnectionState.Open) sqlConnection.Open();
-
-            using (SqlCommand sqlCommand = new SqlCommand("SELECT COUNT(*) FROM UserAccountData " +
-                                                         "WHERE UserID LIKE @userID", sqlConnection))
+            using (SqlConnection sqlConnection = new SqlConnection(dbString))
             {
-                Random rnd = new Random();
-                while (!uniqueIDFound)
+                if (sqlConnection.State != ConnectionState.Open) sqlConnection.Open();
+
+                using (SqlCommand sqlCommand = new SqlCommand("SELECT COUNT(*) FROM UserAccountData " +
+                                                             "WHERE UserID LIKE @userID", sqlConnection))
                 {
-                    newUserID = rnd.Next(100000, 999999);
-                    //newUserID = 123456; //Debug with test userID to check if existing ID doesnt work.
-
-                    sqlCommand.Parameters.AddWithValue("@userID", newUserID);
-                    count = (int)sqlCommand.ExecuteScalar();
-                    if (count == 0)
+                    Random rnd = new Random();
+                    while (!uniqueIDFound)
                     {
-                        uniqueIDFound = true;
+                        newUserID = rnd.Next(100000, 999999);
+                        //newUserID = 123456; //Debug with test userID to check if existing ID doesnt work.
+
+                        sqlCommand.Parameters.AddWithValue("@userID", newUserID);
+                        count = (int)sqlCommand.ExecuteScalar();
+                        if (count == 0)
+                        {
+                            uniqueIDFound = true;
+                        }
+                        sqlCommand.Parameters.RemoveAt(0);
                     }
-                    sqlCommand.Parameters.RemoveAt(0);
                 }
+
+                return newUserID;
             }
-
-            sqlConnection.Close();
-
-            return newUserID;
         }
 
         private User setupUser()
@@ -149,35 +149,22 @@ namespace Air3550
         private void addUserToDB(User user)
         {
             string dbString = Properties.Settings.Default.Air3550DBConnectionString;
-            SqlConnection sqlConnection = new SqlConnection(dbString);
-            if (sqlConnection.State != ConnectionState.Open) sqlConnection.Open();
-
-            using (SqlCommand sqlCommand = new SqlCommand("INSERT INTO UserAccountData " +
-                                                          "(UserID,Password,Type,FirstName)" +
-                                                          //"LastName,Age,Email,Phone,Address," +
-                                                          //"CardNum,RewardBalance,UserHistID) " +
-                                                          "VALUES " +
-                                                          "(@userID,@Password,@Type,@FirstName)", sqlConnection))
-                                                          //"@LastName,@Age,@Email,@Phone,@Address," +
-                                                          //"@CardNum,@RewardBalance,@UserHistID)", sqlConnection))
+            using (SqlConnection sqlConnection = new SqlConnection(dbString))
             {
-                sqlCommand.Parameters.AddWithValue("@userID", user.id);
-                sqlCommand.Parameters.AddWithValue("@Password", user.passwordHash);
-                sqlCommand.Parameters.AddWithValue("@Type", user.type);
-                sqlCommand.Parameters.AddWithValue("@FirstName", user.firstName);
-                //sqlCommand.Parameters.AddWithValue("@LastName", user.lastName);
-                //sqlCommand.Parameters.AddWithValue("@Age", user.age);
-                //sqlCommand.Parameters.AddWithValue("@Email", user.email);
-                //sqlCommand.Parameters.AddWithValue("@Phone", user.phone);
-                //sqlCommand.Parameters.AddWithValue("@Address", user.address);
-                //sqlCommand.Parameters.AddWithValue("@CardNum", user.cardNumber);
-                //sqlCommand.Parameters.AddWithValue("@RewardBalance", user.rewardBalance);
-                //sqlCommand.Parameters.AddWithValue("@UserHistID", user.userHistoryID);
+                if (sqlConnection.State != ConnectionState.Open) sqlConnection.Open();
 
-                sqlCommand.ExecuteNonQuery();
+                string sqlString = $"INSERT INTO UserAccountData " +
+                    $"(UserID,Password,Type,FirstName,LastName,Age,Email,Phone," +
+                    $"Address,CardNum,RewardBalance,UserHistID) " +
+                    $"VALUES ('{user.id}','{user.passwordHash}','{user.type}','{user.firstName}'," +
+                    $"'{user.lastName}','{user.age}','{user.email}','{user.phone}','{user.address}'," +
+                    $"'{user.cardNumber}','{user.rewardBalance}','{user.userHistoryID}')";
 
+                SqlCommand command = new SqlCommand(sqlString, sqlConnection);
+                command.ExecuteNonQuery();
+
+                Console.WriteLine(sqlString);
             }
-            sqlConnection.Close();
         }
     }
 }
