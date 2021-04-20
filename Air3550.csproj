@@ -130,6 +130,9 @@
     <EmbeddedResource Include="LoadEngLandingPage.resx">
       <DependentUpon>LoadEngLandingPage.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="MarketingLandingPage.resx">
+      <DependentUpon>MarketingLandingPage.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UserLandingPage.resx">
       <DependentUpon>UserLandingPage.cs</DependentUpon>
     </EmbeddedResource>
