@@ -88,6 +88,7 @@
     <Compile Include="AccountantLandingPage.Designer.cs">
       <DependentUpon>AccountantLandingPage.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormDatabaseHelper.cs" />
     <Compile Include="LoadEngLandingPage.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -99,12 +100,6 @@
     </Compile>
     <Compile Include="MarketingLandingPage.Designer.cs">
       <DependentUpon>MarketingLandingPage.cs</DependentUpon>
-    </Compile>
-    <Compile Include="testStuff.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="testStuff.Designer.cs">
-      <DependentUpon>testStuff.cs</DependentUpon>
     </Compile>
     <Compile Include="UserLandingPage.cs">
       <SubType>Form</SubType>
@@ -138,9 +133,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MarketingLandingPage.resx">
       <DependentUpon>MarketingLandingPage.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="testStuff.resx">
-      <DependentUpon>testStuff.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserLandingPage.resx">
       <DependentUpon>UserLandingPage.cs</DependentUpon>

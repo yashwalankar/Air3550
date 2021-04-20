@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -27,7 +28,10 @@ namespace Air3550
             editRoute_groupBox.Hide();
             deleteRoute_groupBox.Hide();
             addRoute_groupBox.Show();
-            
+            FormDatabaseHelper.fillAirportsAbv(add_origin_comboBox);
+            FormDatabaseHelper.fillAirportsAbv(add_dest_comboBox);
+
+
         }
 
         private void editRoute_btn_Click(object sender, EventArgs e)
@@ -47,6 +51,9 @@ namespace Air3550
             editRoute_groupBox.Hide();
         }
 
-        
+        private void add_getDist_btn_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
