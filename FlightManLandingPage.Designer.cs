@@ -64,7 +64,7 @@ namespace Air3550
             // 
             // printManifest_btn
             // 
-            this.printManifest_btn.Location = new System.Drawing.Point(534, 131);
+            this.printManifest_btn.Location = new System.Drawing.Point(565, 142);
             this.printManifest_btn.Name = "printManifest_btn";
             this.printManifest_btn.Size = new System.Drawing.Size(88, 23);
             this.printManifest_btn.TabIndex = 3;
