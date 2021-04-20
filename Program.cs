@@ -16,7 +16,7 @@ namespace Air3550
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new LoadEngLandingPage());
+            Application.Run(new FlightManLandingPage());
         }
     }
 }

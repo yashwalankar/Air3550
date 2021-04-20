@@ -10,17 +10,12 @@ using System.Windows.Forms;
 
 namespace Air3550
 {
-    public partial class FlightManLandingPage : Form
+    public partial class flightManifest : Form
     {
-        public FlightManLandingPage()
+        public flightManifest()
         {
             InitializeComponent();
         }
 
-        private void printManifest_btn_Click(object sender, EventArgs e)
-        {
-            flightManifest manifest = new flightManifest();
-            manifest.Visible = true;
-        }
     }
 }

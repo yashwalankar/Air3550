@@ -70,6 +70,12 @@
       <DependentUpon>Air3550DBDataSet.xsd</DependentUpon>
     </Compile>
     <Compile Include="Class1.cs" />
+    <Compile Include="flightManifest.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="flightManifest.Designer.cs">
+      <DependentUpon>flightManifest.cs</DependentUpon>
+    </Compile>
     <Compile Include="FlightManLandingPage.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -115,6 +121,12 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="flightManifest.resx">
+      <DependentUpon>flightManifest.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FlightManLandingPage.resx">
+      <DependentUpon>FlightManLandingPage.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="LoadEngLandingPage.resx">
       <DependentUpon>LoadEngLandingPage.cs</DependentUpon>
     </EmbeddedResource>
