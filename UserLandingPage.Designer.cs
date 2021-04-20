@@ -38,29 +38,30 @@ namespace Air3550
             this.welcome_label.AutoSize = true;
             this.welcome_label.Location = new System.Drawing.Point(61, 27);
             this.welcome_label.Name = "welcome_label";
-            this.welcome_label.Size = new System.Drawing.Size(134, 13);
+            this.welcome_label.Size = new System.Drawing.Size(122, 13);
             this.welcome_label.TabIndex = 0;
             this.welcome_label.Text = "Welcome, ---username---";
-            this.welcome_label.Click += new System.EventHandler(this.welcome_label_Click);
+            
             // 
-            // label1
+            // usertype_label
             // 
             this.usertype_label.AutoSize = true;
             this.usertype_label.Location = new System.Drawing.Point(626, 27);
             this.usertype_label.Name = "usertype_label";
-            this.usertype_label.Size = new System.Drawing.Size(35, 13);
+            this.usertype_label.Size = new System.Drawing.Size(126, 13);
             this.usertype_label.TabIndex = 1;
             this.usertype_label.Text = "User Type : ---user type---";
             // 
-            // landing_page
+            // UserLandingPage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.usertype_label);
             this.Controls.Add(this.welcome_label);
-            this.Name = "landing_page";
+            this.Name = "UserLandingPage";
             this.Text = "Landing Page";
+            
             this.ResumeLayout(false);
             this.PerformLayout();
 

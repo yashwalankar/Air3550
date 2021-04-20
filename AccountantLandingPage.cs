@@ -10,13 +10,11 @@ using System.Windows.Forms;
 
 namespace Air3550
 {
-    public partial class UserLandingPage : Form
+    public partial class AccountantLandingPage : Form
     {
-        public UserLandingPage(User userData)
+        public AccountantLandingPage()
         {
             InitializeComponent();
         }
-
-        
     }
 }
