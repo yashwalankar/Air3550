@@ -35,7 +35,6 @@ namespace Air3550
             this.editRoute_btn = new System.Windows.Forms.Button();
             this.deleteRoute_btn = new System.Windows.Forms.Button();
             this.addRoute_groupBox = new System.Windows.Forms.GroupBox();
-            this.add_getDist_btn = new System.Windows.Forms.Button();
             this.add_distanceValue_label = new System.Windows.Forms.Label();
             this.add_distance_label = new System.Windows.Forms.Label();
             this.addRoute_submit_btn = new System.Windows.Forms.Button();
@@ -131,7 +130,6 @@ namespace Air3550
             // 
             // addRoute_groupBox
             // 
-            this.addRoute_groupBox.Controls.Add(this.add_getDist_btn);
             this.addRoute_groupBox.Controls.Add(this.add_distanceValue_label);
             this.addRoute_groupBox.Controls.Add(this.add_distance_label);
             this.addRoute_groupBox.Controls.Add(this.addRoute_submit_btn);
@@ -151,16 +149,6 @@ namespace Air3550
             this.addRoute_groupBox.TabIndex = 4;
             this.addRoute_groupBox.TabStop = false;
             this.addRoute_groupBox.Text = "Add Route";
-            // 
-            // add_getDist_btn
-            // 
-            this.add_getDist_btn.Location = new System.Drawing.Point(157, 89);
-            this.add_getDist_btn.Name = "add_getDist_btn";
-            this.add_getDist_btn.Size = new System.Drawing.Size(102, 23);
-            this.add_getDist_btn.TabIndex = 33;
-            this.add_getDist_btn.Text = "Calc Distance";
-            this.add_getDist_btn.UseVisualStyleBackColor = true;
-            this.add_getDist_btn.Click += new System.EventHandler(this.add_getDist_btn_Click);
             // 
             // add_distanceValue_label
             // 
@@ -208,6 +196,7 @@ namespace Air3550
             // 
             // add_planetype_comboBox
             // 
+            this.add_planetype_comboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.add_planetype_comboBox.FormattingEnabled = true;
             this.add_planetype_comboBox.Location = new System.Drawing.Point(88, 186);
             this.add_planetype_comboBox.Name = "add_planetype_comboBox";
@@ -241,11 +230,13 @@ namespace Air3550
             // 
             // add_dest_comboBox
             // 
+            this.add_dest_comboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.add_dest_comboBox.FormattingEnabled = true;
             this.add_dest_comboBox.Location = new System.Drawing.Point(88, 54);
             this.add_dest_comboBox.Name = "add_dest_comboBox";
             this.add_dest_comboBox.Size = new System.Drawing.Size(121, 21);
             this.add_dest_comboBox.TabIndex = 9;
+            this.add_dest_comboBox.TextChanged += new System.EventHandler(this.add_dest_comboBox_TextChanged);
             // 
             // add_dest_label
             // 
@@ -258,6 +249,7 @@ namespace Air3550
             // 
             // add_origin_comboBox
             // 
+            this.add_origin_comboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.add_origin_comboBox.FormattingEnabled = true;
             this.add_origin_comboBox.Location = new System.Drawing.Point(88, 22);
             this.add_origin_comboBox.Name = "add_origin_comboBox";
@@ -604,7 +596,6 @@ namespace Air3550
         private System.Windows.Forms.Label edit_distanceValue_label;
         private System.Windows.Forms.Label edit_distance_label;
         private System.Windows.Forms.Button edit_getDist_btn;
-        private System.Windows.Forms.Button add_getDist_btn;
         private System.Windows.Forms.Label add_distanceValue_label;
         private System.Windows.Forms.Label add_distance_label;
         private Air3550DBDataSet air3550DBDataSet;

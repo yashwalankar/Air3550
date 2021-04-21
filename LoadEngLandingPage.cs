@@ -63,7 +63,6 @@ namespace Air3550
                 String origin = add_origin_comboBox.SelectedItem.ToString();
                 String dest = add_dest_comboBox.SelectedItem.ToString();
                 String distance = String.Format("{0:0.00}", FormDatabaseHelper.getDistance(origin, dest).ToString("0.00"));
-                Console.WriteLine(distance);
                 add_distanceValue_label.Text = distance;
             }
 
@@ -84,7 +83,33 @@ namespace Air3550
 
         private void add_origin_comboBox_TextChanged(object sender, EventArgs e)
         {
-            Console.WriteLine("ItemSelected");
+            if (add_origin_comboBox.SelectedItem != null && add_dest_comboBox.SelectedItem != null)
+            {
+                getDistance();
+            }
+        }
+        
+        private void add_dest_comboBox_TextChanged(object sender, EventArgs e)
+        {
+            if (add_origin_comboBox.SelectedItem != null && add_dest_comboBox.SelectedItem != null)
+            {
+                getDistance();
+            }
+        }
+
+        private void getDistance()
+        {
+            if (add_origin_comboBox.SelectedItem == null || add_dest_comboBox.SelectedItem == null)
+            {
+                // error code here
+            }
+            else
+            {
+                String origin = add_origin_comboBox.SelectedItem.ToString();
+                String dest = add_dest_comboBox.SelectedItem.ToString();
+                String distance = String.Format("{0:0.00}", FormDatabaseHelper.getDistance(origin, dest).ToString("0.00"));
+                add_distanceValue_label.Text = distance;
+            }
         }
 
         private void logoutbutton_Click(object sender, EventArgs e)
@@ -94,5 +119,6 @@ namespace Air3550
             Login s = new Login();
             s.Visible = true;
         }
+
     }
 }
