@@ -24,9 +24,12 @@ namespace Air3550
             manifest.Visible = true;
         }
 
-        
-
-
-
+        private void logout_button_Click(object sender, EventArgs e)
+        {
+            this.Visible = false;
+            this.Dispose();
+            Login s = new Login();
+            s.Visible = true;
+        }
     }
 }

@@ -39,6 +39,7 @@ namespace Air3550
             this.set_plane_label = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
             this.newCapacityValue_label = new System.Windows.Forms.Label();
+            this.logout_button = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -131,11 +132,22 @@ namespace Air3550
             this.newCapacityValue_label.TabIndex = 9;
             this.newCapacityValue_label.Text = "0";
             // 
+            // logout_button
+            // 
+            this.logout_button.Location = new System.Drawing.Point(713, 12);
+            this.logout_button.Name = "logout_button";
+            this.logout_button.Size = new System.Drawing.Size(75, 23);
+            this.logout_button.TabIndex = 10;
+            this.logout_button.Text = "Logout";
+            this.logout_button.UseVisualStyleBackColor = true;
+            this.logout_button.Click += new System.EventHandler(this.logout_button_Click);
+            // 
             // MarketingLandingPage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.logout_button);
             this.Controls.Add(this.newCapacityValue_label);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.new_capacity_label);
@@ -166,5 +178,6 @@ namespace Air3550
         private System.Windows.Forms.Label set_plane_label;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Label newCapacityValue_label;
+        private System.Windows.Forms.Button logout_button;
     }
 }

@@ -78,6 +78,7 @@ namespace Air3550
             this.air3550DBDataSet = new Air3550.Air3550DBDataSet();
             this.flightsBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.flightsTableAdapter = new Air3550.Air3550DBDataSet1TableAdapters.FlightsTableAdapter();
+            this.logout_button = new System.Windows.Forms.Button();
             this.addRoute_groupBox.SuspendLayout();
             this.editRoute_groupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
@@ -262,6 +263,7 @@ namespace Air3550
             this.add_origin_comboBox.Name = "add_origin_comboBox";
             this.add_origin_comboBox.Size = new System.Drawing.Size(121, 21);
             this.add_origin_comboBox.TabIndex = 8;
+            this.add_origin_comboBox.TextChanged += new System.EventHandler(this.add_origin_comboBox_TextChanged);
             // 
             // add_origin_label
             // 
@@ -522,11 +524,22 @@ namespace Air3550
             // 
             this.flightsTableAdapter.ClearBeforeFill = true;
             // 
+            // logout_button
+            // 
+            this.logout_button.Location = new System.Drawing.Point(627, 12);
+            this.logout_button.Name = "logout_button";
+            this.logout_button.Size = new System.Drawing.Size(75, 23);
+            this.logout_button.TabIndex = 7;
+            this.logout_button.Text = "Logout";
+            this.logout_button.UseVisualStyleBackColor = true;
+            this.logout_button.Click += new System.EventHandler(this.logoutbutton_Click);
+            // 
             // LoadEngLandingPage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(714, 609);
+            this.Controls.Add(this.logout_button);
             this.Controls.Add(this.deleteRoute_btn);
             this.Controls.Add(this.editRoute_btn);
             this.Controls.Add(this.addRoute_btn);
@@ -606,5 +619,6 @@ namespace Air3550
         private System.Windows.Forms.DataGridViewTextBoxColumn planeTypeDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn currCapacityDataGridViewTextBoxColumn;
         private System.Windows.Forms.BindingSource flightsBindingSource1;
+        private System.Windows.Forms.Button logout_button;
     }
 }

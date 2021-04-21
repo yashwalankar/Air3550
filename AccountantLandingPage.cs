@@ -16,5 +16,13 @@ namespace Air3550
         {
             InitializeComponent();
         }
+
+        private void logout_button_Click(object sender, EventArgs e)
+        {
+            this.Visible = false;
+            this.Dispose();
+            Login s = new Login();
+            s.Visible = true;
+        }
     }
 }

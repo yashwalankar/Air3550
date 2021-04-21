@@ -127,6 +127,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="AccountantLandingPage.resx">
+      <DependentUpon>AccountantLandingPage.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="flightManifest.resx">
       <DependentUpon>flightManifest.cs</DependentUpon>
     </EmbeddedResource>

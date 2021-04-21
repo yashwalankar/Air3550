@@ -26,5 +26,13 @@ namespace Air3550
         {
             FormDatabaseHelper.updateCapacityBox(planesModels_comboBox.SelectedItem.ToString() , newCapacityValue_label);
         }
+
+        private void logout_button_Click(object sender, EventArgs e)
+        {
+            this.Visible = false;
+            this.Dispose();
+            Login s = new Login();
+            s.Visible = true;
+        }
     }
 }

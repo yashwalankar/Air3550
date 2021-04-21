@@ -33,6 +33,7 @@ namespace Air3550
             this.flightman_welcome_label = new System.Windows.Forms.Label();
             this.selected_flight_label = new System.Windows.Forms.Label();
             this.printManifest_btn = new System.Windows.Forms.Button();
+            this.logout_button = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -72,11 +73,22 @@ namespace Air3550
             this.printManifest_btn.UseVisualStyleBackColor = true;
             this.printManifest_btn.Click += new System.EventHandler(this.printManifest_btn_Click);
             // 
+            // logout_button
+            // 
+            this.logout_button.Location = new System.Drawing.Point(713, 12);
+            this.logout_button.Name = "logout_button";
+            this.logout_button.Size = new System.Drawing.Size(75, 23);
+            this.logout_button.TabIndex = 11;
+            this.logout_button.Text = "Logout";
+            this.logout_button.UseVisualStyleBackColor = true;
+            this.logout_button.Click += new System.EventHandler(this.logout_button_Click);
+            // 
             // FlightManLandingPage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.logout_button);
             this.Controls.Add(this.printManifest_btn);
             this.Controls.Add(this.selected_flight_label);
             this.Controls.Add(this.flightman_welcome_label);
@@ -95,5 +107,6 @@ namespace Air3550
         private System.Windows.Forms.Label flightman_welcome_label;
         private System.Windows.Forms.Label selected_flight_label;
         private System.Windows.Forms.Button printManifest_btn;
+        private System.Windows.Forms.Button logout_button;
     }
 }

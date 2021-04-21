@@ -69,7 +69,7 @@ namespace Air3550
             ParentPage.Visible = true;
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void cancelbutton_Click(object sender, EventArgs e)
         {
             this.Visible = false;
             this.Dispose();
@@ -166,6 +166,7 @@ namespace Air3550
                 Console.WriteLine(sqlString);
             }
         }
+
     }
 }
                  

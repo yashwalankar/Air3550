@@ -81,5 +81,18 @@ namespace Air3550
         {
             
         }
+
+        private void add_origin_comboBox_TextChanged(object sender, EventArgs e)
+        {
+            Console.WriteLine("ItemSelected");
+        }
+
+        private void logoutbutton_Click(object sender, EventArgs e)
+        {
+            this.Visible = false;
+            this.Dispose();
+            Login s = new Login();
+            s.Visible = true;
+        }
     }
 }
