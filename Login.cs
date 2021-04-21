@@ -51,28 +51,28 @@ namespace Air3550
             {
                 case 1:
                     this.Visible = false;
-                    UserLandingPage s = new UserLandingPage(userData);
-                    s.Visible = true;
+                    UserLandingPage userpage = new UserLandingPage(userData);
+                    userpage.Visible = true;
                     break;
                 case 2:
                     this.Visible = false;
-                    //LoadEngLandingPage s = new LoadEngLandingPage();
-                    //s.Visible = true;
+                    LoadEngLandingPage loadengpage = new LoadEngLandingPage();
+                    loadengpage.Visible = true;
                     break;
                 case 3:
                     this.Visible = false;
-                    //FlightManLandingPage s = new FlightManLandingPage();
-                    //s.Visible = true;
+                    FlightManLandingPage flightmanpage = new FlightManLandingPage();
+                    flightmanpage.Visible = true;
                     break;
                 case 4:
                     this.Visible = false;
-                    //MarketingLandingPage s = new MarketingLandingPage();
-                    //s.Visible = true;
+                    MarketingLandingPage marketingpage = new MarketingLandingPage();
+                    marketingpage.Visible = true;
                     break;
                 case 5:
                     this.Visible = false;
-                    //AccountantLandingPage s = new AccountantLandingPage();
-                    //s.Visible = true;
+                    AccountantLandingPage accountantpage = new AccountantLandingPage();
+                    accountantpage.Visible = true;
                     break;
                 default:
                     //error code here
@@ -82,7 +82,6 @@ namespace Air3550
 
         private void signup_btn_Click(object sender, EventArgs e)
         {
-            
             //Go to sign up page
             this.Visible = false;     
             Signup s = new Signup(this);  

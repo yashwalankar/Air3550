@@ -44,7 +44,7 @@ namespace Air3550
             this.userid_textbox = new System.Windows.Forms.TextBox();
             this.age_textbox = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
+            this.cancel_button = new System.Windows.Forms.Button();
             this.email_textbox = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.phone_textbox = new System.Windows.Forms.TextBox();
@@ -175,15 +175,15 @@ namespace Air3550
             this.label2.TabIndex = 15;
             this.label2.Text = "Age";
             // 
-            // button1
+            // cancel_button
             // 
-            this.button1.Location = new System.Drawing.Point(330, 367);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 17;
-            this.button1.Text = "Cancel";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.cancel_button.Location = new System.Drawing.Point(330, 367);
+            this.cancel_button.Name = "cancel_button";
+            this.cancel_button.Size = new System.Drawing.Size(75, 23);
+            this.cancel_button.TabIndex = 17;
+            this.cancel_button.Text = "Cancel";
+            this.cancel_button.UseVisualStyleBackColor = true;
+            this.cancel_button.Click += new System.EventHandler(this.cancelbutton_Click);
             // 
             // email_textbox
             // 
@@ -226,7 +226,7 @@ namespace Air3550
             this.Controls.Add(this.label4);
             this.Controls.Add(this.email_textbox);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.cancel_button);
             this.Controls.Add(this.age_textbox);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.userid_textbox);
@@ -267,7 +267,7 @@ namespace Air3550
         private System.Windows.Forms.TextBox userid_textbox;
         private System.Windows.Forms.TextBox age_textbox;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button cancel_button;
         private System.Windows.Forms.TextBox email_textbox;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox phone_textbox;

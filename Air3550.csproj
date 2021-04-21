@@ -69,7 +69,43 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Air3550DBDataSet.xsd</DependentUpon>
     </Compile>
-    <Compile Include="Class1.cs" />
+    <Compile Include="Air3550DBDataSet1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Air3550DBDataSet1.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="flightManifest.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="flightManifest.Designer.cs">
+      <DependentUpon>flightManifest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FlightManLandingPage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FlightManLandingPage.Designer.cs">
+      <DependentUpon>FlightManLandingPage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AccountantLandingPage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AccountantLandingPage.Designer.cs">
+      <DependentUpon>AccountantLandingPage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="flight.cs" />
+    <Compile Include="FormDatabaseHelper.cs" />
+    <Compile Include="LoadEngLandingPage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LoadEngLandingPage.Designer.cs">
+      <DependentUpon>LoadEngLandingPage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MarketingLandingPage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MarketingLandingPage.Designer.cs">
+      <DependentUpon>MarketingLandingPage.cs</DependentUpon>
+    </Compile>
     <Compile Include="UserLandingPage.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -91,6 +127,21 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="AccountantLandingPage.resx">
+      <DependentUpon>AccountantLandingPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="flightManifest.resx">
+      <DependentUpon>flightManifest.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FlightManLandingPage.resx">
+      <DependentUpon>FlightManLandingPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LoadEngLandingPage.resx">
+      <DependentUpon>LoadEngLandingPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MarketingLandingPage.resx">
+      <DependentUpon>MarketingLandingPage.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UserLandingPage.resx">
       <DependentUpon>UserLandingPage.cs</DependentUpon>
     </EmbeddedResource>
@@ -119,6 +170,17 @@
     </None>
     <None Include="Air3550DBDataSet.xss">
       <DependentUpon>Air3550DBDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="Air3550DBDataSet1.xsc">
+      <DependentUpon>Air3550DBDataSet1.xsd</DependentUpon>
+    </None>
+    <None Include="Air3550DBDataSet1.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>Air3550DBDataSet1.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Air3550DBDataSet1.xss">
+      <DependentUpon>Air3550DBDataSet1.xsd</DependentUpon>
     </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -153,6 +215,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <DependentUpon>Air3550DB.mdf</DependentUpon>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

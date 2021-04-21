@@ -17,9 +17,6 @@ namespace Air3550
             InitializeComponent();
         }
 
-        private void welcome_label_Click(object sender, EventArgs e)
-        {
-
-        }
+        
     }
 }
