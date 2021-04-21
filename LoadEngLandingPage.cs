@@ -45,6 +45,8 @@ namespace Air3550
             addRoute_groupBox.Hide();
             deleteRoute_groupBox.Hide();
             editRoute_groupBox.Show();
+            FormDatabaseHelper.fillAirportsAbv(edit_origin_combobox);
+            FormDatabaseHelper.fillAirportsAbv(edit_dest_combobox);
 
         }
 
@@ -57,7 +59,8 @@ namespace Air3550
 
         private void LoadEngLandingPage_Load(object sender, EventArgs e)
         {
-            // TODO: This line of code loads data into the 'air3550DBDataSet1.Flights' table. You can move, or remove it, as needed.
+            // TODO: This line of code loads data into the 'air3550DBDataSet.Flights' table. You can move, or remove it, as needed.
+            this.flightsTableAdapter1.Fill(this.air3550DBDataSet.Flights);
 
         }
 
@@ -72,8 +75,8 @@ namespace Air3550
                 flight newFlight = new flight();
                 newFlight.createFlight(add_origin_comboBox.Text,
                                         add_dest_comboBox.Text,
-                                        add_depart_time_DTP.Value.ToString(),
-                                        arrival_time_DTP.Value.ToString(),
+                                        add_depart_time_DTP.Value.ToString("t"),
+                                        add_arrival_time_DTP.Value.ToString("t"),
                                         defaultPlane,
                                         double.Parse(add_cost_label.Text),
                                         maxCap,
@@ -147,14 +150,14 @@ namespace Air3550
 
             departTime = departTime.AddSeconds(flightTime);
 
-            arrival_time_DTP.Value = departTime;
+            add_arrival_time_DTP.Value = departTime;
         }
 
         private void calcCost()
         {
             double distance = double.Parse(add_distanceValue_label.Text);
             DateTime departure_time = add_depart_time_DTP.Value;
-            DateTime arrival_time = arrival_time_DTP.Value;
+            DateTime arrival_time = add_arrival_time_DTP.Value;
 
             double discount = 1.0;
             DateTime dt8AM = new DateTime(departure_time.Year, departure_time.Month, departure_time.Day, 8, 0, 0);
@@ -174,6 +177,11 @@ namespace Air3550
             double cost = (50.0 + 0.12 * distance) * discount;
 
             add_cost_label.Text = cost.ToString();
+        }
+
+        private void dataGridView2_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
         }
     }
 }
