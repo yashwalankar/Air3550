@@ -35,6 +35,10 @@ namespace Air3550
             this.editRoute_btn = new System.Windows.Forms.Button();
             this.deleteRoute_btn = new System.Windows.Forms.Button();
             this.addRoute_groupBox = new System.Windows.Forms.GroupBox();
+            this.cost_postfix_label = new System.Windows.Forms.Label();
+            this.add_cost_label = new System.Windows.Forms.Label();
+            this.cost_label = new System.Windows.Forms.Label();
+            this.mile_label = new System.Windows.Forms.Label();
             this.arrival_time_DTP = new System.Windows.Forms.DateTimePicker();
             this.add_depart_time_DTP = new System.Windows.Forms.DateTimePicker();
             this.add_distanceValue_label = new System.Windows.Forms.Label();
@@ -73,19 +77,15 @@ namespace Air3550
             this.planeTypeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.currCapacityDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.flightsBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
-            this.air3550DBDataSet1 = new Air3550.Air3550DBDataSet1();
             this.air3550DBDataSet = new Air3550.Air3550DBDataSet();
             this.flightsBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.flightsTableAdapter = new Air3550.Air3550DBDataSet1TableAdapters.FlightsTableAdapter();
             this.logout_button = new System.Windows.Forms.Button();
-            this.mile_label = new System.Windows.Forms.Label();
             this.addRoute_groupBox.SuspendLayout();
             this.editRoute_groupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
             this.deleteRoute_groupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.flightsBindingSource1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.air3550DBDataSet1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.air3550DBDataSet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.flightsBindingSource)).BeginInit();
             this.SuspendLayout();
@@ -131,6 +131,9 @@ namespace Air3550
             // 
             // addRoute_groupBox
             // 
+            this.addRoute_groupBox.Controls.Add(this.cost_postfix_label);
+            this.addRoute_groupBox.Controls.Add(this.add_cost_label);
+            this.addRoute_groupBox.Controls.Add(this.cost_label);
             this.addRoute_groupBox.Controls.Add(this.mile_label);
             this.addRoute_groupBox.Controls.Add(this.arrival_time_DTP);
             this.addRoute_groupBox.Controls.Add(this.add_depart_time_DTP);
@@ -151,6 +154,42 @@ namespace Air3550
             this.addRoute_groupBox.TabIndex = 4;
             this.addRoute_groupBox.TabStop = false;
             this.addRoute_groupBox.Text = "Add Route";
+            // 
+            // cost_postfix_label
+            // 
+            this.cost_postfix_label.AutoSize = true;
+            this.cost_postfix_label.Location = new System.Drawing.Point(144, 187);
+            this.cost_postfix_label.Name = "cost_postfix_label";
+            this.cost_postfix_label.Size = new System.Drawing.Size(13, 13);
+            this.cost_postfix_label.TabIndex = 36;
+            this.cost_postfix_label.Text = "$";
+            // 
+            // add_cost_label
+            // 
+            this.add_cost_label.AutoSize = true;
+            this.add_cost_label.Location = new System.Drawing.Point(86, 187);
+            this.add_cost_label.Name = "add_cost_label";
+            this.add_cost_label.Size = new System.Drawing.Size(16, 13);
+            this.add_cost_label.TabIndex = 35;
+            this.add_cost_label.Text = "---";
+            // 
+            // cost_label
+            // 
+            this.cost_label.AutoSize = true;
+            this.cost_label.Location = new System.Drawing.Point(24, 187);
+            this.cost_label.Name = "cost_label";
+            this.cost_label.Size = new System.Drawing.Size(28, 13);
+            this.cost_label.TabIndex = 34;
+            this.cost_label.Text = "Cost";
+            // 
+            // mile_label
+            // 
+            this.mile_label.AutoSize = true;
+            this.mile_label.Location = new System.Drawing.Point(144, 79);
+            this.mile_label.Name = "mile_label";
+            this.mile_label.Size = new System.Drawing.Size(31, 13);
+            this.mile_label.TabIndex = 33;
+            this.mile_label.Text = "Miles";
             // 
             // arrival_time_DTP
             // 
@@ -194,7 +233,7 @@ namespace Air3550
             // 
             // addRoute_submit_btn
             // 
-            this.addRoute_submit_btn.Location = new System.Drawing.Point(88, 184);
+            this.addRoute_submit_btn.Location = new System.Drawing.Point(88, 217);
             this.addRoute_submit_btn.Name = "addRoute_submit_btn";
             this.addRoute_submit_btn.Size = new System.Drawing.Size(75, 23);
             this.addRoute_submit_btn.TabIndex = 12;
@@ -505,12 +544,7 @@ namespace Air3550
             // flightsBindingSource1
             // 
             this.flightsBindingSource1.DataMember = "Flights";
-            this.flightsBindingSource1.DataSource = this.air3550DBDataSet1;
-            // 
-            // air3550DBDataSet1
-            // 
-            this.air3550DBDataSet1.DataSetName = "Air3550DBDataSet1";
-            this.air3550DBDataSet1.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
+            this.flightsBindingSource1.DataSource = this.air3550DBDataSet;
             // 
             // air3550DBDataSet
             // 
@@ -520,11 +554,7 @@ namespace Air3550
             // flightsBindingSource
             // 
             this.flightsBindingSource.DataMember = "Flights";
-            this.flightsBindingSource.DataSource = this.air3550DBDataSet1;
-            // 
-            // flightsTableAdapter
-            // 
-            this.flightsTableAdapter.ClearBeforeFill = true;
+            this.flightsBindingSource.DataSource = this.air3550DBDataSet;
             // 
             // logout_button
             // 
@@ -536,15 +566,6 @@ namespace Air3550
             this.logout_button.UseVisualStyleBackColor = true;
             this.logout_button.Click += new System.EventHandler(this.logoutbutton_Click);
             // 
-            // mile_label
-            // 
-            this.mile_label.AutoSize = true;
-            this.mile_label.Location = new System.Drawing.Point(144, 79);
-            this.mile_label.Name = "mile_label";
-            this.mile_label.Size = new System.Drawing.Size(31, 13);
-            this.mile_label.TabIndex = 33;
-            this.mile_label.Text = "Miles";
-            // 
             // LoadEngLandingPage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -555,9 +576,9 @@ namespace Air3550
             this.Controls.Add(this.editRoute_btn);
             this.Controls.Add(this.addRoute_btn);
             this.Controls.Add(this.welcome_label);
-            this.Controls.Add(this.addRoute_groupBox);
             this.Controls.Add(this.deleteRoute_groupBox);
             this.Controls.Add(this.editRoute_groupBox);
+            this.Controls.Add(this.addRoute_groupBox);
             this.Name = "LoadEngLandingPage";
             this.Text = "LoadEngLandingPage";
             this.Load += new System.EventHandler(this.LoadEngLandingPage_Load);
@@ -570,7 +591,6 @@ namespace Air3550
             this.deleteRoute_groupBox.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.flightsBindingSource1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.air3550DBDataSet1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.air3550DBDataSet)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.flightsBindingSource)).EndInit();
             this.ResumeLayout(false);
@@ -617,9 +637,7 @@ namespace Air3550
         private System.Windows.Forms.Label add_distance_label;
         private Air3550DBDataSet air3550DBDataSet;
         private System.Windows.Forms.DataGridView dataGridView1;
-        private Air3550DBDataSet1 air3550DBDataSet1;
         private System.Windows.Forms.BindingSource flightsBindingSource;
-        private Air3550DBDataSet1TableAdapters.FlightsTableAdapter flightsTableAdapter;
         private System.Windows.Forms.DataGridViewTextBoxColumn originAbvDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn destAbvDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn departureTimeDataGridViewTextBoxColumn;
@@ -631,5 +649,9 @@ namespace Air3550
         private System.Windows.Forms.DateTimePicker arrival_time_DTP;
         private System.Windows.Forms.DateTimePicker add_depart_time_DTP;
         private System.Windows.Forms.Label mile_label;
+        private System.Windows.Forms.Label cost_postfix_label;
+        private System.Windows.Forms.Label add_cost_label;
+        private System.Windows.Forms.Label cost_label;
+        private Air3550.Air3550DBDataSetTableAdapters.FlightsTableAdapter flightsTableAdapter;
     }
 }

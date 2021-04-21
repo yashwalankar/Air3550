@@ -47,7 +47,6 @@ namespace Air3550
             deleteRoute_groupBox.Hide();
             editRoute_groupBox.Show();
 
-
         }
 
         private void deleteRoute_btn_Click(object sender, EventArgs e)
@@ -60,13 +59,13 @@ namespace Air3550
         private void LoadEngLandingPage_Load(object sender, EventArgs e)
         {
             // TODO: This line of code loads data into the 'air3550DBDataSet1.Flights' table. You can move, or remove it, as needed.
-            this.flightsTableAdapter.Fill(this.air3550DBDataSet1.Flights);
+            this.flightsTableAdapter.Fill(this.air3550DBDataSet.Flights);
 
         }
 
         private void addRoute_submit_btn_Click(object sender, EventArgs e)
         {
-            if(add_origin_comboBox.SelectedItem != null 
+            if (add_origin_comboBox.SelectedItem != null
                 && add_dest_comboBox.SelectedItem != null
                 && add_planetype_comboBox.SelectedItem != null)
             {
@@ -92,15 +91,17 @@ namespace Air3550
             {
                 getDistance();
                 getArrivalTime();
+                calcCost();
             }
         }
-        
+
         private void add_dest_comboBox_TextChanged(object sender, EventArgs e)
         {
             if (add_origin_comboBox.SelectedItem != null && add_dest_comboBox.SelectedItem != null)
             {
                 getDistance();
                 getArrivalTime();
+                calcCost();
             }
         }
 
@@ -122,6 +123,7 @@ namespace Air3550
         private void add_depart_time_DTP_ValueChanged(object sender, EventArgs e)
         {
             getArrivalTime();
+            calcCost();
         }
 
         private void getArrivalTime()
@@ -139,6 +141,32 @@ namespace Air3550
             departTime = departTime.AddSeconds(flightTime);
 
             arrival_time_DTP.Value = departTime;
+        }
+
+        private void calcCost()
+        {
+            double distance = double.Parse(add_distanceValue_label.Text);
+            DateTime departure_time = add_depart_time_DTP.Value;
+            DateTime arrival_time = arrival_time_DTP.Value;
+
+            double discount = 1.0;
+            DateTime dt8AM = new DateTime(departure_time.Year, departure_time.Month, departure_time.Day, 8, 0, 0);
+            DateTime dt7PM = new DateTime(arrival_time.Year, arrival_time.Month, arrival_time.Day, 19, 0, 0);
+            DateTime dt5AMdept = new DateTime(departure_time.Year, departure_time.Month, departure_time.Day, 5, 0, 0);
+            DateTime dt5AMarriv = new DateTime(arrival_time.Year, arrival_time.Month, arrival_time.Day, 5, 0, 0);
+
+            if ((departure_time < dt8AM) || (arrival_time > dt7PM))//set it to .9 if departure is before 800 or if arrival is after 1900
+            {
+                discount = 0.9;
+            }
+            if ((departure_time < dt5AMdept) || (arrival_time < dt5AMarriv))//set it to .8 if either is less than 500
+            {
+                discount = 0.8;
+            }
+
+            double cost = (50.0 + 0.12 * distance) * discount;
+
+            add_cost_label.Text = cost.ToString();
         }
     }
 }
