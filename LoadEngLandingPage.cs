@@ -21,7 +21,13 @@ namespace Air3550
             addRoute_groupBox.Hide();
         }
 
-        
+        private void logoutbutton_Click(object sender, EventArgs e)
+        {
+            this.Visible = false;
+            this.Dispose();
+            Login s = new Login();
+            s.Visible = true;
+        }
 
         private void addRoute_btn_Click(object sender, EventArgs e)
         {
@@ -51,24 +57,6 @@ namespace Air3550
             editRoute_groupBox.Hide();
         }
 
-        private void add_getDist_btn_Click(object sender, EventArgs e)
-        {
-            
-            if(add_origin_comboBox.SelectedItem == null || add_dest_comboBox.SelectedItem == null)
-            {
-                Console.WriteLine("Either null");
-            }
-            else
-            {
-                String origin = add_origin_comboBox.SelectedItem.ToString();
-                String dest = add_dest_comboBox.SelectedItem.ToString();
-                String distance = String.Format("{0:0.00}", FormDatabaseHelper.getDistance(origin, dest).ToString("0.00"));
-                add_distanceValue_label.Text = distance;
-            }
-
-
-        }
-
         private void LoadEngLandingPage_Load(object sender, EventArgs e)
         {
             // TODO: This line of code loads data into the 'air3550DBDataSet1.Flights' table. You can move, or remove it, as needed.
@@ -86,6 +74,7 @@ namespace Air3550
             if (add_origin_comboBox.SelectedItem != null && add_dest_comboBox.SelectedItem != null)
             {
                 getDistance();
+                getArrivalTime();
             }
         }
         
@@ -94,6 +83,7 @@ namespace Air3550
             if (add_origin_comboBox.SelectedItem != null && add_dest_comboBox.SelectedItem != null)
             {
                 getDistance();
+                getArrivalTime();
             }
         }
 
@@ -112,13 +102,26 @@ namespace Air3550
             }
         }
 
-        private void logoutbutton_Click(object sender, EventArgs e)
+        private void add_depart_time_DTP_ValueChanged(object sender, EventArgs e)
         {
-            this.Visible = false;
-            this.Dispose();
-            Login s = new Login();
-            s.Visible = true;
+            getArrivalTime();
         }
 
+        private void getArrivalTime()
+        {
+            DateTime departTime = add_depart_time_DTP.Value;
+
+            double distance = double.Parse(add_distanceValue_label.Text);
+            double airSpeed = 500.0;  //airspeed set by thomas in requirements;
+            double taxiTime = 30.0;   //plane to runway + runway to gate set by thomas in requirements;
+
+            double flightTime = (distance / airSpeed) * 60; //time in the air in minutes;
+            flightTime = flightTime + taxiTime;             //total flight time in minutes;
+            flightTime = flightTime * 60;                   //total time in seconds (seconds needed to add to date/time);
+
+            departTime = departTime.AddSeconds(flightTime);
+
+            arrival_time_DTP.Value = departTime;
+        }
     }
 }
