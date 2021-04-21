@@ -30,7 +30,7 @@ namespace Air3550
             addRoute_groupBox.Show();
             FormDatabaseHelper.fillAirportsAbv(add_origin_comboBox);
             FormDatabaseHelper.fillAirportsAbv(add_dest_comboBox);
-
+            FormDatabaseHelper.FillPlaneModelsBox(add_planetype_comboBox);
 
         }
 
@@ -53,7 +53,33 @@ namespace Air3550
 
         private void add_getDist_btn_Click(object sender, EventArgs e)
         {
+            
+            if(add_origin_comboBox.SelectedItem == null || add_dest_comboBox.SelectedItem == null)
+            {
+                Console.WriteLine("Either null");
+            }
+            else
+            {
+                String origin = add_origin_comboBox.SelectedItem.ToString();
+                String dest = add_dest_comboBox.SelectedItem.ToString();
+                String distance = String.Format("{0:0.00}", FormDatabaseHelper.getDistance(origin, dest).ToString("0.00"));
+                Console.WriteLine(distance);
+                add_distanceValue_label.Text = distance;
+            }
 
+
+        }
+
+        private void LoadEngLandingPage_Load(object sender, EventArgs e)
+        {
+            // TODO: This line of code loads data into the 'air3550DBDataSet1.Flights' table. You can move, or remove it, as needed.
+            this.flightsTableAdapter.Fill(this.air3550DBDataSet1.Flights);
+
+        }
+
+        private void addRoute_submit_btn_Click(object sender, EventArgs e)
+        {
+            Console.WriteLine(add_depart_DTP.Value.ToString());
         }
     }
 }

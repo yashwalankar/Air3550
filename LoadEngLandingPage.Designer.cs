@@ -29,11 +29,15 @@ namespace Air3550
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.welcome_label = new System.Windows.Forms.Label();
             this.addRoute_btn = new System.Windows.Forms.Button();
             this.editRoute_btn = new System.Windows.Forms.Button();
             this.deleteRoute_btn = new System.Windows.Forms.Button();
             this.addRoute_groupBox = new System.Windows.Forms.GroupBox();
+            this.add_getDist_btn = new System.Windows.Forms.Button();
+            this.add_distanceValue_label = new System.Windows.Forms.Label();
+            this.add_distance_label = new System.Windows.Forms.Label();
             this.addRoute_submit_btn = new System.Windows.Forms.Button();
             this.add_arrival_DTP = new System.Windows.Forms.DateTimePicker();
             this.add_arrival_time_label = new System.Windows.Forms.Label();
@@ -46,6 +50,9 @@ namespace Air3550
             this.add_origin_comboBox = new System.Windows.Forms.ComboBox();
             this.add_origin_label = new System.Windows.Forms.Label();
             this.editRoute_groupBox = new System.Windows.Forms.GroupBox();
+            this.edit_getDist_btn = new System.Windows.Forms.Button();
+            this.edit_distanceValue_label = new System.Windows.Forms.Label();
+            this.edit_distance_label = new System.Windows.Forms.Label();
             this.dataGridView2 = new System.Windows.Forms.DataGridView();
             this.submitChanges_btn = new System.Windows.Forms.Button();
             this.addRoute_arrival_DTP = new System.Windows.Forms.DateTimePicker();
@@ -60,17 +67,26 @@ namespace Air3550
             this.button1 = new System.Windows.Forms.Button();
             this.del_selected_route_label = new System.Windows.Forms.Label();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.edit_distance_label = new System.Windows.Forms.Label();
-            this.edit_distanceValue_label = new System.Windows.Forms.Label();
-            this.edit_getDist_btn = new System.Windows.Forms.Button();
-            this.add_getDist_btn = new System.Windows.Forms.Button();
-            this.add_distanceValue_label = new System.Windows.Forms.Label();
-            this.add_distance_label = new System.Windows.Forms.Label();
+            this.originAbvDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.destAbvDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.departureTimeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.arrivalTimeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.planeTypeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.currCapacityDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.flightsBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
+            this.air3550DBDataSet1 = new Air3550.Air3550DBDataSet1();
+            this.air3550DBDataSet = new Air3550.Air3550DBDataSet();
+            this.flightsBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.flightsTableAdapter = new Air3550.Air3550DBDataSet1TableAdapters.FlightsTableAdapter();
             this.addRoute_groupBox.SuspendLayout();
             this.editRoute_groupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
             this.deleteRoute_groupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.flightsBindingSource1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.air3550DBDataSet1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.air3550DBDataSet)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.flightsBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // welcome_label
@@ -135,6 +151,34 @@ namespace Air3550
             this.addRoute_groupBox.TabStop = false;
             this.addRoute_groupBox.Text = "Add Route";
             // 
+            // add_getDist_btn
+            // 
+            this.add_getDist_btn.Location = new System.Drawing.Point(157, 89);
+            this.add_getDist_btn.Name = "add_getDist_btn";
+            this.add_getDist_btn.Size = new System.Drawing.Size(102, 23);
+            this.add_getDist_btn.TabIndex = 33;
+            this.add_getDist_btn.Text = "Calc Distance";
+            this.add_getDist_btn.UseVisualStyleBackColor = true;
+            this.add_getDist_btn.Click += new System.EventHandler(this.add_getDist_btn_Click);
+            // 
+            // add_distanceValue_label
+            // 
+            this.add_distanceValue_label.AutoSize = true;
+            this.add_distanceValue_label.Location = new System.Drawing.Point(88, 94);
+            this.add_distanceValue_label.Name = "add_distanceValue_label";
+            this.add_distanceValue_label.Size = new System.Drawing.Size(13, 13);
+            this.add_distanceValue_label.TabIndex = 32;
+            this.add_distanceValue_label.Text = "0";
+            // 
+            // add_distance_label
+            // 
+            this.add_distance_label.AutoSize = true;
+            this.add_distance_label.Location = new System.Drawing.Point(24, 94);
+            this.add_distance_label.Name = "add_distance_label";
+            this.add_distance_label.Size = new System.Drawing.Size(49, 13);
+            this.add_distance_label.TabIndex = 31;
+            this.add_distance_label.Text = "Distance";
+            // 
             // addRoute_submit_btn
             // 
             this.addRoute_submit_btn.Location = new System.Drawing.Point(123, 218);
@@ -143,6 +187,7 @@ namespace Air3550
             this.addRoute_submit_btn.TabIndex = 7;
             this.addRoute_submit_btn.Text = "Submit";
             this.addRoute_submit_btn.UseVisualStyleBackColor = true;
+            this.addRoute_submit_btn.Click += new System.EventHandler(this.addRoute_submit_btn_Click);
             // 
             // add_arrival_DTP
             // 
@@ -249,6 +294,33 @@ namespace Air3550
             this.editRoute_groupBox.TabStop = false;
             this.editRoute_groupBox.Text = "Edit Route";
             // 
+            // edit_getDist_btn
+            // 
+            this.edit_getDist_btn.Location = new System.Drawing.Point(474, 96);
+            this.edit_getDist_btn.Name = "edit_getDist_btn";
+            this.edit_getDist_btn.Size = new System.Drawing.Size(102, 23);
+            this.edit_getDist_btn.TabIndex = 30;
+            this.edit_getDist_btn.Text = "Calc Distance";
+            this.edit_getDist_btn.UseVisualStyleBackColor = true;
+            // 
+            // edit_distanceValue_label
+            // 
+            this.edit_distanceValue_label.AutoSize = true;
+            this.edit_distanceValue_label.Location = new System.Drawing.Point(391, 100);
+            this.edit_distanceValue_label.Name = "edit_distanceValue_label";
+            this.edit_distanceValue_label.Size = new System.Drawing.Size(13, 13);
+            this.edit_distanceValue_label.TabIndex = 29;
+            this.edit_distanceValue_label.Text = "0";
+            // 
+            // edit_distance_label
+            // 
+            this.edit_distance_label.AutoSize = true;
+            this.edit_distance_label.Location = new System.Drawing.Point(330, 100);
+            this.edit_distance_label.Name = "edit_distance_label";
+            this.edit_distance_label.Size = new System.Drawing.Size(49, 13);
+            this.edit_distance_label.TabIndex = 28;
+            this.edit_distance_label.Text = "Distance";
+            // 
             // dataGridView2
             // 
             this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -339,14 +411,14 @@ namespace Air3550
             this.deleteRoute_groupBox.Controls.Add(this.dataGridView1);
             this.deleteRoute_groupBox.Location = new System.Drawing.Point(33, 98);
             this.deleteRoute_groupBox.Name = "deleteRoute_groupBox";
-            this.deleteRoute_groupBox.Size = new System.Drawing.Size(627, 411);
+            this.deleteRoute_groupBox.Size = new System.Drawing.Size(627, 499);
             this.deleteRoute_groupBox.TabIndex = 6;
             this.deleteRoute_groupBox.TabStop = false;
             this.deleteRoute_groupBox.Text = "Delete Route";
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(421, 105);
+            this.button1.Location = new System.Drawing.Point(127, 460);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(86, 23);
             this.button1.TabIndex = 7;
@@ -356,7 +428,7 @@ namespace Air3550
             // del_selected_route_label
             // 
             this.del_selected_route_label.AutoSize = true;
-            this.del_selected_route_label.Location = new System.Drawing.Point(418, 50);
+            this.del_selected_route_label.Location = new System.Drawing.Point(22, 425);
             this.del_selected_route_label.Name = "del_selected_route_label";
             this.del_selected_route_label.Size = new System.Drawing.Size(104, 13);
             this.del_selected_route_label.TabIndex = 7;
@@ -364,72 +436,97 @@ namespace Air3550
             // 
             // dataGridView1
             // 
+            this.dataGridView1.AllowUserToAddRows = false;
+            this.dataGridView1.AllowUserToDeleteRows = false;
+            this.dataGridView1.AutoGenerateColumns = false;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.originAbvDataGridViewTextBoxColumn,
+            this.destAbvDataGridViewTextBoxColumn,
+            this.departureTimeDataGridViewTextBoxColumn,
+            this.arrivalTimeDataGridViewTextBoxColumn,
+            this.planeTypeDataGridViewTextBoxColumn,
+            this.currCapacityDataGridViewTextBoxColumn});
+            this.dataGridView1.DataSource = this.flightsBindingSource1;
             this.dataGridView1.Location = new System.Drawing.Point(15, 22);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(371, 383);
+            this.dataGridView1.ReadOnly = true;
+            this.dataGridView1.Size = new System.Drawing.Size(524, 383);
             this.dataGridView1.TabIndex = 7;
             // 
-            // edit_distance_label
+            // originAbvDataGridViewTextBoxColumn
             // 
-            this.edit_distance_label.AutoSize = true;
-            this.edit_distance_label.Location = new System.Drawing.Point(330, 100);
-            this.edit_distance_label.Name = "edit_distance_label";
-            this.edit_distance_label.Size = new System.Drawing.Size(49, 13);
-            this.edit_distance_label.TabIndex = 28;
-            this.edit_distance_label.Text = "Distance";
+            this.originAbvDataGridViewTextBoxColumn.DataPropertyName = "originAbv";
+            this.originAbvDataGridViewTextBoxColumn.HeaderText = "Origin";
+            this.originAbvDataGridViewTextBoxColumn.Name = "originAbvDataGridViewTextBoxColumn";
+            this.originAbvDataGridViewTextBoxColumn.ReadOnly = true;
+            this.originAbvDataGridViewTextBoxColumn.Width = 40;
             // 
-            // edit_distanceValue_label
+            // destAbvDataGridViewTextBoxColumn
             // 
-            this.edit_distanceValue_label.AutoSize = true;
-            this.edit_distanceValue_label.Location = new System.Drawing.Point(391, 100);
-            this.edit_distanceValue_label.Name = "edit_distanceValue_label";
-            this.edit_distanceValue_label.Size = new System.Drawing.Size(13, 13);
-            this.edit_distanceValue_label.TabIndex = 29;
-            this.edit_distanceValue_label.Text = "0";
+            this.destAbvDataGridViewTextBoxColumn.DataPropertyName = "destAbv";
+            this.destAbvDataGridViewTextBoxColumn.HeaderText = "Dest";
+            this.destAbvDataGridViewTextBoxColumn.Name = "destAbvDataGridViewTextBoxColumn";
+            this.destAbvDataGridViewTextBoxColumn.ReadOnly = true;
+            this.destAbvDataGridViewTextBoxColumn.Width = 40;
             // 
-            // edit_getDist_btn
+            // departureTimeDataGridViewTextBoxColumn
             // 
-            this.edit_getDist_btn.Location = new System.Drawing.Point(474, 96);
-            this.edit_getDist_btn.Name = "edit_getDist_btn";
-            this.edit_getDist_btn.Size = new System.Drawing.Size(102, 23);
-            this.edit_getDist_btn.TabIndex = 30;
-            this.edit_getDist_btn.Text = "Calc Distance";
-            this.edit_getDist_btn.UseVisualStyleBackColor = true;
+            this.departureTimeDataGridViewTextBoxColumn.DataPropertyName = "departureTime";
+            this.departureTimeDataGridViewTextBoxColumn.HeaderText = "Dept";
+            this.departureTimeDataGridViewTextBoxColumn.Name = "departureTimeDataGridViewTextBoxColumn";
+            this.departureTimeDataGridViewTextBoxColumn.ReadOnly = true;
             // 
-            // add_getDist_btn
+            // arrivalTimeDataGridViewTextBoxColumn
             // 
-            this.add_getDist_btn.Location = new System.Drawing.Point(157, 89);
-            this.add_getDist_btn.Name = "add_getDist_btn";
-            this.add_getDist_btn.Size = new System.Drawing.Size(102, 23);
-            this.add_getDist_btn.TabIndex = 33;
-            this.add_getDist_btn.Text = "Calc Distance";
-            this.add_getDist_btn.UseVisualStyleBackColor = true;
-            this.add_getDist_btn.Click += new System.EventHandler(this.add_getDist_btn_Click);
+            this.arrivalTimeDataGridViewTextBoxColumn.DataPropertyName = "arrivalTime";
+            this.arrivalTimeDataGridViewTextBoxColumn.HeaderText = "Arriv";
+            this.arrivalTimeDataGridViewTextBoxColumn.Name = "arrivalTimeDataGridViewTextBoxColumn";
+            this.arrivalTimeDataGridViewTextBoxColumn.ReadOnly = true;
             // 
-            // add_distanceValue_label
+            // planeTypeDataGridViewTextBoxColumn
             // 
-            this.add_distanceValue_label.AutoSize = true;
-            this.add_distanceValue_label.Location = new System.Drawing.Point(88, 94);
-            this.add_distanceValue_label.Name = "add_distanceValue_label";
-            this.add_distanceValue_label.Size = new System.Drawing.Size(13, 13);
-            this.add_distanceValue_label.TabIndex = 32;
-            this.add_distanceValue_label.Text = "0";
+            this.planeTypeDataGridViewTextBoxColumn.DataPropertyName = "PlaneType";
+            this.planeTypeDataGridViewTextBoxColumn.HeaderText = "PlaneType";
+            this.planeTypeDataGridViewTextBoxColumn.Name = "planeTypeDataGridViewTextBoxColumn";
+            this.planeTypeDataGridViewTextBoxColumn.ReadOnly = true;
             // 
-            // add_distance_label
+            // currCapacityDataGridViewTextBoxColumn
             // 
-            this.add_distance_label.AutoSize = true;
-            this.add_distance_label.Location = new System.Drawing.Point(24, 94);
-            this.add_distance_label.Name = "add_distance_label";
-            this.add_distance_label.Size = new System.Drawing.Size(49, 13);
-            this.add_distance_label.TabIndex = 31;
-            this.add_distance_label.Text = "Distance";
+            this.currCapacityDataGridViewTextBoxColumn.DataPropertyName = "currCapacity";
+            this.currCapacityDataGridViewTextBoxColumn.HeaderText = "Curr Capacity";
+            this.currCapacityDataGridViewTextBoxColumn.Name = "currCapacityDataGridViewTextBoxColumn";
+            this.currCapacityDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // flightsBindingSource1
+            // 
+            this.flightsBindingSource1.DataMember = "Flights";
+            this.flightsBindingSource1.DataSource = this.air3550DBDataSet1;
+            // 
+            // air3550DBDataSet1
+            // 
+            this.air3550DBDataSet1.DataSetName = "Air3550DBDataSet1";
+            this.air3550DBDataSet1.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
+            // 
+            // air3550DBDataSet
+            // 
+            this.air3550DBDataSet.DataSetName = "Air3550DBDataSet";
+            this.air3550DBDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
+            // 
+            // flightsBindingSource
+            // 
+            this.flightsBindingSource.DataMember = "Flights";
+            this.flightsBindingSource.DataSource = this.air3550DBDataSet1;
+            // 
+            // flightsTableAdapter
+            // 
+            this.flightsTableAdapter.ClearBeforeFill = true;
             // 
             // LoadEngLandingPage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(701, 558);
+            this.ClientSize = new System.Drawing.Size(714, 609);
             this.Controls.Add(this.deleteRoute_btn);
             this.Controls.Add(this.editRoute_btn);
             this.Controls.Add(this.addRoute_btn);
@@ -439,6 +536,7 @@ namespace Air3550
             this.Controls.Add(this.editRoute_groupBox);
             this.Name = "LoadEngLandingPage";
             this.Text = "LoadEngLandingPage";
+            this.Load += new System.EventHandler(this.LoadEngLandingPage_Load);
             this.addRoute_groupBox.ResumeLayout(false);
             this.addRoute_groupBox.PerformLayout();
             this.editRoute_groupBox.ResumeLayout(false);
@@ -447,6 +545,10 @@ namespace Air3550
             this.deleteRoute_groupBox.ResumeLayout(false);
             this.deleteRoute_groupBox.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.flightsBindingSource1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.air3550DBDataSet1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.air3550DBDataSet)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.flightsBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -485,7 +587,6 @@ namespace Air3550
         private System.Windows.Forms.GroupBox deleteRoute_groupBox;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Label del_selected_route_label;
-        private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.DataGridView dataGridView2;
         private System.Windows.Forms.Label edit_distanceValue_label;
         private System.Windows.Forms.Label edit_distance_label;
@@ -493,5 +594,17 @@ namespace Air3550
         private System.Windows.Forms.Button add_getDist_btn;
         private System.Windows.Forms.Label add_distanceValue_label;
         private System.Windows.Forms.Label add_distance_label;
+        private Air3550DBDataSet air3550DBDataSet;
+        private System.Windows.Forms.DataGridView dataGridView1;
+        private Air3550DBDataSet1 air3550DBDataSet1;
+        private System.Windows.Forms.BindingSource flightsBindingSource;
+        private Air3550DBDataSet1TableAdapters.FlightsTableAdapter flightsTableAdapter;
+        private System.Windows.Forms.DataGridViewTextBoxColumn originAbvDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn destAbvDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn departureTimeDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn arrivalTimeDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn planeTypeDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn currCapacityDataGridViewTextBoxColumn;
+        private System.Windows.Forms.BindingSource flightsBindingSource1;
     }
 }
