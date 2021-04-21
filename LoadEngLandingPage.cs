@@ -66,7 +66,24 @@ namespace Air3550
 
         private void addRoute_submit_btn_Click(object sender, EventArgs e)
         {
-            
+            if(add_origin_comboBox.SelectedItem != null 
+                && add_dest_comboBox.SelectedItem != null
+                && add_planetype_comboBox.SelectedItem != null)
+            {
+                flight newFlight = new flight();
+                newFlight.createFlight(add_origin_comboBox.Text,
+                                        add_dest_comboBox.Text,
+                                        add_depart_time_DTP.Value.ToString(),
+                                        arrival_time_DTP.Value.ToString(),
+                                        add_planetype_comboBox.Text,
+                                        0);
+
+                FormDatabaseHelper.uploadFlight(newFlight);
+            }
+            else
+            {
+                //error code here
+            }
         }
 
         private void add_origin_comboBox_TextChanged(object sender, EventArgs e)

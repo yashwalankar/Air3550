@@ -32,8 +32,6 @@ namespace Air3550
 
                     sqlReader.Close();
                 }
-
-
             }
         }
 
@@ -58,10 +56,7 @@ namespace Air3550
 
                     sqlReader.Close();
                 }
-
-
             }
-
         }
 
         public static void updateCapacityBox(String planeModelInput, Label newCapacityValue_label)
@@ -88,8 +83,6 @@ namespace Air3550
 
                     sqlReader.Close();
                 }
-
-
             }
         }
 
@@ -198,14 +191,39 @@ namespace Air3550
 
                     sqlReader.Close();
                 }
-
-
             }
 
             return capacity;
         }
 
+        public static void uploadFlight(flight newFlight)
+        {
+            string dbString = Properties.Settings.Default.Air3550DBConnectionString;
+            using (SqlConnection sqlConnection = new SqlConnection(dbString))
+            {
+                if (sqlConnection.State != ConnectionState.Open) sqlConnection.Open();
 
+                string sqlString = "INSERT INTO Flights " +
+                    "(originAbv,destAbv,depatureTime,arrivalTime,distance,PlaneType,cost,maxCapacity,currCapacity) " +
+                    "VALUES " +
+                    "(@originAbv,@destAbv,@depatureTime,@arrivalTime,@distance,@PlaneType,@cost,@maxCapacity,@currCapacity)";
+
+                SqlCommand command = new SqlCommand(sqlString, sqlConnection);
+
+                command.Parameters.AddWithValue("@originAbv", newFlight.origin);
+                command.Parameters.AddWithValue("@destAbv", newFlight.dest);
+                command.Parameters.AddWithValue("@depatureTime", newFlight.deptTime);
+                command.Parameters.AddWithValue("@arrivalTime", newFlight.arrivalTime);
+                command.Parameters.AddWithValue("@distance", newFlight.distance);
+                command.Parameters.AddWithValue("@PlaneType", newFlight.planeType);
+                command.Parameters.AddWithValue("@cost", newFlight.cost);
+                command.Parameters.AddWithValue("@maxCapacity", newFlight.maxCapacity);
+                command.Parameters.AddWithValue("@currCapacity", newFlight.currCapacity);
+
+                command.ExecuteNonQuery();
+
+            }
+        }
        
 
 

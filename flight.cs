@@ -8,15 +8,17 @@ namespace Air3550
 {
     class flight
     {
-        String origin;
-        String dest;
-        String deptTime,arrivalTime;
-        double distance;
-        String planeType;
-        int maxCapacity;
-        int currCapacity;
+        public string origin { get; set; }
+        public string dest { get; set; }
+        public string deptTime { get; set; }
+        public string arrivalTime { get; set; }
+        public double distance { get; set; }
+        public string planeType { get; set; }
+        public double cost { get; set; }
+        public int maxCapacity { get; set; }
+        public int currCapacity { get; set; }
 
-        flight(String origin,String dest, String deptTime,String arrivalTime,String planeType,int currCapacity)
+        public void createFlight(String origin,String dest, String deptTime,String arrivalTime,String planeType,int currCapacity)
         {
             this.origin = origin;
             this.dest = dest;

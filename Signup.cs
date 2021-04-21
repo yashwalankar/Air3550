@@ -162,8 +162,6 @@ namespace Air3550
 
                 SqlCommand command = new SqlCommand(sqlString, sqlConnection);
                 command.ExecuteNonQuery();
-
-                Console.WriteLine(sqlString);
             }
         }
 
