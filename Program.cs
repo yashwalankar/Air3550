@@ -14,9 +14,11 @@ namespace Air3550
         [STAThread]
         static void Main()
         {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MarketingLandingPage());
+            //Application.EnableVisualStyles();
+            //Application.SetCompatibleTextRenderingDefault(false);
+            //Application.Run(new MarketingLandingPage());
+            Console.WriteLine("hello");
+            Console.WriteLine(FormDatabaseHelper.getDistance("LAX", "JFK"));
         }
     }
 }
