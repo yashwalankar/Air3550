@@ -14,11 +14,11 @@ namespace Air3550
         [STAThread]
         static void Main()
         {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new LoadEngLandingPage());
-            
-            
+            // Application.EnableVisualStyles();
+            //  Application.SetCompatibleTextRenderingDefault(false);
+            //  Application.Run(new LoadEngLandingPage());
+
+            Console.WriteLine(FormDatabaseHelper.getPlaneCapacity("Boeing 747"));
         }
     }
 }

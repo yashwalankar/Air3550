@@ -74,7 +74,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Air3550DBDataSet1.xsd</DependentUpon>
     </Compile>
-    <Compile Include="Class1.cs" />
     <Compile Include="flightManifest.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -93,6 +92,7 @@
     <Compile Include="AccountantLandingPage.Designer.cs">
       <DependentUpon>AccountantLandingPage.cs</DependentUpon>
     </Compile>
+    <Compile Include="flight.cs" />
     <Compile Include="FormDatabaseHelper.cs" />
     <Compile Include="LoadEngLandingPage.cs">
       <SubType>Form</SubType>

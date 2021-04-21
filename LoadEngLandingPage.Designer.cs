@@ -146,7 +146,7 @@ namespace Air3550
             this.addRoute_groupBox.Controls.Add(this.add_origin_label);
             this.addRoute_groupBox.Location = new System.Drawing.Point(24, 98);
             this.addRoute_groupBox.Name = "addRoute_groupBox";
-            this.addRoute_groupBox.Size = new System.Drawing.Size(625, 379);
+            this.addRoute_groupBox.Size = new System.Drawing.Size(630, 379);
             this.addRoute_groupBox.TabIndex = 4;
             this.addRoute_groupBox.TabStop = false;
             this.addRoute_groupBox.Text = "Add Route";

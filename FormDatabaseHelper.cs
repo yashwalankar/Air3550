@@ -174,6 +174,37 @@ namespace Air3550
             return milesresult;
         }
 
+        public static int getPlaneCapacity(String planeModel)
+        {
+            int capacity =0;
+            string dbString = Properties.Settings.Default.Air3550DBConnectionString;
+            using (SqlConnection sqlConnection = new SqlConnection(dbString))
+            {
+                if (sqlConnection.State != ConnectionState.Open) sqlConnection.Open();
+
+
+                using (SqlCommand sqlCommand = new SqlCommand("SELECT Capacity FROM PlaneModel WHERE PlaneModel LIKE @planeModelInput ", sqlConnection))
+                {
+                    sqlCommand.Parameters.AddWithValue("@planeModelInput", planeModel);
+
+                    SqlDataReader sqlReader = sqlCommand.ExecuteReader();
+
+
+
+                    while (sqlReader.Read())
+                    {
+                        capacity = (int) sqlReader["Capacity"];
+                    }
+
+                    sqlReader.Close();
+                }
+
+
+            }
+
+            return capacity;
+        }
+
 
        
 

@@ -79,7 +79,7 @@ namespace Air3550
 
         private void addRoute_submit_btn_Click(object sender, EventArgs e)
         {
-            Console.WriteLine(add_depart_DTP.Value.ToString());
+            
         }
     }
 }
