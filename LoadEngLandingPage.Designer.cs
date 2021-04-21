@@ -45,8 +45,6 @@ namespace Air3550
             this.add_distance_label = new System.Windows.Forms.Label();
             this.addRoute_submit_btn = new System.Windows.Forms.Button();
             this.add_arrival_time_label = new System.Windows.Forms.Label();
-            this.add_planetype_comboBox = new System.Windows.Forms.ComboBox();
-            this.add_planetype_label = new System.Windows.Forms.Label();
             this.add_dept_time_label = new System.Windows.Forms.Label();
             this.add_dest_comboBox = new System.Windows.Forms.ComboBox();
             this.add_dest_label = new System.Windows.Forms.Label();
@@ -80,6 +78,7 @@ namespace Air3550
             this.air3550DBDataSet = new Air3550.Air3550DBDataSet();
             this.flightsBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.logout_button = new System.Windows.Forms.Button();
+            this.add_status_label = new System.Windows.Forms.Label();
             this.addRoute_groupBox.SuspendLayout();
             this.editRoute_groupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
@@ -131,6 +130,7 @@ namespace Air3550
             // 
             // addRoute_groupBox
             // 
+            this.addRoute_groupBox.Controls.Add(this.add_status_label);
             this.addRoute_groupBox.Controls.Add(this.cost_postfix_label);
             this.addRoute_groupBox.Controls.Add(this.add_cost_label);
             this.addRoute_groupBox.Controls.Add(this.cost_label);
@@ -141,8 +141,6 @@ namespace Air3550
             this.addRoute_groupBox.Controls.Add(this.add_distance_label);
             this.addRoute_groupBox.Controls.Add(this.addRoute_submit_btn);
             this.addRoute_groupBox.Controls.Add(this.add_arrival_time_label);
-            this.addRoute_groupBox.Controls.Add(this.add_planetype_comboBox);
-            this.addRoute_groupBox.Controls.Add(this.add_planetype_label);
             this.addRoute_groupBox.Controls.Add(this.add_dept_time_label);
             this.addRoute_groupBox.Controls.Add(this.add_dest_comboBox);
             this.addRoute_groupBox.Controls.Add(this.add_dest_label);
@@ -158,7 +156,7 @@ namespace Air3550
             // cost_postfix_label
             // 
             this.cost_postfix_label.AutoSize = true;
-            this.cost_postfix_label.Location = new System.Drawing.Point(144, 187);
+            this.cost_postfix_label.Location = new System.Drawing.Point(144, 160);
             this.cost_postfix_label.Name = "cost_postfix_label";
             this.cost_postfix_label.Size = new System.Drawing.Size(13, 13);
             this.cost_postfix_label.TabIndex = 36;
@@ -167,7 +165,7 @@ namespace Air3550
             // add_cost_label
             // 
             this.add_cost_label.AutoSize = true;
-            this.add_cost_label.Location = new System.Drawing.Point(86, 187);
+            this.add_cost_label.Location = new System.Drawing.Point(86, 160);
             this.add_cost_label.Name = "add_cost_label";
             this.add_cost_label.Size = new System.Drawing.Size(16, 13);
             this.add_cost_label.TabIndex = 35;
@@ -176,7 +174,7 @@ namespace Air3550
             // cost_label
             // 
             this.cost_label.AutoSize = true;
-            this.cost_label.Location = new System.Drawing.Point(24, 187);
+            this.cost_label.Location = new System.Drawing.Point(24, 160);
             this.cost_label.Name = "cost_label";
             this.cost_label.Size = new System.Drawing.Size(28, 13);
             this.cost_label.TabIndex = 34;
@@ -211,6 +209,7 @@ namespace Air3550
             this.add_depart_time_DTP.ShowUpDown = true;
             this.add_depart_time_DTP.Size = new System.Drawing.Size(96, 20);
             this.add_depart_time_DTP.TabIndex = 8;
+            this.add_depart_time_DTP.Value = new System.DateTime(2021, 4, 21, 15, 3, 0, 0);
             this.add_depart_time_DTP.ValueChanged += new System.EventHandler(this.add_depart_time_DTP_ValueChanged);
             // 
             // add_distanceValue_label
@@ -233,7 +232,7 @@ namespace Air3550
             // 
             // addRoute_submit_btn
             // 
-            this.addRoute_submit_btn.Location = new System.Drawing.Point(88, 217);
+            this.addRoute_submit_btn.Location = new System.Drawing.Point(89, 188);
             this.addRoute_submit_btn.Name = "addRoute_submit_btn";
             this.addRoute_submit_btn.Size = new System.Drawing.Size(75, 23);
             this.addRoute_submit_btn.TabIndex = 12;
@@ -249,24 +248,6 @@ namespace Air3550
             this.add_arrival_time_label.Size = new System.Drawing.Size(36, 13);
             this.add_arrival_time_label.TabIndex = 14;
             this.add_arrival_time_label.Text = "Arrival";
-            // 
-            // add_planetype_comboBox
-            // 
-            this.add_planetype_comboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.add_planetype_comboBox.FormattingEnabled = true;
-            this.add_planetype_comboBox.Location = new System.Drawing.Point(88, 157);
-            this.add_planetype_comboBox.Name = "add_planetype_comboBox";
-            this.add_planetype_comboBox.Size = new System.Drawing.Size(121, 21);
-            this.add_planetype_comboBox.TabIndex = 11;
-            // 
-            // add_planetype_label
-            // 
-            this.add_planetype_label.AutoSize = true;
-            this.add_planetype_label.Location = new System.Drawing.Point(24, 160);
-            this.add_planetype_label.Name = "add_planetype_label";
-            this.add_planetype_label.Size = new System.Drawing.Size(61, 13);
-            this.add_planetype_label.TabIndex = 12;
-            this.add_planetype_label.Text = "Plane Type";
             // 
             // add_dept_time_label
             // 
@@ -566,6 +547,15 @@ namespace Air3550
             this.logout_button.UseVisualStyleBackColor = true;
             this.logout_button.Click += new System.EventHandler(this.logoutbutton_Click);
             // 
+            // add_status_label
+            // 
+            this.add_status_label.AutoSize = true;
+            this.add_status_label.Location = new System.Drawing.Point(206, 193);
+            this.add_status_label.Name = "add_status_label";
+            this.add_status_label.Size = new System.Drawing.Size(16, 13);
+            this.add_status_label.TabIndex = 37;
+            this.add_status_label.Text = "---";
+            // 
             // LoadEngLandingPage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -576,9 +566,9 @@ namespace Air3550
             this.Controls.Add(this.editRoute_btn);
             this.Controls.Add(this.addRoute_btn);
             this.Controls.Add(this.welcome_label);
+            this.Controls.Add(this.addRoute_groupBox);
             this.Controls.Add(this.deleteRoute_groupBox);
             this.Controls.Add(this.editRoute_groupBox);
-            this.Controls.Add(this.addRoute_groupBox);
             this.Name = "LoadEngLandingPage";
             this.Text = "LoadEngLandingPage";
             this.Load += new System.EventHandler(this.LoadEngLandingPage_Load);
@@ -610,8 +600,6 @@ namespace Air3550
         private System.Windows.Forms.Label add_origin_label;
         private System.Windows.Forms.GroupBox editRoute_groupBox;
         private System.Windows.Forms.Label add_arrival_time_label;
-        private System.Windows.Forms.ComboBox add_planetype_comboBox;
-        private System.Windows.Forms.Label add_planetype_label;
         private System.Windows.Forms.Label add_dept_time_label;
         private System.Windows.Forms.ComboBox add_dest_comboBox;
         private System.Windows.Forms.Label add_dest_label;
@@ -653,5 +641,6 @@ namespace Air3550
         private System.Windows.Forms.Label add_cost_label;
         private System.Windows.Forms.Label cost_label;
         private Air3550.Air3550DBDataSetTableAdapters.FlightsTableAdapter flightsTableAdapter;
+        private System.Windows.Forms.Label add_status_label;
     }
 }
