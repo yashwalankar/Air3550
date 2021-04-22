@@ -30,6 +30,7 @@ namespace Air3550
                 String flight_string = "";
                 String plane_type = "";
                 String maxCapacity = "";
+                String filledSeats = "";
                 if (currentRow != null)
                 {
                     flightId = currentRow.Cells[0].Value.ToString();
@@ -38,13 +39,14 @@ namespace Air3550
 
                     plane_type = currentRow.Cells[4].Value.ToString();
                     maxCapacity = currentRow.Cells[5].Value.ToString();
-
+                    filledSeats = currentRow.Cells[6].Value.ToString();
                 }
 
                 selFlightValue_textbox.Text = flight_string;
                 currPlane_textbox.Text = plane_type;
                 curr_maxCapacity_textbox.Text = maxCapacity;
                 selFlightId_textbox.Text = flightId;
+                filledSeatsValue_textBox.Text = filledSeats;
             
         }
 
@@ -80,10 +82,10 @@ namespace Air3550
                 planeModel = planesModels_comboBox.SelectedItem.ToString();
                 int flightId = Int32.Parse(selFlightId_textbox.Text);
                 int newCapacity = Int32.Parse(capacityStr);
-                int oldCapacity = Int32.Parse(curr_maxCapacity_textbox.Text);
+                int filledSeats = Int32.Parse(filledSeatsValue_textBox.Text);
 
                 //updates in database/flights table
-                if (newCapacity > oldCapacity)
+                if (newCapacity > filledSeats)
                 {
                     FormDatabaseHelper.updatePlaneInFlightsTable(flightId, planeModel, newCapacity);
 
