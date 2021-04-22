@@ -178,10 +178,5 @@ namespace Air3550
 
             add_cost_label.Text = cost.ToString();
         }
-
-        private void dataGridView2_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
     }
 }

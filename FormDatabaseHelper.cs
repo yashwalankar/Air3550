@@ -61,7 +61,6 @@ namespace Air3550
 
         public static void updateCapacityBox(String planeModelInput, Label newCapacityValue_label)
         {
-            
             string dbString = Properties.Settings.Default.Air3550DBConnectionString;
             using (SqlConnection sqlConnection = new SqlConnection(dbString))
             {
@@ -73,8 +72,6 @@ namespace Air3550
                     sqlCommand.Parameters.AddWithValue("@planeModelInput", planeModelInput);
 
                     SqlDataReader sqlReader = sqlCommand.ExecuteReader();
-
-
 
                     while (sqlReader.Read())
                     {
@@ -132,8 +129,6 @@ namespace Air3550
 
                     SqlDataReader sqlReader = sqlCommand.ExecuteReader();
 
-
-
                     while (sqlReader.Read())
                     {
                         lat2 = (double)sqlReader["Latitude"];
@@ -144,8 +139,6 @@ namespace Air3550
 
                     sqlReader.Close();
                 }
-
-                
 
             }
 
