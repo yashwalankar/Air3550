@@ -217,6 +217,29 @@ namespace Air3550
 
             }
         }
+        public static void updatePlaneInFlightsTable(int flightId,String planeModel,int capacity)
+        {
+            string dbString = Properties.Settings.Default.Air3550DBConnectionString;
+            using (SqlConnection sqlConnection = new SqlConnection(dbString))
+            {
+                if (sqlConnection.State != ConnectionState.Open) sqlConnection.Open();
+
+                string sqlString = "UPDATE Flights SET PlaneType = @PlaneType, maxCapacity = @maxCapacity WHERE Id = @flightId";
+                
+
+                SqlCommand command = new SqlCommand(sqlString, sqlConnection);
+
+                command.Parameters.AddWithValue("@PlaneType", planeModel);
+                command.Parameters.AddWithValue("@maxCapacity", capacity);
+                command.Parameters.AddWithValue("@flightId", flightId);
+                
+
+                command.ExecuteNonQuery();
+
+            }
+        }
+        
+        
        
 
 
