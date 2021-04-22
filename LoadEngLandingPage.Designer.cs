@@ -35,6 +35,7 @@ namespace Air3550
             this.editRoute_btn = new System.Windows.Forms.Button();
             this.deleteRoute_btn = new System.Windows.Forms.Button();
             this.addRoute_groupBox = new System.Windows.Forms.GroupBox();
+            this.add_status_label = new System.Windows.Forms.Label();
             this.cost_postfix_label = new System.Windows.Forms.Label();
             this.add_cost_label = new System.Windows.Forms.Label();
             this.cost_label = new System.Windows.Forms.Label();
@@ -54,6 +55,14 @@ namespace Air3550
             this.edit_distanceValue_label = new System.Windows.Forms.Label();
             this.edit_distance_label = new System.Windows.Forms.Label();
             this.dataGridView2 = new System.Windows.Forms.DataGridView();
+            this.originAbvDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.destAbvDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.departureTimeDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.arrivalTimeDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.maxCapacityDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.currCapacityDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.flightsBindingSource2 = new System.Windows.Forms.BindingSource(this.components);
+            this.air3550DBDataSet = new Air3550.Air3550DBDataSet();
             this.edit_submit_btn = new System.Windows.Forms.Button();
             this.edit_arrival_time_DTP = new System.Windows.Forms.DateTimePicker();
             this.edit_arrival_label = new System.Windows.Forms.Label();
@@ -74,27 +83,19 @@ namespace Air3550
             this.planeTypeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.currCapacityDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.flightsBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
-            this.air3550DBDataSet = new Air3550.Air3550DBDataSet();
             this.flightsBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.logout_button = new System.Windows.Forms.Button();
-            this.add_status_label = new System.Windows.Forms.Label();
-            this.flightsBindingSource2 = new System.Windows.Forms.BindingSource(this.components);
             this.flightsTableAdapter1 = new Air3550.Air3550DBDataSetTableAdapters.FlightsTableAdapter();
-            this.originAbvDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.destAbvDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.departureTimeDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.arrivalTimeDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.maxCapacityDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.currCapacityDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.label1 = new System.Windows.Forms.Label();
             this.addRoute_groupBox.SuspendLayout();
             this.editRoute_groupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.flightsBindingSource2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.air3550DBDataSet)).BeginInit();
             this.deleteRoute_groupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.flightsBindingSource1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.air3550DBDataSet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.flightsBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.flightsBindingSource2)).BeginInit();
             this.SuspendLayout();
             // 
             // welcome_label
@@ -160,6 +161,15 @@ namespace Air3550
             this.addRoute_groupBox.TabIndex = 4;
             this.addRoute_groupBox.TabStop = false;
             this.addRoute_groupBox.Text = "Add Route";
+            // 
+            // add_status_label
+            // 
+            this.add_status_label.AutoSize = true;
+            this.add_status_label.Location = new System.Drawing.Point(206, 193);
+            this.add_status_label.Name = "add_status_label";
+            this.add_status_label.Size = new System.Drawing.Size(16, 13);
+            this.add_status_label.TabIndex = 37;
+            this.add_status_label.Text = "---";
             // 
             // cost_postfix_label
             // 
@@ -306,6 +316,7 @@ namespace Air3550
             // 
             // editRoute_groupBox
             // 
+            this.editRoute_groupBox.Controls.Add(this.label1);
             this.editRoute_groupBox.Controls.Add(this.edit_distanceValue_label);
             this.editRoute_groupBox.Controls.Add(this.edit_distance_label);
             this.editRoute_groupBox.Controls.Add(this.dataGridView2);
@@ -362,6 +373,52 @@ namespace Air3550
             this.dataGridView2.Size = new System.Drawing.Size(318, 248);
             this.dataGridView2.TabIndex = 27;
             this.dataGridView2.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView2_CellContentClick);
+            // 
+            // originAbvDataGridViewTextBoxColumn1
+            // 
+            this.originAbvDataGridViewTextBoxColumn1.DataPropertyName = "originAbv";
+            this.originAbvDataGridViewTextBoxColumn1.HeaderText = "Origin";
+            this.originAbvDataGridViewTextBoxColumn1.Name = "originAbvDataGridViewTextBoxColumn1";
+            // 
+            // destAbvDataGridViewTextBoxColumn1
+            // 
+            this.destAbvDataGridViewTextBoxColumn1.DataPropertyName = "destAbv";
+            this.destAbvDataGridViewTextBoxColumn1.HeaderText = "Destination";
+            this.destAbvDataGridViewTextBoxColumn1.Name = "destAbvDataGridViewTextBoxColumn1";
+            // 
+            // departureTimeDataGridViewTextBoxColumn1
+            // 
+            this.departureTimeDataGridViewTextBoxColumn1.DataPropertyName = "departureTime";
+            this.departureTimeDataGridViewTextBoxColumn1.HeaderText = "Departure";
+            this.departureTimeDataGridViewTextBoxColumn1.Name = "departureTimeDataGridViewTextBoxColumn1";
+            // 
+            // arrivalTimeDataGridViewTextBoxColumn1
+            // 
+            this.arrivalTimeDataGridViewTextBoxColumn1.DataPropertyName = "arrivalTime";
+            this.arrivalTimeDataGridViewTextBoxColumn1.HeaderText = "Arrival";
+            this.arrivalTimeDataGridViewTextBoxColumn1.Name = "arrivalTimeDataGridViewTextBoxColumn1";
+            // 
+            // maxCapacityDataGridViewTextBoxColumn
+            // 
+            this.maxCapacityDataGridViewTextBoxColumn.DataPropertyName = "maxCapacity";
+            this.maxCapacityDataGridViewTextBoxColumn.HeaderText = "Max Seats";
+            this.maxCapacityDataGridViewTextBoxColumn.Name = "maxCapacityDataGridViewTextBoxColumn";
+            // 
+            // currCapacityDataGridViewTextBoxColumn1
+            // 
+            this.currCapacityDataGridViewTextBoxColumn1.DataPropertyName = "currCapacity";
+            this.currCapacityDataGridViewTextBoxColumn1.HeaderText = "Filled Seats";
+            this.currCapacityDataGridViewTextBoxColumn1.Name = "currCapacityDataGridViewTextBoxColumn1";
+            // 
+            // flightsBindingSource2
+            // 
+            this.flightsBindingSource2.DataMember = "Flights";
+            this.flightsBindingSource2.DataSource = this.air3550DBDataSet;
+            // 
+            // air3550DBDataSet
+            // 
+            this.air3550DBDataSet.DataSetName = "Air3550DBDataSet";
+            this.air3550DBDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
             // 
             // edit_submit_btn
             // 
@@ -545,11 +602,6 @@ namespace Air3550
             this.flightsBindingSource1.DataMember = "Flights";
             this.flightsBindingSource1.DataSource = this.air3550DBDataSet;
             // 
-            // air3550DBDataSet
-            // 
-            this.air3550DBDataSet.DataSetName = "Air3550DBDataSet";
-            this.air3550DBDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
             // flightsBindingSource
             // 
             this.flightsBindingSource.DataMember = "Flights";
@@ -565,59 +617,18 @@ namespace Air3550
             this.logout_button.UseVisualStyleBackColor = true;
             this.logout_button.Click += new System.EventHandler(this.logoutbutton_Click);
             // 
-            // add_status_label
-            // 
-            this.add_status_label.AutoSize = true;
-            this.add_status_label.Location = new System.Drawing.Point(206, 193);
-            this.add_status_label.Name = "add_status_label";
-            this.add_status_label.Size = new System.Drawing.Size(16, 13);
-            this.add_status_label.TabIndex = 37;
-            this.add_status_label.Text = "---";
-            // 
-            // flightsBindingSource2
-            // 
-            this.flightsBindingSource2.DataMember = "Flights";
-            this.flightsBindingSource2.DataSource = this.air3550DBDataSet;
-            // 
             // flightsTableAdapter1
             // 
             this.flightsTableAdapter1.ClearBeforeFill = true;
             // 
-            // originAbvDataGridViewTextBoxColumn1
+            // label1
             // 
-            this.originAbvDataGridViewTextBoxColumn1.DataPropertyName = "originAbv";
-            this.originAbvDataGridViewTextBoxColumn1.HeaderText = "Origin";
-            this.originAbvDataGridViewTextBoxColumn1.Name = "originAbvDataGridViewTextBoxColumn1";
-            // 
-            // destAbvDataGridViewTextBoxColumn1
-            // 
-            this.destAbvDataGridViewTextBoxColumn1.DataPropertyName = "destAbv";
-            this.destAbvDataGridViewTextBoxColumn1.HeaderText = "Destination";
-            this.destAbvDataGridViewTextBoxColumn1.Name = "destAbvDataGridViewTextBoxColumn1";
-            // 
-            // departureTimeDataGridViewTextBoxColumn1
-            // 
-            this.departureTimeDataGridViewTextBoxColumn1.DataPropertyName = "departureTime";
-            this.departureTimeDataGridViewTextBoxColumn1.HeaderText = "Departure";
-            this.departureTimeDataGridViewTextBoxColumn1.Name = "departureTimeDataGridViewTextBoxColumn1";
-            // 
-            // arrivalTimeDataGridViewTextBoxColumn1
-            // 
-            this.arrivalTimeDataGridViewTextBoxColumn1.DataPropertyName = "arrivalTime";
-            this.arrivalTimeDataGridViewTextBoxColumn1.HeaderText = "Arrival";
-            this.arrivalTimeDataGridViewTextBoxColumn1.Name = "arrivalTimeDataGridViewTextBoxColumn1";
-            // 
-            // maxCapacityDataGridViewTextBoxColumn
-            // 
-            this.maxCapacityDataGridViewTextBoxColumn.DataPropertyName = "maxCapacity";
-            this.maxCapacityDataGridViewTextBoxColumn.HeaderText = "Max Seats";
-            this.maxCapacityDataGridViewTextBoxColumn.Name = "maxCapacityDataGridViewTextBoxColumn";
-            // 
-            // currCapacityDataGridViewTextBoxColumn1
-            // 
-            this.currCapacityDataGridViewTextBoxColumn1.DataPropertyName = "currCapacity";
-            this.currCapacityDataGridViewTextBoxColumn1.HeaderText = "Filled Seats";
-            this.currCapacityDataGridViewTextBoxColumn1.Name = "currCapacityDataGridViewTextBoxColumn1";
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(458, 57);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(49, 13);
+            this.label1.TabIndex = 30;
+            this.label1.Text = "Distance";
             // 
             // LoadEngLandingPage
             // 
@@ -640,13 +651,13 @@ namespace Air3550
             this.editRoute_groupBox.ResumeLayout(false);
             this.editRoute_groupBox.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.flightsBindingSource2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.air3550DBDataSet)).EndInit();
             this.deleteRoute_groupBox.ResumeLayout(false);
             this.deleteRoute_groupBox.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.flightsBindingSource1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.air3550DBDataSet)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.flightsBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.flightsBindingSource2)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -713,5 +724,6 @@ namespace Air3550
         private System.Windows.Forms.DataGridViewTextBoxColumn arrivalTimeDataGridViewTextBoxColumn1;
         private System.Windows.Forms.DataGridViewTextBoxColumn maxCapacityDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn currCapacityDataGridViewTextBoxColumn1;
+        private System.Windows.Forms.Label label1;
     }
 }
