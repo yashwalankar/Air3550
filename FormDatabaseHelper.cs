@@ -61,7 +61,6 @@ namespace Air3550
 
         public static void updateCapacityBox(String planeModelInput, Label newCapacityValue_label)
         {
-            
             string dbString = Properties.Settings.Default.Air3550DBConnectionString;
             using (SqlConnection sqlConnection = new SqlConnection(dbString))
             {
@@ -73,8 +72,6 @@ namespace Air3550
                     sqlCommand.Parameters.AddWithValue("@planeModelInput", planeModelInput);
 
                     SqlDataReader sqlReader = sqlCommand.ExecuteReader();
-
-
 
                     while (sqlReader.Read())
                     {
@@ -132,8 +129,6 @@ namespace Air3550
 
                     SqlDataReader sqlReader = sqlCommand.ExecuteReader();
 
-
-
                     while (sqlReader.Read())
                     {
                         lat2 = (double)sqlReader["Latitude"];
@@ -144,8 +139,6 @@ namespace Air3550
 
                     sqlReader.Close();
                 }
-
-                
 
             }
 
@@ -204,15 +197,15 @@ namespace Air3550
                 if (sqlConnection.State != ConnectionState.Open) sqlConnection.Open();
 
                 string sqlString = "INSERT INTO Flights " +
-                    "(originAbv,destAbv,depatureTime,arrivalTime,distance,PlaneType,cost,maxCapacity,currCapacity) " +
+                    "(originAbv,destAbv,departureTime,arrivalTime,distance,PlaneType,cost,maxCapacity,currCapacity) " +
                     "VALUES " +
-                    "(@originAbv,@destAbv,@depatureTime,@arrivalTime,@distance,@PlaneType,@cost,@maxCapacity,@currCapacity)";
+                    "(@originAbv,@destAbv,@departureTime,@arrivalTime,@distance,@PlaneType,@cost,@maxCapacity,@currCapacity)";
 
                 SqlCommand command = new SqlCommand(sqlString, sqlConnection);
 
                 command.Parameters.AddWithValue("@originAbv", newFlight.origin);
                 command.Parameters.AddWithValue("@destAbv", newFlight.dest);
-                command.Parameters.AddWithValue("@depatureTime", newFlight.deptTime);
+                command.Parameters.AddWithValue("@departureTime", newFlight.deptTime);
                 command.Parameters.AddWithValue("@arrivalTime", newFlight.arrivalTime);
                 command.Parameters.AddWithValue("@distance", newFlight.distance);
                 command.Parameters.AddWithValue("@PlaneType", newFlight.planeType);
@@ -224,6 +217,29 @@ namespace Air3550
 
             }
         }
+        public static void updatePlaneInFlightsTable(int flightId,String planeModel,int capacity)
+        {
+            string dbString = Properties.Settings.Default.Air3550DBConnectionString;
+            using (SqlConnection sqlConnection = new SqlConnection(dbString))
+            {
+                if (sqlConnection.State != ConnectionState.Open) sqlConnection.Open();
+
+                string sqlString = "UPDATE Flights SET PlaneType = @PlaneType, maxCapacity = @maxCapacity WHERE Id = @flightId";
+                
+
+                SqlCommand command = new SqlCommand(sqlString, sqlConnection);
+
+                command.Parameters.AddWithValue("@PlaneType", planeModel);
+                command.Parameters.AddWithValue("@maxCapacity", capacity);
+                command.Parameters.AddWithValue("@flightId", flightId);
+                
+
+                command.ExecuteNonQuery();
+
+            }
+        }
+        
+        
        
 
 
