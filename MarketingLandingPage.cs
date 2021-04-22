@@ -79,16 +79,22 @@ namespace Air3550
             {
                 planeModel = planesModels_comboBox.SelectedItem.ToString();
                 int flightId = Int32.Parse(selFlightId_textbox.Text);
-                int capacity = Int32.Parse(capacityStr);
-                
+                int newCapacity = Int32.Parse(capacityStr);
+                int oldCapacity = Int32.Parse(curr_maxCapacity_textbox.Text);
 
                 //updates in database/flights table
-                FormDatabaseHelper.updatePlaneInFlightsTable(flightId, planeModel, capacity);
+                if (newCapacity > oldCapacity)
+                {
+                    FormDatabaseHelper.updatePlaneInFlightsTable(flightId, planeModel, newCapacity);
 
-                //update in the data grid view
-                marketing_datagrid.SelectedRows[0].Cells[4].Value = planeModel;
-                marketing_datagrid.SelectedRows[0].Cells[5].Value = capacity;
-
+                    //update in the data grid view
+                    marketing_datagrid.SelectedRows[0].Cells[4].Value = planeModel;
+                    marketing_datagrid.SelectedRows[0].Cells[5].Value = newCapacity;
+                }
+                else
+                {
+                    Console.WriteLine("Select a plane with higher capacity than current");
+                }
             }
             
         }

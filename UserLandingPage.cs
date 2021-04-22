@@ -14,7 +14,7 @@ namespace Air3550
     {
         public UserLandingPage(User userData)
         {
-            InitializeComponent();
+            InitializeComponent(userData);
         }
 
         

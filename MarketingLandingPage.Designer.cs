@@ -34,13 +34,6 @@ namespace Air3550
             this.components = new System.ComponentModel.Container();
             this.marketingManger_welcome_label = new System.Windows.Forms.Label();
             this.marketing_datagrid = new System.Windows.Forms.DataGridView();
-            this.idDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.originAbvDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.destAbvDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.departureTimeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.planeTypeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.maxCapacityDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.currCapacityDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.flightsBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.air3550DBDataSet = new Air3550.Air3550DBDataSet();
             this.selectedFlight_label = new System.Windows.Forms.Label();
@@ -57,6 +50,13 @@ namespace Air3550
             this.curr_maxCapacity_textbox = new System.Windows.Forms.TextBox();
             this.newCapacityValue_textBox = new System.Windows.Forms.TextBox();
             this.selFlightId_textbox = new System.Windows.Forms.TextBox();
+            this.idDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.originAbvDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.destAbvDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.departureTimeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.planeTypeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.maxCapacityDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.currCapacityDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.marketing_datagrid)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.flightsBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.air3550DBDataSet)).BeginInit();
@@ -90,63 +90,9 @@ namespace Air3550
             this.marketing_datagrid.Name = "marketing_datagrid";
             this.marketing_datagrid.ReadOnly = true;
             this.marketing_datagrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.marketing_datagrid.Size = new System.Drawing.Size(470, 340);
+            this.marketing_datagrid.Size = new System.Drawing.Size(470, 323);
             this.marketing_datagrid.TabIndex = 1;
             this.marketing_datagrid.SelectionChanged += new System.EventHandler(this.marketing_datagrid_SelectionChanged);
-            // 
-            // idDataGridViewTextBoxColumn
-            // 
-            this.idDataGridViewTextBoxColumn.DataPropertyName = "Id";
-            this.idDataGridViewTextBoxColumn.HeaderText = "Id";
-            this.idDataGridViewTextBoxColumn.Name = "idDataGridViewTextBoxColumn";
-            this.idDataGridViewTextBoxColumn.ReadOnly = true;
-            this.idDataGridViewTextBoxColumn.Width = 30;
-            // 
-            // originAbvDataGridViewTextBoxColumn
-            // 
-            this.originAbvDataGridViewTextBoxColumn.DataPropertyName = "originAbv";
-            this.originAbvDataGridViewTextBoxColumn.HeaderText = "Origin";
-            this.originAbvDataGridViewTextBoxColumn.Name = "originAbvDataGridViewTextBoxColumn";
-            this.originAbvDataGridViewTextBoxColumn.ReadOnly = true;
-            this.originAbvDataGridViewTextBoxColumn.Width = 50;
-            // 
-            // destAbvDataGridViewTextBoxColumn
-            // 
-            this.destAbvDataGridViewTextBoxColumn.DataPropertyName = "destAbv";
-            this.destAbvDataGridViewTextBoxColumn.HeaderText = "Dest";
-            this.destAbvDataGridViewTextBoxColumn.Name = "destAbvDataGridViewTextBoxColumn";
-            this.destAbvDataGridViewTextBoxColumn.ReadOnly = true;
-            this.destAbvDataGridViewTextBoxColumn.Width = 50;
-            // 
-            // departureTimeDataGridViewTextBoxColumn
-            // 
-            this.departureTimeDataGridViewTextBoxColumn.DataPropertyName = "departureTime";
-            this.departureTimeDataGridViewTextBoxColumn.HeaderText = "Departure";
-            this.departureTimeDataGridViewTextBoxColumn.Name = "departureTimeDataGridViewTextBoxColumn";
-            this.departureTimeDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // planeTypeDataGridViewTextBoxColumn
-            // 
-            this.planeTypeDataGridViewTextBoxColumn.DataPropertyName = "PlaneType";
-            this.planeTypeDataGridViewTextBoxColumn.HeaderText = "Plane";
-            this.planeTypeDataGridViewTextBoxColumn.Name = "planeTypeDataGridViewTextBoxColumn";
-            this.planeTypeDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // maxCapacityDataGridViewTextBoxColumn
-            // 
-            this.maxCapacityDataGridViewTextBoxColumn.DataPropertyName = "maxCapacity";
-            this.maxCapacityDataGridViewTextBoxColumn.HeaderText = "Max Cap";
-            this.maxCapacityDataGridViewTextBoxColumn.Name = "maxCapacityDataGridViewTextBoxColumn";
-            this.maxCapacityDataGridViewTextBoxColumn.ReadOnly = true;
-            this.maxCapacityDataGridViewTextBoxColumn.Width = 50;
-            // 
-            // currCapacityDataGridViewTextBoxColumn
-            // 
-            this.currCapacityDataGridViewTextBoxColumn.DataPropertyName = "currCapacity";
-            this.currCapacityDataGridViewTextBoxColumn.HeaderText = "Curr Cap";
-            this.currCapacityDataGridViewTextBoxColumn.Name = "currCapacityDataGridViewTextBoxColumn";
-            this.currCapacityDataGridViewTextBoxColumn.ReadOnly = true;
-            this.currCapacityDataGridViewTextBoxColumn.Width = 50;
             // 
             // flightsBindingSource
             // 
@@ -281,6 +227,60 @@ namespace Air3550
             this.selFlightId_textbox.Size = new System.Drawing.Size(70, 20);
             this.selFlightId_textbox.TabIndex = 15;
             // 
+            // idDataGridViewTextBoxColumn
+            // 
+            this.idDataGridViewTextBoxColumn.DataPropertyName = "Id";
+            this.idDataGridViewTextBoxColumn.HeaderText = "Id";
+            this.idDataGridViewTextBoxColumn.Name = "idDataGridViewTextBoxColumn";
+            this.idDataGridViewTextBoxColumn.ReadOnly = true;
+            this.idDataGridViewTextBoxColumn.Width = 30;
+            // 
+            // originAbvDataGridViewTextBoxColumn
+            // 
+            this.originAbvDataGridViewTextBoxColumn.DataPropertyName = "originAbv";
+            this.originAbvDataGridViewTextBoxColumn.HeaderText = "Origin";
+            this.originAbvDataGridViewTextBoxColumn.Name = "originAbvDataGridViewTextBoxColumn";
+            this.originAbvDataGridViewTextBoxColumn.ReadOnly = true;
+            this.originAbvDataGridViewTextBoxColumn.Width = 50;
+            // 
+            // destAbvDataGridViewTextBoxColumn
+            // 
+            this.destAbvDataGridViewTextBoxColumn.DataPropertyName = "destAbv";
+            this.destAbvDataGridViewTextBoxColumn.HeaderText = "Dest";
+            this.destAbvDataGridViewTextBoxColumn.Name = "destAbvDataGridViewTextBoxColumn";
+            this.destAbvDataGridViewTextBoxColumn.ReadOnly = true;
+            this.destAbvDataGridViewTextBoxColumn.Width = 50;
+            // 
+            // departureTimeDataGridViewTextBoxColumn
+            // 
+            this.departureTimeDataGridViewTextBoxColumn.DataPropertyName = "departureTime";
+            this.departureTimeDataGridViewTextBoxColumn.HeaderText = "Departure";
+            this.departureTimeDataGridViewTextBoxColumn.Name = "departureTimeDataGridViewTextBoxColumn";
+            this.departureTimeDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // planeTypeDataGridViewTextBoxColumn
+            // 
+            this.planeTypeDataGridViewTextBoxColumn.DataPropertyName = "PlaneType";
+            this.planeTypeDataGridViewTextBoxColumn.HeaderText = "Plane";
+            this.planeTypeDataGridViewTextBoxColumn.Name = "planeTypeDataGridViewTextBoxColumn";
+            this.planeTypeDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // maxCapacityDataGridViewTextBoxColumn
+            // 
+            this.maxCapacityDataGridViewTextBoxColumn.DataPropertyName = "maxCapacity";
+            this.maxCapacityDataGridViewTextBoxColumn.HeaderText = "Max Cap";
+            this.maxCapacityDataGridViewTextBoxColumn.Name = "maxCapacityDataGridViewTextBoxColumn";
+            this.maxCapacityDataGridViewTextBoxColumn.ReadOnly = true;
+            this.maxCapacityDataGridViewTextBoxColumn.Width = 50;
+            // 
+            // currCapacityDataGridViewTextBoxColumn
+            // 
+            this.currCapacityDataGridViewTextBoxColumn.DataPropertyName = "currCapacity";
+            this.currCapacityDataGridViewTextBoxColumn.HeaderText = "Curr Cap";
+            this.currCapacityDataGridViewTextBoxColumn.Name = "currCapacityDataGridViewTextBoxColumn";
+            this.currCapacityDataGridViewTextBoxColumn.ReadOnly = true;
+            this.currCapacityDataGridViewTextBoxColumn.Width = 45;
+            // 
             // MarketingLandingPage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -329,6 +329,11 @@ namespace Air3550
         private Air3550DBDataSet air3550DBDataSet;
         private System.Windows.Forms.BindingSource flightsBindingSource;
         private Air3550DBDataSetTableAdapters.FlightsTableAdapter flightsTableAdapter;
+        private System.Windows.Forms.TextBox selFlightValue_textbox;
+        private System.Windows.Forms.TextBox currPlane_textbox;
+        private System.Windows.Forms.TextBox curr_maxCapacity_textbox;
+        private System.Windows.Forms.TextBox newCapacityValue_textBox;
+        private System.Windows.Forms.TextBox selFlightId_textbox;
         private System.Windows.Forms.DataGridViewTextBoxColumn idDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn originAbvDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn destAbvDataGridViewTextBoxColumn;
@@ -336,10 +341,5 @@ namespace Air3550
         private System.Windows.Forms.DataGridViewTextBoxColumn planeTypeDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn maxCapacityDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn currCapacityDataGridViewTextBoxColumn;
-        private System.Windows.Forms.TextBox selFlightValue_textbox;
-        private System.Windows.Forms.TextBox currPlane_textbox;
-        private System.Windows.Forms.TextBox curr_maxCapacity_textbox;
-        private System.Windows.Forms.TextBox newCapacityValue_textBox;
-        private System.Windows.Forms.TextBox selFlightId_textbox;
     }
 }
