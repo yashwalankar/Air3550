@@ -34,6 +34,29 @@ namespace Air3550
                 }
             }
         }
+        public static void fillAirportsCity(ComboBox box)
+        {
+            string dbString = Properties.Settings.Default.Air3550DBConnectionString;
+            using (SqlConnection sqlConnection = new SqlConnection(dbString))
+            {
+                if (sqlConnection.State != ConnectionState.Open) sqlConnection.Open();
+
+
+                using (SqlCommand sqlCommand = new SqlCommand("SELECT City FROM AirportList ", sqlConnection))
+                {
+
+
+                    SqlDataReader sqlReader = sqlCommand.ExecuteReader();
+
+                    while (sqlReader.Read())
+                    {
+                        box.Items.Add(sqlReader["City"].ToString());
+                    }
+
+                    sqlReader.Close();
+                }
+            }
+        }
 
         public static void FillPlaneModelsBox(ComboBox box)
         {
@@ -217,6 +240,7 @@ namespace Air3550
 
             }
         }
+
         public static void updatePlaneInFlightsTable(int flightId,String planeModel,int capacity)
         {
             string dbString = Properties.Settings.Default.Air3550DBConnectionString;
@@ -238,8 +262,73 @@ namespace Air3550
 
             }
         }
-        
-        
+
+        public static DataTable updateEditGridViewTable(string orig, string dest)
+        {
+            string dbString = Properties.Settings.Default.Air3550DBConnectionString;
+
+            using (SqlConnection sqlConnection = new SqlConnection(dbString))
+            {
+                if (sqlConnection.State != ConnectionState.Open) sqlConnection.Open();
+
+                SqlDataAdapter adapter = new SqlDataAdapter();
+                DataTable newDataTable = new DataTable();
+
+                string requestString;
+                int option = 0;
+                if (!(orig == null) && (dest == null))
+                {
+                    requestString = "SELECT * FROM Flights WHERE originAbv LIKE @origin";
+                    option = 1;
+                }
+                else if ((orig == null) && !(dest == null))
+                {
+                    requestString = "SELECT * FROM Flights WHERE destAbv LIKE @destination";
+                    option = 2;
+                }
+                else if (!(orig == null) && !(dest == null))
+                {
+                    requestString = "SELECT * FROM Flights WHERE originAbv LIKE @origin AND destAbv LIKE @destination";
+                    option = 3;
+                }
+                else
+                {
+                    requestString = "SELECT * FROM Flights";
+                    option = 4;
+                }
+
+                using (SqlCommand sqlCommand = new SqlCommand(requestString, sqlConnection))
+                {
+                    switch (option)
+                    {
+                        case 1: // origin only supplied
+                            sqlCommand.Parameters.AddWithValue("@origin",orig);
+
+                            break;
+                        case 2: // destination only supplied
+                            sqlCommand.Parameters.AddWithValue("@destination", dest);
+
+                            break;
+                        case 3: // origin and destination supplied
+                            sqlCommand.Parameters.AddWithValue("@origin", orig);
+                            sqlCommand.Parameters.AddWithValue("@destination", dest);
+
+                            break;
+                        case 4: // nothing supplied
+                            // nothing happens here
+                            break;
+                        default:
+                            return null;
+                            break;
+                    }
+
+                    adapter.SelectCommand = sqlCommand;
+                    adapter.Fill(newDataTable);
+
+                    return newDataTable;
+                }
+            }
+        }
        
 
 
