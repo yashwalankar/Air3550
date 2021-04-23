@@ -34,6 +34,29 @@ namespace Air3550
                 }
             }
         }
+        public static void fillAirportsCity(ComboBox box)
+        {
+            string dbString = Properties.Settings.Default.Air3550DBConnectionString;
+            using (SqlConnection sqlConnection = new SqlConnection(dbString))
+            {
+                if (sqlConnection.State != ConnectionState.Open) sqlConnection.Open();
+
+
+                using (SqlCommand sqlCommand = new SqlCommand("SELECT City FROM AirportList ", sqlConnection))
+                {
+
+
+                    SqlDataReader sqlReader = sqlCommand.ExecuteReader();
+
+                    while (sqlReader.Read())
+                    {
+                        box.Items.Add(sqlReader["City"].ToString());
+                    }
+
+                    sqlReader.Close();
+                }
+            }
+        }
 
         public static void FillPlaneModelsBox(ComboBox box)
         {
