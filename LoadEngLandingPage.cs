@@ -21,33 +21,19 @@ namespace Air3550
             addRoute_groupBox.Hide();
         }
 
+        private void LoadEngLandingPage_Load(object sender, EventArgs e)
+        {
+            // TODO: This line of code loads data into the 'air3550DBDataSet.Flights' table. You can move, or remove it, as needed.
+            //this.flightsTableAdapter1.Fill(this.air3550DBDataSet.Flights);
+
+        }
+
         private void logoutbutton_Click(object sender, EventArgs e)
         {
             this.Visible = false;
             this.Dispose();
             Login s = new Login();
             s.Visible = true;
-        }
-
-        private void addRoute_btn_Click(object sender, EventArgs e)
-        {
-            editRoute_groupBox.Hide();
-            deleteRoute_groupBox.Hide();
-            addRoute_groupBox.Show();
-            FormDatabaseHelper.fillAirportsAbv(add_origin_comboBox);
-            FormDatabaseHelper.fillAirportsAbv(add_dest_comboBox);
-
-        }
-
-        private void editRoute_btn_Click(object sender, EventArgs e)
-        {
-
-            addRoute_groupBox.Hide();
-            deleteRoute_groupBox.Hide();
-            editRoute_groupBox.Show();
-            FormDatabaseHelper.fillAirportsAbv(edit_origin_combobox);
-            FormDatabaseHelper.fillAirportsAbv(edit_dest_combobox);
-
         }
 
         private void deleteRoute_btn_Click(object sender, EventArgs e)
@@ -57,10 +43,16 @@ namespace Air3550
             editRoute_groupBox.Hide();
         }
 
-        private void LoadEngLandingPage_Load(object sender, EventArgs e)
+        // ==================================================================================
+        // Add Route Group Methods ==========================================================
+        // ==================================================================================
+        private void addRoute_btn_Click(object sender, EventArgs e)
         {
-            // TODO: This line of code loads data into the 'air3550DBDataSet.Flights' table. You can move, or remove it, as needed.
-            this.flightsTableAdapter1.Fill(this.air3550DBDataSet.Flights);
+            editRoute_groupBox.Hide();
+            deleteRoute_groupBox.Hide();
+            addRoute_groupBox.Show();
+            FormDatabaseHelper.fillAirportsAbv(add_origin_comboBox);
+            FormDatabaseHelper.fillAirportsAbv(add_dest_comboBox);
 
         }
 
@@ -75,8 +67,8 @@ namespace Air3550
                 flight newFlight = new flight();
                 newFlight.createFlight(add_origin_comboBox.Text,
                                         add_dest_comboBox.Text,
-                                        add_depart_time_DTP.Value.ToString("t"),
-                                        add_arrival_time_DTP.Value.ToString("t"),
+                                        add_depart_time_DTP.Value,
+                                        add_arrival_time_DTP.Value,
                                         defaultPlane,
                                         double.Parse(add_cost_label.Text),
                                         maxCap,
@@ -177,6 +169,71 @@ namespace Air3550
             double cost = (50.0 + 0.12 * distance) * discount;
 
             add_cost_label.Text = cost.ToString();
+        }
+
+        // ==================================================================================
+        // Edit Route Group Methods =========================================================
+        // ==================================================================================
+        private void editRoute_btn_Click(object sender, EventArgs e)
+        {
+
+            addRoute_groupBox.Hide();
+            deleteRoute_groupBox.Hide();
+            editRoute_groupBox.Show();
+            FormDatabaseHelper.fillAirportsAbv(edit_origin_combobox);
+            FormDatabaseHelper.fillAirportsAbv(edit_dest_combobox);
+
+            DataTable newEditTable = FormDatabaseHelper.updateEditGridViewTable(null, null);
+            BindingSource SBind = new BindingSource();
+            SBind.DataSource = newEditTable;
+            edit_flights_dataview.DataSource = SBind;
+            edit_flights_dataview.Refresh();
+
+        }
+
+        private void edit_origin_combobox_TextChanged(object sender, EventArgs e)
+        {
+            string origin = edit_origin_combobox.Text;
+            DataTable newEditTable;
+            BindingSource SBind = new BindingSource();
+
+            if (edit_dest_combobox.SelectedItem != null)
+            {
+                string destination = edit_dest_combobox.Text;
+                newEditTable = FormDatabaseHelper.updateEditGridViewTable(origin, destination);
+            }
+            else
+            {
+                newEditTable = FormDatabaseHelper.updateEditGridViewTable(origin, null);
+            }
+
+            SBind.DataSource = newEditTable;
+            edit_flights_dataview.Columns.Clear();
+            edit_flights_dataview.DataSource = SBind;
+            edit_flights_dataview.Refresh();
+
+        }
+
+        private void edit_dest_combobox_TextChanged(object sender, EventArgs e)
+        {
+            string destination = edit_dest_combobox.Text;
+            DataTable newEditTable;
+            BindingSource SBind = new BindingSource();
+
+            if (edit_dest_combobox.SelectedItem != null)
+            { 
+                string origin = edit_origin_combobox.Text;
+                newEditTable = FormDatabaseHelper.updateEditGridViewTable(origin, destination);
+            }
+            else
+            {
+                newEditTable = FormDatabaseHelper.updateEditGridViewTable(destination, null);
+            }
+
+            SBind.DataSource = newEditTable;
+            edit_flights_dataview.Columns.Clear();
+            edit_flights_dataview.DataSource = SBind;
+            edit_flights_dataview.Refresh();
         }
     }
 }

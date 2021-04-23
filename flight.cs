@@ -11,15 +11,15 @@ namespace Air3550
         public int Id { get; set; }
         public string origin { get; set; }
         public string dest { get; set; }
-        public string deptTime { get; set; }
-        public string arrivalTime { get; set; }
+        public DateTime deptTime { get; set; }
+        public DateTime arrivalTime { get; set; }
         public double distance { get; set; }
         public string planeType { get; set; }
         public double cost { get; set; }
         public int maxCapacity { get; set; }
         public int currCapacity { get; set; }
 
-        public void createFlight(String origin,String dest, String deptTime,String arrivalTime,String planeType,
+        public void createFlight(string origin, string dest, DateTime deptTime, DateTime arrivalTime, string planeType,
                                     double cost, int maxCapacity, int currCapacity)
         {
             this.origin = origin;
