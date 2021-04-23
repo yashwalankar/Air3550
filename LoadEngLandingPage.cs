@@ -186,6 +186,7 @@ namespace Air3550
             DataTable newEditTable = FormDatabaseHelper.updateEditGridViewTable(null, null);
             BindingSource SBind = new BindingSource();
             SBind.DataSource = newEditTable;
+            editTableColumnSetup();
             edit_flights_dataview.DataSource = SBind;
             edit_flights_dataview.Refresh();
 
@@ -209,6 +210,7 @@ namespace Air3550
 
             SBind.DataSource = newEditTable;
             edit_flights_dataview.Columns.Clear();
+            editTableColumnSetup();
             edit_flights_dataview.DataSource = SBind;
             edit_flights_dataview.Refresh();
 
@@ -232,8 +234,42 @@ namespace Air3550
 
             SBind.DataSource = newEditTable;
             edit_flights_dataview.Columns.Clear();
+            editTableColumnSetup();
             edit_flights_dataview.DataSource = SBind;
             edit_flights_dataview.Refresh();
+        }
+
+        private void editTableColumnSetup()
+        {
+            edit_flights_dataview.DataSource = null;
+
+            edit_flights_dataview.AutoGenerateColumns = false;
+            edit_flights_dataview.ColumnCount = 5;
+
+            edit_flights_dataview.Columns[0].Name = "originAbv";
+            edit_flights_dataview.Columns[0].HeaderText = "Origin";
+            edit_flights_dataview.Columns[0].DataPropertyName = "originAbv";
+            edit_flights_dataview.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+
+            edit_flights_dataview.Columns[1].Name = "destAbv";
+            edit_flights_dataview.Columns[1].HeaderText = "Destination";
+            edit_flights_dataview.Columns[1].DataPropertyName = "destAbv";
+            edit_flights_dataview.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+
+            edit_flights_dataview.Columns[2].Name = "departureTime";
+            edit_flights_dataview.Columns[2].HeaderText = "Departure (24H)";
+            edit_flights_dataview.Columns[2].DataPropertyName = "departureTime";
+            edit_flights_dataview.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+
+            edit_flights_dataview.Columns[3].Name = "arrivalTime";
+            edit_flights_dataview.Columns[3].HeaderText = "Arrival (24H)";
+            edit_flights_dataview.Columns[3].DataPropertyName = "arrivalTime";
+            edit_flights_dataview.Columns[3].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+
+            edit_flights_dataview.Columns[4].Name = "cost";
+            edit_flights_dataview.Columns[4].HeaderText = "Cost";
+            edit_flights_dataview.Columns[4].DataPropertyName = "cost";
+            edit_flights_dataview.Columns[4].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
         }
     }
 }
