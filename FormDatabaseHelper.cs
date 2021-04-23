@@ -330,7 +330,34 @@ namespace Air3550
             }
         }
        
+        public static String getAirportAbvFromCity(String city)
+        {
+            String airportAbbv = "";
+            string dbString = Properties.Settings.Default.Air3550DBConnectionString;
+            using (SqlConnection sqlConnection = new SqlConnection(dbString))
+            {
+                if (sqlConnection.State != ConnectionState.Open) sqlConnection.Open();
 
+
+                using (SqlCommand sqlCommand = new SqlCommand("SELECT AirportAbbrev FROM AirportList WHERE City LIKE @City ", sqlConnection))
+                {
+                    sqlCommand.Parameters.AddWithValue("@City", city);
+
+                    SqlDataReader sqlReader = sqlCommand.ExecuteReader();
+
+
+
+                    while (sqlReader.Read())
+                    {
+                        airportAbbv = sqlReader["AirportAbbrev"].ToString();
+                    }
+
+                    sqlReader.Close();
+                }
+            }
+
+            return airportAbbv;
+        }
 
 
 

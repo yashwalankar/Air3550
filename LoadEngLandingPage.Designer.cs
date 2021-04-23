@@ -52,11 +52,12 @@ namespace Air3550
             this.add_origin_comboBox = new System.Windows.Forms.ComboBox();
             this.add_origin_label = new System.Windows.Forms.Label();
             this.editRoute_groupBox = new System.Windows.Forms.GroupBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             this.edit_costValue_label = new System.Windows.Forms.Label();
             this.edit_cost_label = new System.Windows.Forms.Label();
             this.edit_flights_dataview = new System.Windows.Forms.DataGridView();
-            this.flightsBindingSource2 = new System.Windows.Forms.BindingSource(this.components);
-            this.air3550DBDataSet = new Air3550.Air3550DBDataSet();
             this.edit_submit_btn = new System.Windows.Forms.Button();
             this.edit_arrival_time_DTP = new System.Windows.Forms.DateTimePicker();
             this.edit_arrival_label = new System.Windows.Forms.Label();
@@ -66,6 +67,8 @@ namespace Air3550
             this.edit_dest_label = new System.Windows.Forms.Label();
             this.edit_origin_combobox = new System.Windows.Forms.ComboBox();
             this.edit_origin_label = new System.Windows.Forms.Label();
+            this.flightsBindingSource2 = new System.Windows.Forms.BindingSource(this.components);
+            this.air3550DBDataSet = new Air3550.Air3550DBDataSet();
             this.deleteRoute_groupBox = new System.Windows.Forms.GroupBox();
             this.button1 = new System.Windows.Forms.Button();
             this.del_selected_route_label = new System.Windows.Forms.Label();
@@ -80,9 +83,6 @@ namespace Air3550
             this.flightsBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.logout_button = new System.Windows.Forms.Button();
             this.flightsTableAdapter1 = new Air3550.Air3550DBDataSetTableAdapters.FlightsTableAdapter();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
             this.addRoute_groupBox.SuspendLayout();
             this.editRoute_groupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.edit_flights_dataview)).BeginInit();
@@ -334,6 +334,33 @@ namespace Air3550
             this.editRoute_groupBox.TabStop = false;
             this.editRoute_groupBox.Text = "Edit Route";
             // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(268, 25);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(77, 13);
+            this.label3.TabIndex = 34;
+            this.label3.Text = "Edit flight route";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(44, 25);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(97, 13);
+            this.label2.TabIndex = 33;
+            this.label2.Text = "Sort flight routes by";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(557, 58);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(13, 13);
+            this.label1.TabIndex = 32;
+            this.label1.Text = "$";
+            // 
             // edit_costValue_label
             // 
             this.edit_costValue_label.AutoSize = true;
@@ -361,16 +388,6 @@ namespace Air3550
             this.edit_flights_dataview.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.edit_flights_dataview.Size = new System.Drawing.Size(523, 248);
             this.edit_flights_dataview.TabIndex = 27;
-            // 
-            // flightsBindingSource2
-            // 
-            this.flightsBindingSource2.DataMember = "Flights";
-            this.flightsBindingSource2.DataSource = this.air3550DBDataSet;
-            // 
-            // air3550DBDataSet
-            // 
-            this.air3550DBDataSet.DataSetName = "Air3550DBDataSet";
-            this.air3550DBDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
             // 
             // edit_submit_btn
             // 
@@ -457,6 +474,16 @@ namespace Air3550
             this.edit_origin_label.Size = new System.Drawing.Size(34, 13);
             this.edit_origin_label.TabIndex = 16;
             this.edit_origin_label.Text = "Origin";
+            // 
+            // flightsBindingSource2
+            // 
+            this.flightsBindingSource2.DataMember = "Flights";
+            this.flightsBindingSource2.DataSource = this.air3550DBDataSet;
+            // 
+            // air3550DBDataSet
+            // 
+            this.air3550DBDataSet.DataSetName = "Air3550DBDataSet";
+            this.air3550DBDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
             // 
             // deleteRoute_groupBox
             // 
@@ -577,33 +604,6 @@ namespace Air3550
             // 
             this.flightsTableAdapter1.ClearBeforeFill = true;
             // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(557, 58);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(13, 13);
-            this.label1.TabIndex = 32;
-            this.label1.Text = "$";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(44, 25);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(97, 13);
-            this.label2.TabIndex = 33;
-            this.label2.Text = "Sort flight routes by";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(268, 25);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(77, 13);
-            this.label3.TabIndex = 34;
-            this.label3.Text = "Edit flight route";
-            // 
             // LoadEngLandingPage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -614,9 +614,9 @@ namespace Air3550
             this.Controls.Add(this.editRoute_btn);
             this.Controls.Add(this.addRoute_btn);
             this.Controls.Add(this.welcome_label);
-            this.Controls.Add(this.editRoute_groupBox);
             this.Controls.Add(this.addRoute_groupBox);
             this.Controls.Add(this.deleteRoute_groupBox);
+            this.Controls.Add(this.editRoute_groupBox);
             this.Name = "LoadEngLandingPage";
             this.Text = "LoadEngLandingPage";
             this.Load += new System.EventHandler(this.LoadEngLandingPage_Load);

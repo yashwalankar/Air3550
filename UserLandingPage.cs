@@ -73,7 +73,7 @@ namespace Air3550
 
         private void return_rbtn_CheckedChanged(object sender, EventArgs e)
         {
-            if (return_rbtn.Checked == true)
+            if (return_rBtn.Checked == true)
             {
                 ShowReturnComponents(true);
             }
@@ -107,6 +107,53 @@ namespace Air3550
                 returnDate_label.Hide();
                 returnDate_dtp.Hide();
             }
+
+        }
+
+        private void showFlights_btn_Click(object sender, EventArgs e)
+        {
+            bool oneWayBooking = oneWay_rBtn.Checked;
+            bool returnBooking = return_rBtn.Checked;
+
+
+            DateTime currentTime = currSysTime_DTP.Value;
+
+            if(origin_comboBox.SelectedItem != null && destination_comboBox.SelectedItem !=null )
+            {
+                String origin = FormDatabaseHelper.getAirportAbvFromCity(origin_comboBox.SelectedItem.ToString());
+
+                String dest = FormDatabaseHelper.getAirportAbvFromCity(destination_comboBox.SelectedItem.ToString());
+
+                DateTime deptTime = deptDate_dtp.Value;
+                if (origin != dest)
+                {
+                    if (deptTime > currentTime.AddDays(60))
+                    {
+                        Console.WriteLine("Bookingings cannot be more than 60days out");
+                    }
+                    else
+                    {
+                        Console.WriteLine("One way" + oneWayBooking);
+                        Console.WriteLine("Return booking" + returnBooking);
+
+                        Console.WriteLine("Origin" + origin);
+                        Console.WriteLine("destination" + dest);
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("orign and destination cannot be same");
+                }
+
+                
+
+            }
+            else
+            {
+                Console.WriteLine("Select origin and destination pls");
+            }
+            
+            
 
         }
     }
