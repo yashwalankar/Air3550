@@ -109,5 +109,55 @@ namespace Air3550
             }
 
         }
+
+        private void checkFlights_btn_Click(object sender, EventArgs e)
+        {
+
+            //check if origin and dest are selected
+            if (origin_comboBox.SelectedItem != null && destination_comboBox.SelectedItem != null)
+            {
+
+                DateTime currSysTime = currSysTime_DTP.Value;
+                DateTime deptTime = deptDate_dtp.Value;
+                bool oneWay = oneWay_rBtn.Checked;
+                bool returnBooking = return_rbtn.Checked;
+
+               // String originAbv = origin_comboBox.SelectedItem.ToString();
+               // String destAbv = destination_comboBox.SelectedItem.ToString();
+
+               // Console.WriteLine(originAbv);
+               // Console.WriteLine(destAbv);
+
+                String originAbv =  FormDatabaseHelper.getAirportAbvFromCity(origin_comboBox.SelectedItem.ToString());
+                String destAbv = FormDatabaseHelper.getAirportAbvFromCity(destination_comboBox.SelectedItem.ToString());
+
+                //check if origin and destination are not same
+                if (originAbv != destAbv)
+                {
+                    //Check if flight departure is within 6 months of current time
+                    if (deptTime <= currSysTime.AddDays(60))
+                    {
+                        //find flight 
+
+
+
+
+
+                    }
+                    else
+                    {
+                        Console.WriteLine("Depature date should be within 6 months");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("origin and dest cannot be same");
+                }
+            }
+            else
+            {
+                Console.WriteLine("origin and dest not set");
+            }
+        }
     }
 }

@@ -42,6 +42,7 @@ namespace Air3550
             this.upcomingFlights_groupBox = new System.Windows.Forms.GroupBox();
             this.upcomingFlights_datagridview = new System.Windows.Forms.DataGridView();
             this.bookFlights_groupBox = new System.Windows.Forms.GroupBox();
+            this.checkFlights_btn = new System.Windows.Forms.Button();
             this.returnDate_dtp = new System.Windows.Forms.DateTimePicker();
             this.returnDate_label = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -177,6 +178,7 @@ namespace Air3550
             // 
             // bookFlights_groupBox
             // 
+            this.bookFlights_groupBox.Controls.Add(this.checkFlights_btn);
             this.bookFlights_groupBox.Controls.Add(this.returnDate_dtp);
             this.bookFlights_groupBox.Controls.Add(this.returnDate_label);
             this.bookFlights_groupBox.Controls.Add(this.groupBox1);
@@ -194,19 +196,29 @@ namespace Air3550
             this.bookFlights_groupBox.Text = "Book Flight";
             this.bookFlights_groupBox.Enter += new System.EventHandler(this.bookFlights_groupBox_Enter);
             // 
+            // checkFlights_btn
+            // 
+            this.checkFlights_btn.Location = new System.Drawing.Point(629, 87);
+            this.checkFlights_btn.Name = "checkFlights_btn";
+            this.checkFlights_btn.Size = new System.Drawing.Size(104, 23);
+            this.checkFlights_btn.TabIndex = 27;
+            this.checkFlights_btn.Text = "Show Flights";
+            this.checkFlights_btn.UseVisualStyleBackColor = true;
+            this.checkFlights_btn.Click += new System.EventHandler(this.checkFlights_btn_Click);
+            // 
             // returnDate_dtp
             // 
-            this.returnDate_dtp.CustomFormat = "yyyy/MM/dd - h:mm tt";
+            this.returnDate_dtp.CustomFormat = "yyyy/MM/dd";
             this.returnDate_dtp.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.returnDate_dtp.Location = new System.Drawing.Point(413, 90);
+            this.returnDate_dtp.Location = new System.Drawing.Point(375, 90);
             this.returnDate_dtp.Name = "returnDate_dtp";
-            this.returnDate_dtp.Size = new System.Drawing.Size(142, 20);
+            this.returnDate_dtp.Size = new System.Drawing.Size(101, 20);
             this.returnDate_dtp.TabIndex = 34;
             // 
             // returnDate_label
             // 
             this.returnDate_label.AutoSize = true;
-            this.returnDate_label.Location = new System.Drawing.Point(410, 73);
+            this.returnDate_label.Location = new System.Drawing.Point(372, 73);
             this.returnDate_label.Name = "returnDate_label";
             this.returnDate_label.Size = new System.Drawing.Size(39, 13);
             this.returnDate_label.TabIndex = 33;
@@ -259,11 +271,11 @@ namespace Air3550
             // 
             // deptDate_dtp
             // 
-            this.deptDate_dtp.CustomFormat = "yyyy/MM/dd - h:mm tt";
+            this.deptDate_dtp.CustomFormat = "yyyy/MM/dd";
             this.deptDate_dtp.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.deptDate_dtp.Location = new System.Drawing.Point(246, 90);
             this.deptDate_dtp.Name = "deptDate_dtp";
-            this.deptDate_dtp.Size = new System.Drawing.Size(136, 20);
+            this.deptDate_dtp.Size = new System.Drawing.Size(101, 20);
             this.deptDate_dtp.TabIndex = 27;
             this.deptDate_dtp.ValueChanged += new System.EventHandler(this.dateTimePicker1_ValueChanged);
             // 
@@ -309,7 +321,7 @@ namespace Air3550
             this.currSysTime_DTP.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.currSysTime_DTP.Location = new System.Drawing.Point(119, 13);
             this.currSysTime_DTP.Name = "currSysTime_DTP";
-            this.currSysTime_DTP.Size = new System.Drawing.Size(141, 20);
+            this.currSysTime_DTP.Size = new System.Drawing.Size(155, 20);
             this.currSysTime_DTP.TabIndex = 24;
             // 
             // currSysTime_label
@@ -403,5 +415,6 @@ namespace Air3550
         private System.Windows.Forms.RadioButton return_rbtn;
         private System.Windows.Forms.Label returnDate_label;
         private System.Windows.Forms.DateTimePicker returnDate_dtp;
+        private System.Windows.Forms.Button checkFlights_btn;
     }
 }

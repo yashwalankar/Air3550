@@ -153,7 +153,7 @@ namespace Air3550
             this.addRoute_groupBox.Controls.Add(this.add_origin_label);
             this.addRoute_groupBox.Location = new System.Drawing.Point(24, 98);
             this.addRoute_groupBox.Name = "addRoute_groupBox";
-            this.addRoute_groupBox.Size = new System.Drawing.Size(630, 379);
+            this.addRoute_groupBox.Size = new System.Drawing.Size(636, 438);
             this.addRoute_groupBox.TabIndex = 4;
             this.addRoute_groupBox.TabStop = false;
             this.addRoute_groupBox.Text = "Add Route";
@@ -327,9 +327,9 @@ namespace Air3550
             this.editRoute_groupBox.Controls.Add(this.edit_dest_label);
             this.editRoute_groupBox.Controls.Add(this.edit_origin_combobox);
             this.editRoute_groupBox.Controls.Add(this.edit_origin_label);
-            this.editRoute_groupBox.Location = new System.Drawing.Point(35, 98);
+            this.editRoute_groupBox.Location = new System.Drawing.Point(24, 98);
             this.editRoute_groupBox.Name = "editRoute_groupBox";
-            this.editRoute_groupBox.Size = new System.Drawing.Size(625, 385);
+            this.editRoute_groupBox.Size = new System.Drawing.Size(636, 385);
             this.editRoute_groupBox.TabIndex = 5;
             this.editRoute_groupBox.TabStop = false;
             this.editRoute_groupBox.Text = "Edit Route";
