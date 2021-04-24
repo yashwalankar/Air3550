@@ -614,9 +614,9 @@ namespace Air3550
             this.Controls.Add(this.editRoute_btn);
             this.Controls.Add(this.addRoute_btn);
             this.Controls.Add(this.welcome_label);
-            this.Controls.Add(this.editRoute_groupBox);
             this.Controls.Add(this.addRoute_groupBox);
             this.Controls.Add(this.deleteRoute_groupBox);
+            this.Controls.Add(this.editRoute_groupBox);
             this.Name = "LoadEngLandingPage";
             this.Text = "LoadEngLandingPage";
             this.Load += new System.EventHandler(this.LoadEngLandingPage_Load);
