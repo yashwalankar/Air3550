@@ -499,6 +499,43 @@ namespace Air3550
             return airportAbbv;
         }
 
+        public static void removeFlightFromRoutes(int flightID)
+        {
+            string dbString = Properties.Settings.Default.Air3550DBConnectionString;
+            using (SqlConnection sqlConnection = new SqlConnection(dbString))
+            {
+                if (sqlConnection.State != ConnectionState.Open) sqlConnection.Open();
+
+                string sqlString = "DELETE FROM Flights WHERE Id = @flightId";
+
+                SqlCommand command = new SqlCommand(sqlString, sqlConnection);
+
+                command.Parameters.AddWithValue("@flightId", flightID);
+
+                command.ExecuteNonQuery();
+            }
+        }
+
+        public static void updateTimesInFlightsTable(int flightID, DateTime arrivalTime, DateTime departureTime, double cost)
+        {
+            string dbString = Properties.Settings.Default.Air3550DBConnectionString;
+            using (SqlConnection sqlConnection = new SqlConnection(dbString))
+            {
+                if (sqlConnection.State != ConnectionState.Open) sqlConnection.Open();
+
+                string sqlString = "UPDATE Flights SET departureTime = @departTime, arrivalTime = @arrivalTime, cost = @cost " +
+                    "WHERE Id = @flightId";
+
+                SqlCommand command = new SqlCommand(sqlString, sqlConnection);
+
+                command.Parameters.AddWithValue("@arrivalTime", arrivalTime);
+                command.Parameters.AddWithValue("@departTime", departureTime);
+                command.Parameters.AddWithValue("@flightId", flightID);
+                command.Parameters.AddWithValue("@cost", cost);
+
+                command.ExecuteNonQuery();
+            }
+        }
 
 
 
