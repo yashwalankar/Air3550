@@ -70,26 +70,28 @@ namespace Air3550
             this.flightsBindingSource2 = new System.Windows.Forms.BindingSource(this.components);
             this.air3550DBDataSet = new Air3550.Air3550DBDataSet();
             this.deleteRoute_groupBox = new System.Windows.Forms.GroupBox();
-            this.button1 = new System.Windows.Forms.Button();
+            this.del_submit_button = new System.Windows.Forms.Button();
             this.del_selected_route_label = new System.Windows.Forms.Label();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.originAbvDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.destAbvDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.departureTimeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.arrivalTimeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.planeTypeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.currCapacityDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.del_flights_datagridview = new System.Windows.Forms.DataGridView();
             this.flightsBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.flightsBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.logout_button = new System.Windows.Forms.Button();
             this.flightsTableAdapter1 = new Air3550.Air3550DBDataSetTableAdapters.FlightsTableAdapter();
+            this.label4 = new System.Windows.Forms.Label();
+            this.del_destination_combobox = new System.Windows.Forms.ComboBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.del_origin_combobox = new System.Windows.Forms.ComboBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.del_flightidvalue_label = new System.Windows.Forms.Label();
+            this.del_clearSort_button = new System.Windows.Forms.Button();
+            this.edit_clearSort_button = new System.Windows.Forms.Button();
             this.addRoute_groupBox.SuspendLayout();
             this.editRoute_groupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.edit_flights_dataview)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.flightsBindingSource2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.air3550DBDataSet)).BeginInit();
             this.deleteRoute_groupBox.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.del_flights_datagridview)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.flightsBindingSource1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.flightsBindingSource)).BeginInit();
             this.SuspendLayout();
@@ -151,9 +153,9 @@ namespace Air3550
             this.addRoute_groupBox.Controls.Add(this.add_dest_label);
             this.addRoute_groupBox.Controls.Add(this.add_origin_comboBox);
             this.addRoute_groupBox.Controls.Add(this.add_origin_label);
-            this.addRoute_groupBox.Location = new System.Drawing.Point(24, 98);
+            this.addRoute_groupBox.Location = new System.Drawing.Point(35, 98);
             this.addRoute_groupBox.Name = "addRoute_groupBox";
-            this.addRoute_groupBox.Size = new System.Drawing.Size(630, 379);
+            this.addRoute_groupBox.Size = new System.Drawing.Size(625, 385);
             this.addRoute_groupBox.TabIndex = 4;
             this.addRoute_groupBox.TabStop = false;
             this.addRoute_groupBox.Text = "Add Route";
@@ -312,6 +314,7 @@ namespace Air3550
             // 
             // editRoute_groupBox
             // 
+            this.editRoute_groupBox.Controls.Add(this.edit_clearSort_button);
             this.editRoute_groupBox.Controls.Add(this.label3);
             this.editRoute_groupBox.Controls.Add(this.label2);
             this.editRoute_groupBox.Controls.Add(this.label1);
@@ -381,13 +384,16 @@ namespace Air3550
             // 
             // edit_flights_dataview
             // 
+            this.edit_flights_dataview.AllowUserToAddRows = false;
+            this.edit_flights_dataview.AllowUserToDeleteRows = false;
             this.edit_flights_dataview.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.edit_flights_dataview.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
-            this.edit_flights_dataview.Location = new System.Drawing.Point(47, 176);
+            this.edit_flights_dataview.Location = new System.Drawing.Point(47, 149);
             this.edit_flights_dataview.Name = "edit_flights_dataview";
             this.edit_flights_dataview.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.edit_flights_dataview.Size = new System.Drawing.Size(523, 194);
+            this.edit_flights_dataview.Size = new System.Drawing.Size(523, 221);
             this.edit_flights_dataview.TabIndex = 27;
+            this.edit_flights_dataview.SelectionChanged += new System.EventHandler(this.edit_flights_dataview_SelectionChanged);
             // 
             // edit_submit_btn
             // 
@@ -397,6 +403,7 @@ namespace Air3550
             this.edit_submit_btn.TabIndex = 17;
             this.edit_submit_btn.Text = "Submit Changes";
             this.edit_submit_btn.UseVisualStyleBackColor = true;
+            this.edit_submit_btn.Click += new System.EventHandler(this.edit_submit_btn_Click);
             // 
             // edit_arrival_time_DTP
             // 
@@ -427,6 +434,7 @@ namespace Air3550
             this.edit_depart_time_DTP.ShowUpDown = true;
             this.edit_depart_time_DTP.Size = new System.Drawing.Size(86, 20);
             this.edit_depart_time_DTP.TabIndex = 15;
+            this.edit_depart_time_DTP.ValueChanged += new System.EventHandler(this.edit_depart_time_DTP_ValueChanged);
             // 
             // edit_dept_label
             // 
@@ -487,98 +495,54 @@ namespace Air3550
             // 
             // deleteRoute_groupBox
             // 
-            this.deleteRoute_groupBox.Controls.Add(this.button1);
+            this.deleteRoute_groupBox.Controls.Add(this.del_clearSort_button);
+            this.deleteRoute_groupBox.Controls.Add(this.del_flightidvalue_label);
+            this.deleteRoute_groupBox.Controls.Add(this.label4);
+            this.deleteRoute_groupBox.Controls.Add(this.del_destination_combobox);
+            this.deleteRoute_groupBox.Controls.Add(this.label5);
+            this.deleteRoute_groupBox.Controls.Add(this.del_origin_combobox);
+            this.deleteRoute_groupBox.Controls.Add(this.label6);
+            this.deleteRoute_groupBox.Controls.Add(this.del_submit_button);
+            this.deleteRoute_groupBox.Controls.Add(this.del_flights_datagridview);
             this.deleteRoute_groupBox.Controls.Add(this.del_selected_route_label);
-            this.deleteRoute_groupBox.Controls.Add(this.dataGridView1);
-            this.deleteRoute_groupBox.Location = new System.Drawing.Point(33, 98);
+            this.deleteRoute_groupBox.Location = new System.Drawing.Point(35, 98);
             this.deleteRoute_groupBox.Name = "deleteRoute_groupBox";
-            this.deleteRoute_groupBox.Size = new System.Drawing.Size(627, 499);
+            this.deleteRoute_groupBox.Size = new System.Drawing.Size(625, 385);
             this.deleteRoute_groupBox.TabIndex = 6;
             this.deleteRoute_groupBox.TabStop = false;
             this.deleteRoute_groupBox.Text = "Delete Route";
             // 
-            // button1
+            // del_submit_button
             // 
-            this.button1.Location = new System.Drawing.Point(127, 460);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(86, 23);
-            this.button1.TabIndex = 18;
-            this.button1.Text = "Delete Route";
-            this.button1.UseVisualStyleBackColor = true;
+            this.del_submit_button.Location = new System.Drawing.Point(381, 50);
+            this.del_submit_button.Name = "del_submit_button";
+            this.del_submit_button.Size = new System.Drawing.Size(86, 21);
+            this.del_submit_button.TabIndex = 18;
+            this.del_submit_button.Text = "Delete Route";
+            this.del_submit_button.UseVisualStyleBackColor = true;
+            this.del_submit_button.Click += new System.EventHandler(this.del_submit_button_Click);
             // 
             // del_selected_route_label
             // 
             this.del_selected_route_label.AutoSize = true;
-            this.del_selected_route_label.Location = new System.Drawing.Point(22, 425);
+            this.del_selected_route_label.Location = new System.Drawing.Point(268, 26);
             this.del_selected_route_label.Name = "del_selected_route_label";
             this.del_selected_route_label.Size = new System.Drawing.Size(104, 13);
             this.del_selected_route_label.TabIndex = 7;
             this.del_selected_route_label.Text = "Selected Route ID : ";
             // 
-            // dataGridView1
+            // del_flights_datagridview
             // 
-            this.dataGridView1.AllowUserToAddRows = false;
-            this.dataGridView1.AllowUserToDeleteRows = false;
-            this.dataGridView1.AutoGenerateColumns = false;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.originAbvDataGridViewTextBoxColumn,
-            this.destAbvDataGridViewTextBoxColumn,
-            this.departureTimeDataGridViewTextBoxColumn,
-            this.arrivalTimeDataGridViewTextBoxColumn,
-            this.planeTypeDataGridViewTextBoxColumn,
-            this.currCapacityDataGridViewTextBoxColumn});
-            this.dataGridView1.DataSource = this.flightsBindingSource1;
-            this.dataGridView1.Location = new System.Drawing.Point(15, 22);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.ReadOnly = true;
-            this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView1.Size = new System.Drawing.Size(524, 383);
-            this.dataGridView1.TabIndex = 7;
-            // 
-            // originAbvDataGridViewTextBoxColumn
-            // 
-            this.originAbvDataGridViewTextBoxColumn.DataPropertyName = "originAbv";
-            this.originAbvDataGridViewTextBoxColumn.HeaderText = "Origin";
-            this.originAbvDataGridViewTextBoxColumn.Name = "originAbvDataGridViewTextBoxColumn";
-            this.originAbvDataGridViewTextBoxColumn.ReadOnly = true;
-            this.originAbvDataGridViewTextBoxColumn.Width = 40;
-            // 
-            // destAbvDataGridViewTextBoxColumn
-            // 
-            this.destAbvDataGridViewTextBoxColumn.DataPropertyName = "destAbv";
-            this.destAbvDataGridViewTextBoxColumn.HeaderText = "Dest";
-            this.destAbvDataGridViewTextBoxColumn.Name = "destAbvDataGridViewTextBoxColumn";
-            this.destAbvDataGridViewTextBoxColumn.ReadOnly = true;
-            this.destAbvDataGridViewTextBoxColumn.Width = 40;
-            // 
-            // departureTimeDataGridViewTextBoxColumn
-            // 
-            this.departureTimeDataGridViewTextBoxColumn.DataPropertyName = "departureTime";
-            this.departureTimeDataGridViewTextBoxColumn.HeaderText = "Dept";
-            this.departureTimeDataGridViewTextBoxColumn.Name = "departureTimeDataGridViewTextBoxColumn";
-            this.departureTimeDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // arrivalTimeDataGridViewTextBoxColumn
-            // 
-            this.arrivalTimeDataGridViewTextBoxColumn.DataPropertyName = "arrivalTime";
-            this.arrivalTimeDataGridViewTextBoxColumn.HeaderText = "Arriv";
-            this.arrivalTimeDataGridViewTextBoxColumn.Name = "arrivalTimeDataGridViewTextBoxColumn";
-            this.arrivalTimeDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // planeTypeDataGridViewTextBoxColumn
-            // 
-            this.planeTypeDataGridViewTextBoxColumn.DataPropertyName = "PlaneType";
-            this.planeTypeDataGridViewTextBoxColumn.HeaderText = "PlaneType";
-            this.planeTypeDataGridViewTextBoxColumn.Name = "planeTypeDataGridViewTextBoxColumn";
-            this.planeTypeDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // currCapacityDataGridViewTextBoxColumn
-            // 
-            this.currCapacityDataGridViewTextBoxColumn.DataPropertyName = "currCapacity";
-            this.currCapacityDataGridViewTextBoxColumn.HeaderText = "Curr Capacity";
-            this.currCapacityDataGridViewTextBoxColumn.Name = "currCapacityDataGridViewTextBoxColumn";
-            this.currCapacityDataGridViewTextBoxColumn.ReadOnly = true;
+            this.del_flights_datagridview.AllowUserToAddRows = false;
+            this.del_flights_datagridview.AllowUserToDeleteRows = false;
+            this.del_flights_datagridview.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.del_flights_datagridview.Location = new System.Drawing.Point(47, 149);
+            this.del_flights_datagridview.Name = "del_flights_datagridview";
+            this.del_flights_datagridview.ReadOnly = true;
+            this.del_flights_datagridview.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.del_flights_datagridview.Size = new System.Drawing.Size(523, 221);
+            this.del_flights_datagridview.TabIndex = 7;
+            this.del_flights_datagridview.SelectionChanged += new System.EventHandler(this.del_flights_datagridview_SelectionChanged);
             // 
             // flightsBindingSource1
             // 
@@ -603,6 +567,82 @@ namespace Air3550
             // flightsTableAdapter1
             // 
             this.flightsTableAdapter1.ClearBeforeFill = true;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(44, 26);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(97, 13);
+            this.label4.TabIndex = 38;
+            this.label4.Text = "Sort flight routes by";
+            // 
+            // del_destination_combobox
+            // 
+            this.del_destination_combobox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.del_destination_combobox.FormattingEnabled = true;
+            this.del_destination_combobox.Location = new System.Drawing.Point(108, 82);
+            this.del_destination_combobox.Name = "del_destination_combobox";
+            this.del_destination_combobox.Size = new System.Drawing.Size(121, 21);
+            this.del_destination_combobox.TabIndex = 35;
+            this.del_destination_combobox.TextChanged += new System.EventHandler(this.del_destination_combobox_TextChanged);
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(44, 85);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(60, 13);
+            this.label5.TabIndex = 37;
+            this.label5.Text = "Destination";
+            // 
+            // del_origin_combobox
+            // 
+            this.del_origin_combobox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.del_origin_combobox.FormattingEnabled = true;
+            this.del_origin_combobox.Location = new System.Drawing.Point(108, 50);
+            this.del_origin_combobox.Name = "del_origin_combobox";
+            this.del_origin_combobox.Size = new System.Drawing.Size(121, 21);
+            this.del_origin_combobox.TabIndex = 34;
+            this.del_origin_combobox.TextChanged += new System.EventHandler(this.del_origin_combobox_TextChanged);
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(44, 58);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(34, 13);
+            this.label6.TabIndex = 36;
+            this.label6.Text = "Origin";
+            // 
+            // del_flightidvalue_label
+            // 
+            this.del_flightidvalue_label.AutoSize = true;
+            this.del_flightidvalue_label.Location = new System.Drawing.Point(378, 26);
+            this.del_flightidvalue_label.Name = "del_flightidvalue_label";
+            this.del_flightidvalue_label.Size = new System.Drawing.Size(16, 13);
+            this.del_flightidvalue_label.TabIndex = 39;
+            this.del_flightidvalue_label.Text = "---";
+            // 
+            // del_clearSort_button
+            // 
+            this.del_clearSort_button.Location = new System.Drawing.Point(108, 114);
+            this.del_clearSort_button.Name = "del_clearSort_button";
+            this.del_clearSort_button.Size = new System.Drawing.Size(121, 21);
+            this.del_clearSort_button.TabIndex = 40;
+            this.del_clearSort_button.Text = "Clear Sort Criteria";
+            this.del_clearSort_button.UseVisualStyleBackColor = true;
+            this.del_clearSort_button.Click += new System.EventHandler(this.del_clearSort_button_Click);
+            // 
+            // edit_clearSort_button
+            // 
+            this.edit_clearSort_button.Location = new System.Drawing.Point(108, 114);
+            this.edit_clearSort_button.Name = "edit_clearSort_button";
+            this.edit_clearSort_button.Size = new System.Drawing.Size(121, 21);
+            this.edit_clearSort_button.TabIndex = 41;
+            this.edit_clearSort_button.Text = "Clear Sort Criteria";
+            this.edit_clearSort_button.UseVisualStyleBackColor = true;
+            this.edit_clearSort_button.Click += new System.EventHandler(this.edit_clearSort_button_Click);
             // 
             // LoadEngLandingPage
             // 
@@ -629,7 +669,7 @@ namespace Air3550
             ((System.ComponentModel.ISupportInitialize)(this.air3550DBDataSet)).EndInit();
             this.deleteRoute_groupBox.ResumeLayout(false);
             this.deleteRoute_groupBox.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.del_flights_datagridview)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.flightsBindingSource1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.flightsBindingSource)).EndInit();
             this.ResumeLayout(false);
@@ -664,20 +704,14 @@ namespace Air3550
         private System.Windows.Forms.ComboBox edit_origin_combobox;
         private System.Windows.Forms.Label edit_origin_label;
         private System.Windows.Forms.GroupBox deleteRoute_groupBox;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button del_submit_button;
         private System.Windows.Forms.Label del_selected_route_label;
         private System.Windows.Forms.DataGridView edit_flights_dataview;
         private System.Windows.Forms.Label add_distanceValue_label;
         private System.Windows.Forms.Label add_distance_label;
         private Air3550DBDataSet air3550DBDataSet;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView del_flights_datagridview;
         private System.Windows.Forms.BindingSource flightsBindingSource;
-        private System.Windows.Forms.DataGridViewTextBoxColumn originAbvDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn destAbvDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn departureTimeDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn arrivalTimeDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn planeTypeDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn currCapacityDataGridViewTextBoxColumn;
         private System.Windows.Forms.BindingSource flightsBindingSource1;
         private System.Windows.Forms.Button logout_button;
         private System.Windows.Forms.DateTimePicker add_arrival_time_DTP;
@@ -695,5 +729,13 @@ namespace Air3550
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.ComboBox del_destination_combobox;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.ComboBox del_origin_combobox;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label del_flightidvalue_label;
+        private System.Windows.Forms.Button del_clearSort_button;
+        private System.Windows.Forms.Button edit_clearSort_button;
     }
 }
