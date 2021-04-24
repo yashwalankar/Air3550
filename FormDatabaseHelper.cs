@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
@@ -241,7 +242,7 @@ namespace Air3550
             }
         }
 
-        public static void updatePlaneInFlightsTable(int flightId,string planeModel,int capacity)
+        public static void updatePlaneInFlightsTable(int flightId,String planeModel,int capacity)
         {
             string dbString = Properties.Settings.Default.Air3550DBConnectionString;
             using (SqlConnection sqlConnection = new SqlConnection(dbString))
@@ -260,27 +261,6 @@ namespace Air3550
 
                 command.ExecuteNonQuery();
 
-            }
-        }
-
-        public static void updateTimesInFlightsTable(int flightID, DateTime arrivalTime, DateTime departureTime, double cost)
-        {
-            string dbString = Properties.Settings.Default.Air3550DBConnectionString;
-            using (SqlConnection sqlConnection = new SqlConnection(dbString))
-            {
-                if (sqlConnection.State != ConnectionState.Open) sqlConnection.Open();
-
-                string sqlString = "UPDATE Flights SET departureTime = @departTime, arrivalTime = @arrivalTime, cost = @cost " +
-                    "WHERE Id = @flightId";
-
-                SqlCommand command = new SqlCommand(sqlString, sqlConnection);
-
-                command.Parameters.AddWithValue("@arrivalTime", arrivalTime);
-                command.Parameters.AddWithValue("@departTime", departureTime);
-                command.Parameters.AddWithValue("@flightId", flightID);
-                command.Parameters.AddWithValue("@cost", cost);
-
-                command.ExecuteNonQuery();
             }
         }
 
@@ -350,22 +330,173 @@ namespace Air3550
                 }
             }
         }
-
-        public static void removeFlightFromRoutes(int flightID)
+        public static String getAirportAbvFromCity(String city)
         {
+            string airportAbv="";
             string dbString = Properties.Settings.Default.Air3550DBConnectionString;
             using (SqlConnection sqlConnection = new SqlConnection(dbString))
             {
                 if (sqlConnection.State != ConnectionState.Open) sqlConnection.Open();
 
-                string sqlString = "DELETE FROM Flights WHERE Id = @flightId";
 
-                SqlCommand command = new SqlCommand(sqlString, sqlConnection);
+                using (SqlCommand sqlCommand = new SqlCommand("SELECT AirportAbbrev FROM AirportList WHERE City LIKE @city ", sqlConnection))
+                {
+                    sqlCommand.Parameters.AddWithValue("@city", city);
 
-                command.Parameters.AddWithValue("@flightId", flightID);
+                    SqlDataReader sqlReader = sqlCommand.ExecuteReader();
 
-                command.ExecuteNonQuery();
+                    if (sqlReader.HasRows)
+                    {
+                        while (sqlReader.Read())
+                        {
+                            airportAbv = sqlReader["AirportAbbrev"].ToString();
+                        }
+                    }
+                    else
+                    {
+                        Console.Write("Not in database");
+                    }
+                    sqlReader.Close();
+                }
             }
+
+
+
+            return airportAbv;
+        }
+
+        public static void FindFlights(String originAbv,String destAbv,DateTime deptDate)
+        {
+            string dbString = Properties.Settings.Default.Air3550DBConnectionString;
+            List<int[]> flightsFound = new List<int[]>();
+
+            var possibeRoutesleg1 = new[] { new { id = 1 , dest = "dest" } }.ToList();
+            possibeRoutesleg1.Clear();
+
+
+            //Searching if the route actually exists in flights table
+
+            using (SqlConnection sqlConnection = new SqlConnection(dbString))
+            {
+                if (sqlConnection.State != ConnectionState.Open) sqlConnection.Open();
+
+                //get all the flights from orign 
+                using (SqlCommand sqlCommand = new SqlCommand("SELECT id, destAbv FROM Flights " +
+                                                              "WHERE originAbv LIKE @originAbv ", sqlConnection))
+                {
+                    sqlCommand.Parameters.AddWithValue("@originAbv", originAbv);
+
+                    SqlDataReader sqlReader = sqlCommand.ExecuteReader();
+
+                    if (sqlReader.HasRows)
+                    {
+                        while (sqlReader.Read())
+                        {
+                            int possibleId = (int)sqlReader["id"];
+                            String possibleDest = sqlReader["destAbv"].ToString();
+
+                            //check for direct flights to destination 
+                            if (possibleDest.Equals(destAbv))
+                            {
+                                flightsFound.Add(new int[]{ possibleId,0});
+                            }
+                            else
+                            {
+                                //add all the destination served by origin to a list 
+                                possibeRoutesleg1.Add(new { id = possibleId, dest = possibleDest });
+
+                            }              
+                        }
+                    }
+                    else
+                    {
+                       // No flights from origin
+                    }
+                    sqlReader.Close();
+                }
+            }
+
+            //check for legged connections
+            var possibeRoutesleg2 = new[] { new { id = 1, origin = "dest" } }.ToList();
+            possibeRoutesleg2.Clear();
+            
+            using (SqlConnection sqlConnection = new SqlConnection(dbString))
+            {
+                if (sqlConnection.State != ConnectionState.Open) sqlConnection.Open();
+
+                
+                using (SqlCommand sqlCommand = new SqlCommand("SELECT id, originAbv FROM Flights " +
+                                                              "WHERE destAbv LIKE @destAbv ", sqlConnection))
+                {
+                    sqlCommand.Parameters.AddWithValue("@destAbv", destAbv);
+
+                    SqlDataReader sqlReader = sqlCommand.ExecuteReader();
+
+                    if (sqlReader.HasRows)
+                    {
+                        while (sqlReader.Read())
+                        {
+                            int possibleId = (int) sqlReader["id"];
+                            String possibleConnection = sqlReader["originAbv"].ToString();
+                            possibeRoutesleg2.Add(new { id = possibleId, origin = possibleConnection });
+                        }
+                    }
+                    
+                    sqlReader.Close();
+                }
+
+                foreach(var leg1 in possibeRoutesleg1)
+                {
+                    foreach(var leg2 in possibeRoutesleg2)
+                    {
+                        if (leg1.dest.Equals(leg2.origin))
+                        {
+                            flightsFound.Add(new int[] { leg1.id, leg2.id });
+                        }
+                    }
+                }
+
+
+
+
+            }
+
+            foreach(int[] item in flightsFound)
+            {
+                Console.WriteLine(item[0] +" "+ item[1]);
+
+            }
+
+        }
+
+       
+        public static String getAirportAbvFromCity2(String city)
+        {
+            String airportAbbv = "";
+            string dbString = Properties.Settings.Default.Air3550DBConnectionString;
+            using (SqlConnection sqlConnection = new SqlConnection(dbString))
+            {
+                if (sqlConnection.State != ConnectionState.Open) sqlConnection.Open();
+
+
+                using (SqlCommand sqlCommand = new SqlCommand("SELECT AirportAbbrev FROM AirportList WHERE City LIKE @City ", sqlConnection))
+                {
+                    sqlCommand.Parameters.AddWithValue("@City", city);
+
+                    SqlDataReader sqlReader = sqlCommand.ExecuteReader();
+
+
+
+                    while (sqlReader.Read())
+                    {
+                        airportAbbv = sqlReader["AirportAbbrev"].ToString();
+                    }
+
+                    sqlReader.Close();
+                }
+            }
+
+            return airportAbbv;
         }
 
 

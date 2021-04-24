@@ -46,7 +46,7 @@ namespace Air3550
             this.returnDate_label = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.oneWay_rBtn = new System.Windows.Forms.RadioButton();
-            this.return_rbtn = new System.Windows.Forms.RadioButton();
+            this.return_rBtn = new System.Windows.Forms.RadioButton();
             this.origin_label = new System.Windows.Forms.Label();
             this.deptDate_dtp = new System.Windows.Forms.DateTimePicker();
             this.destination_label = new System.Windows.Forms.Label();
@@ -196,17 +196,17 @@ namespace Air3550
             // 
             // returnDate_dtp
             // 
-            this.returnDate_dtp.CustomFormat = "yyyy/MM/dd - h:mm tt";
+            this.returnDate_dtp.CustomFormat = "yyyy/MM/dd";
             this.returnDate_dtp.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.returnDate_dtp.Location = new System.Drawing.Point(413, 90);
+            this.returnDate_dtp.Location = new System.Drawing.Point(375, 90);
             this.returnDate_dtp.Name = "returnDate_dtp";
-            this.returnDate_dtp.Size = new System.Drawing.Size(142, 20);
+            this.returnDate_dtp.Size = new System.Drawing.Size(103, 20);
             this.returnDate_dtp.TabIndex = 34;
             // 
             // returnDate_label
             // 
             this.returnDate_label.AutoSize = true;
-            this.returnDate_label.Location = new System.Drawing.Point(410, 73);
+            this.returnDate_label.Location = new System.Drawing.Point(372, 73);
             this.returnDate_label.Name = "returnDate_label";
             this.returnDate_label.Size = new System.Drawing.Size(39, 13);
             this.returnDate_label.TabIndex = 33;
@@ -215,7 +215,7 @@ namespace Air3550
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.oneWay_rBtn);
-            this.groupBox1.Controls.Add(this.return_rbtn);
+            this.groupBox1.Controls.Add(this.return_rBtn);
             this.groupBox1.Location = new System.Drawing.Point(8, 19);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(164, 39);
@@ -236,17 +236,17 @@ namespace Air3550
             this.oneWay_rBtn.UseVisualStyleBackColor = true;
             this.oneWay_rBtn.CheckedChanged += new System.EventHandler(this.oneWay_rBtn_CheckedChanged);
             // 
-            // return_rbtn
+            // return_rBtn
             // 
-            this.return_rbtn.AutoSize = true;
-            this.return_rbtn.Location = new System.Drawing.Point(85, 16);
-            this.return_rbtn.Name = "return_rbtn";
-            this.return_rbtn.Size = new System.Drawing.Size(57, 17);
-            this.return_rbtn.TabIndex = 31;
-            this.return_rbtn.TabStop = true;
-            this.return_rbtn.Text = "Return";
-            this.return_rbtn.UseVisualStyleBackColor = true;
-            this.return_rbtn.CheckedChanged += new System.EventHandler(this.return_rbtn_CheckedChanged);
+            this.return_rBtn.AutoSize = true;
+            this.return_rBtn.Location = new System.Drawing.Point(85, 16);
+            this.return_rBtn.Name = "return_rBtn";
+            this.return_rBtn.Size = new System.Drawing.Size(57, 17);
+            this.return_rBtn.TabIndex = 31;
+            this.return_rBtn.TabStop = true;
+            this.return_rBtn.Text = "Return";
+            this.return_rBtn.UseVisualStyleBackColor = true;
+            this.return_rBtn.CheckedChanged += new System.EventHandler(this.return_rbtn_CheckedChanged);
             // 
             // origin_label
             // 
@@ -259,11 +259,11 @@ namespace Air3550
             // 
             // deptDate_dtp
             // 
-            this.deptDate_dtp.CustomFormat = "yyyy/MM/dd - h:mm tt";
+            this.deptDate_dtp.CustomFormat = "yyyy/MM/dd";
             this.deptDate_dtp.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.deptDate_dtp.Location = new System.Drawing.Point(246, 90);
             this.deptDate_dtp.Name = "deptDate_dtp";
-            this.deptDate_dtp.Size = new System.Drawing.Size(136, 20);
+            this.deptDate_dtp.Size = new System.Drawing.Size(98, 20);
             this.deptDate_dtp.TabIndex = 27;
             this.deptDate_dtp.ValueChanged += new System.EventHandler(this.dateTimePicker1_ValueChanged);
             // 
@@ -309,7 +309,7 @@ namespace Air3550
             this.currSysTime_DTP.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.currSysTime_DTP.Location = new System.Drawing.Point(119, 13);
             this.currSysTime_DTP.Name = "currSysTime_DTP";
-            this.currSysTime_DTP.Size = new System.Drawing.Size(141, 20);
+            this.currSysTime_DTP.Size = new System.Drawing.Size(155, 20);
             this.currSysTime_DTP.TabIndex = 24;
             // 
             // currSysTime_label
@@ -400,7 +400,7 @@ namespace Air3550
         private System.Windows.Forms.DateTimePicker deptDate_dtp;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.RadioButton oneWay_rBtn;
-        private System.Windows.Forms.RadioButton return_rbtn;
+        private System.Windows.Forms.RadioButton return_rBtn;
         private System.Windows.Forms.Label returnDate_label;
         private System.Windows.Forms.DateTimePicker returnDate_dtp;
     }
