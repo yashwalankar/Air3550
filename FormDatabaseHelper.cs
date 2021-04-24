@@ -365,11 +365,14 @@ namespace Air3550
             return airportAbv;
         }
 
-        public static int[] FindFlights(String originAbv,String destAbv,DateTime deptDate)
+        public static void FindFlights(String originAbv,String destAbv,DateTime deptDate)
         {
             string dbString = Properties.Settings.Default.Air3550DBConnectionString;
-            ArrayList flightsFound = new ArrayList();
-            int[] bookedFlightsfound = { 0, 0 };
+            List<int[]> flightsFound = new List<int[]>();
+
+            var possibeRoutesleg1 = new[] { new { id = 1 , dest = "dest" } }.ToList();
+            possibeRoutesleg1.Clear();
+
 
             //Searching if the route actually exists in flights table
 
@@ -377,12 +380,54 @@ namespace Air3550
             {
                 if (sqlConnection.State != ConnectionState.Open) sqlConnection.Open();
 
-
-                using (SqlCommand sqlCommand = new SqlCommand("SELECT id FROM Flights " +
-                                                              "WHERE originAbv LIKE @originAbv AND " +
-                                                              "destAbv LIKE @destAbv", sqlConnection))
+                //get all the flights from orign 
+                using (SqlCommand sqlCommand = new SqlCommand("SELECT id, destAbv FROM Flights " +
+                                                              "WHERE originAbv LIKE @originAbv ", sqlConnection))
                 {
                     sqlCommand.Parameters.AddWithValue("@originAbv", originAbv);
+
+                    SqlDataReader sqlReader = sqlCommand.ExecuteReader();
+
+                    if (sqlReader.HasRows)
+                    {
+                        while (sqlReader.Read())
+                        {
+                            int possibleId = (int)sqlReader["id"];
+                            String possibleDest = sqlReader["destAbv"].ToString();
+
+                            //check for direct flights to destination 
+                            if (possibleDest.Equals(destAbv))
+                            {
+                                flightsFound.Add(new int[]{ possibleId,0});
+                            }
+                            else
+                            {
+                                //add all the destination served by origin to a list 
+                                possibeRoutesleg1.Add(new { id = possibleId, dest = possibleDest });
+
+                            }              
+                        }
+                    }
+                    else
+                    {
+                       // No flights from origin
+                    }
+                    sqlReader.Close();
+                }
+            }
+
+            //check for legged connections
+            var possibeRoutesleg2 = new[] { new { id = 1, origin = "dest" } }.ToList();
+            possibeRoutesleg2.Clear();
+            
+            using (SqlConnection sqlConnection = new SqlConnection(dbString))
+            {
+                if (sqlConnection.State != ConnectionState.Open) sqlConnection.Open();
+
+                
+                using (SqlCommand sqlCommand = new SqlCommand("SELECT id, originAbv FROM Flights " +
+                                                              "WHERE destAbv LIKE @destAbv ", sqlConnection))
+                {
                     sqlCommand.Parameters.AddWithValue("@destAbv", destAbv);
 
                     SqlDataReader sqlReader = sqlCommand.ExecuteReader();
@@ -391,25 +436,41 @@ namespace Air3550
                     {
                         while (sqlReader.Read())
                         {
-                            flightsFound.Add((int)sqlReader["Id"]);
+                            int possibleId = (int) sqlReader["id"];
+                            String possibleConnection = sqlReader["originAbv"].ToString();
+                            possibeRoutesleg2.Add(new { id = possibleId, origin = possibleConnection });
                         }
                     }
-                    else
-                    {
-                       // using (SqlCommand sqlCommand = new SqlCommand("SELECT destAbv FROM () " , sqlConnection))
-                    }
+                    
                     sqlReader.Close();
                 }
+
+                foreach(var leg1 in possibeRoutesleg1)
+                {
+                    foreach(var leg2 in possibeRoutesleg2)
+                    {
+                        if (leg1.dest.Equals(leg2.origin))
+                        {
+                            flightsFound.Add(new int[] { leg1.id, leg2.id });
+                        }
+                    }
+                }
+
+
+
+
             }
 
-            Console.WriteLine(flightsFound[0]);
+            foreach(int[] item in flightsFound)
+            {
+                Console.WriteLine(item[0] +" "+ item[1]);
 
+            }
 
-            return bookedFlightsfound;
         }
 
        
-        public static String getAirportAbvFromCity(String city)
+        public static String getAirportAbvFromCity2(String city)
         {
             String airportAbbv = "";
             string dbString = Properties.Settings.Default.Air3550DBConnectionString;

@@ -73,7 +73,7 @@ namespace Air3550
 
         private void return_rbtn_CheckedChanged(object sender, EventArgs e)
         {
-            if (return_rbtn.Checked == true)
+            if (return_rBtn.Checked == true)
             {
                 ShowReturnComponents(true);
             }
@@ -120,7 +120,7 @@ namespace Air3550
                 DateTime currSysTime = currSysTime_DTP.Value;
                 DateTime deptTime = deptDate_dtp.Value;
                 bool oneWay = oneWay_rBtn.Checked;
-                bool returnBooking = return_rbtn.Checked;
+                bool returnBooking = return_rBtn.Checked;
 
                // String originAbv = origin_comboBox.SelectedItem.ToString();
                // String destAbv = destination_comboBox.SelectedItem.ToString();
