@@ -365,12 +365,18 @@ namespace Air3550
             return airportAbv;
         }
 
-        public static void FindFlights(String originAbv,String destAbv,DateTime deptDate)
+        /*Returns a list of int[2] of flightId of posssible ways to go from origin A to destination B
+         * [flighId,0] if direct flight form A to B
+         * [flighIdX,flighIdY] for connecting flights where flighIdX is for A to C and flighIdY is for C to A , where C is the connection 
+         */
+        public static List<int[]> FindFlights_helper(String originAbv,String destAbv)
         {
+            int MIN_LAYOVER_TIME_MIN = 40; //in minutes
+            int MAX_LAYOVER_TIME_HOURS = 8; //in hours
             string dbString = Properties.Settings.Default.Air3550DBConnectionString;
             List<int[]> flightsFound = new List<int[]>();
 
-            var possibeRoutesleg1 = new[] { new { id = 1 , dest = "dest" } }.ToList();
+            var possibeRoutesleg1 = new[] { new { id = 1 , dest = "dest" ,arrivalTime =new DateTime() } }.ToList();
             possibeRoutesleg1.Clear();
 
 
@@ -381,7 +387,7 @@ namespace Air3550
                 if (sqlConnection.State != ConnectionState.Open) sqlConnection.Open();
 
                 //get all the flights from orign 
-                using (SqlCommand sqlCommand = new SqlCommand("SELECT id, destAbv FROM Flights " +
+                using (SqlCommand sqlCommand = new SqlCommand("SELECT id, destAbv , arrivalTime FROM Flights " +
                                                               "WHERE originAbv LIKE @originAbv ", sqlConnection))
                 {
                     sqlCommand.Parameters.AddWithValue("@originAbv", originAbv);
@@ -394,7 +400,7 @@ namespace Air3550
                         {
                             int possibleId = (int)sqlReader["id"];
                             String possibleDest = sqlReader["destAbv"].ToString();
-
+                            DateTime arrivalTime = DateTime.Parse(sqlReader["arrivalTime"].ToString());
                             //check for direct flights to destination 
                             if (possibleDest.Equals(destAbv))
                             {
@@ -403,7 +409,7 @@ namespace Air3550
                             else
                             {
                                 //add all the destination served by origin to a list 
-                                possibeRoutesleg1.Add(new { id = possibleId, dest = possibleDest });
+                                possibeRoutesleg1.Add(new { id = possibleId, dest = possibleDest , arrivalTime = arrivalTime });
 
                             }              
                         }
@@ -417,7 +423,7 @@ namespace Air3550
             }
 
             //check for legged connections
-            var possibeRoutesleg2 = new[] { new { id = 1, origin = "dest" } }.ToList();
+            var possibeRoutesleg2 = new[] { new { id = 1, origin = "dest" ,departureTime = new DateTime()} }.ToList();
             possibeRoutesleg2.Clear();
             
             using (SqlConnection sqlConnection = new SqlConnection(dbString))
@@ -425,7 +431,7 @@ namespace Air3550
                 if (sqlConnection.State != ConnectionState.Open) sqlConnection.Open();
 
                 
-                using (SqlCommand sqlCommand = new SqlCommand("SELECT id, originAbv FROM Flights " +
+                using (SqlCommand sqlCommand = new SqlCommand("SELECT id, originAbv,departureTime FROM Flights " +
                                                               "WHERE destAbv LIKE @destAbv ", sqlConnection))
                 {
                     sqlCommand.Parameters.AddWithValue("@destAbv", destAbv);
@@ -438,7 +444,8 @@ namespace Air3550
                         {
                             int possibleId = (int) sqlReader["id"];
                             String possibleConnection = sqlReader["originAbv"].ToString();
-                            possibeRoutesleg2.Add(new { id = possibleId, origin = possibleConnection });
+                            DateTime departureTime = DateTime.Parse(sqlReader["departureTime"].ToString());
+                            possibeRoutesleg2.Add(new { id = possibleId, origin = possibleConnection , departureTime = departureTime});
                         }
                     }
                     
@@ -451,7 +458,13 @@ namespace Air3550
                     {
                         if (leg1.dest.Equals(leg2.origin))
                         {
-                            flightsFound.Add(new int[] { leg1.id, leg2.id });
+                            bool leg2DepartsAfterMinLayover = (leg2.departureTime >= leg1.arrivalTime.AddMinutes(MIN_LAYOVER_TIME_MIN));
+                            bool leg2DepartsBeforeMaxLayover = (leg2.departureTime <= leg1.arrivalTime.AddHours(MAX_LAYOVER_TIME_HOURS));
+                            if (leg2DepartsAfterMinLayover && leg2DepartsBeforeMaxLayover)
+                            {
+                                flightsFound.Add(new int[] { leg1.id, leg2.id });
+                            }
+                            
                         }
                     }
                 }
@@ -461,12 +474,14 @@ namespace Air3550
 
             }
 
-            foreach(int[] item in flightsFound)
+            /*printing the flights found to test
+            foreach (int[] item in flightsFound)
             {
-                Console.WriteLine(item[0] +" "+ item[1]);
+                Console.WriteLine(item[0] + " " + item[1]);
 
-            }
+            }*/
 
+            return flightsFound;
         }
 
        
@@ -537,7 +552,7 @@ namespace Air3550
             }
         }
 
-
+            
 
 
 
