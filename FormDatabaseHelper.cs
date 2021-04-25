@@ -552,9 +552,126 @@ namespace Air3550
             }
         }
 
-            
+        public static void CheckFlights(List<int[]> flightsFound, DateTime deptDate)
+        {
+            string dbString = Properties.Settings.Default.Air3550DBConnectionString;
+            using (SqlConnection sqlConnection = new SqlConnection(dbString))
+            {
+                if (sqlConnection.State != ConnectionState.Open) sqlConnection.Open();
 
 
+                using (SqlCommand sqlCommand = new SqlCommand("SELECT id FROM BookedFlights WHERE flightId LIKE @flightId AND maxCapcity > currCapacity ", sqlConnection))
+                {
+                    sqlCommand.Parameters.AddWithValue("@id", 1);
+
+                    SqlDataReader sqlReader = sqlCommand.ExecuteReader();
+
+                    if (sqlReader.HasRows)
+                    {
+                        while (sqlReader.Read())
+                        {
+                            string airportAbv = sqlReader["AirportAbbrev"].ToString();
+                        }
+                    }
+                    
+                    sqlReader.Close();
+                }
+            }
+
+        }
+
+        //returns booked flights id for flights id given the departure date(if exists) 
+        public static int getBookedFlights_ID(int flightId, DateTime deptDateChosen)
+        {
+            string dbString = Properties.Settings.Default.Air3550DBConnectionString;
+            using (SqlConnection sqlConnection = new SqlConnection(dbString))
+            {
+                if (sqlConnection.State != ConnectionState.Open) sqlConnection.Open();
+
+
+                using (SqlCommand sqlCommand = new SqlCommand("SELECT id FROM BookedFlights WHERE flightId LIKE @flightId AND " +
+                                                              "CAST( departureTime AS DATE ) LIKE CAST( @deptDateChosen AS DATE) " +
+                                                              "", sqlConnection))
+                {
+                    sqlCommand.Parameters.AddWithValue("@flightId", flightId);
+                    sqlCommand.Parameters.AddWithValue("@deptDateChosen", deptDateChosen.ToString());
+                    SqlDataReader sqlReader = sqlCommand.ExecuteReader();
+
+                    if (sqlReader.HasRows)
+                    {
+                        while (sqlReader.Read())
+                        {
+                            return (int) sqlReader["id"];
+                        }
+                    }
+                    else
+                    {
+                        //flight to insert 
+                        flight fl = getFlight_fromFlightsTable(flightId);
+                        //insert into BookedFlights table
+
+                        
+
+                        return 0;
+                    }
+
+                    sqlReader.Close();
+                }
+               
+            }
+            return 0;
+        }
+
+
+        public static void showAvailableFlights(String originAbv, String deptAbv,DateTime deptDate)
+        {
+            List<int[]> flightsFound = FindFlights_helper(originAbv, deptAbv);
+
+
+
+        }
+
+        public static flight getFlight_fromFlightsTable(int flightID)
+        {
+            flight fl = new flight();
+            fl.Id = flightID ;
+            string dbString = Properties.Settings.Default.Air3550DBConnectionString;
+            using (SqlConnection sqlConnection = new SqlConnection(dbString))
+            {
+                if (sqlConnection.State != ConnectionState.Open) sqlConnection.Open();
+
+
+                using (SqlCommand sqlCommand = new SqlCommand("SELECT * FROM Flights WHERE Id LIKE @flightID ", sqlConnection))
+                {
+                    sqlCommand.Parameters.AddWithValue("@flightID", flightID);
+
+                    SqlDataReader sqlReader = sqlCommand.ExecuteReader();
+
+
+
+                    while (sqlReader.Read())
+                    {
+                        fl.origin = sqlReader["originAbv"].ToString();
+                        fl.dest = sqlReader["destAbv"].ToString();
+                        fl.deptTime = DateTime.Parse(sqlReader["departureTime"].ToString());
+                        fl.arrivalTime = DateTime.Parse(sqlReader["arrivalTime"].ToString());
+                        fl.planeType = sqlReader["PlaneType"].ToString();
+                        fl.cost = Convert.ToDouble( sqlReader["cost"].ToString());
+                        fl.maxCapacity = (int)sqlReader["maxCapacity"];
+                        fl.currCapacity = (int)sqlReader["currCapacity"];
+                        fl.distance = (double) sqlReader["distance"];
+
+                    }
+
+                    sqlReader.Close();
+                }
+            }
+
+
+
+
+            return fl;
+        }
 
 
     } 
