@@ -202,7 +202,7 @@ namespace Air3550
             this.bookFlights_groupBox.Controls.Add(this.departureDate_label);
             this.bookFlights_groupBox.Location = new System.Drawing.Point(46, 155);
             this.bookFlights_groupBox.Name = "bookFlights_groupBox";
-            this.bookFlights_groupBox.Size = new System.Drawing.Size(864, 607);
+            this.bookFlights_groupBox.Size = new System.Drawing.Size(860, 865);
             this.bookFlights_groupBox.TabIndex = 22;
             this.bookFlights_groupBox.TabStop = false;
             this.bookFlights_groupBox.Text = "Book Flight";
@@ -211,9 +211,9 @@ namespace Air3550
             // return_groupBox
             // 
             this.return_groupBox.Controls.Add(this.return_datagridview);
-            this.return_groupBox.Location = new System.Drawing.Point(445, 133);
+            this.return_groupBox.Location = new System.Drawing.Point(8, 454);
             this.return_groupBox.Name = "return_groupBox";
-            this.return_groupBox.Size = new System.Drawing.Size(398, 330);
+            this.return_groupBox.Size = new System.Drawing.Size(839, 330);
             this.return_groupBox.TabIndex = 37;
             this.return_groupBox.TabStop = false;
             this.return_groupBox.Text = "Return";
@@ -223,7 +223,7 @@ namespace Air3550
             this.return_datagridview.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.return_datagridview.Location = new System.Drawing.Point(6, 22);
             this.return_datagridview.Name = "return_datagridview";
-            this.return_datagridview.Size = new System.Drawing.Size(265, 275);
+            this.return_datagridview.Size = new System.Drawing.Size(629, 275);
             this.return_datagridview.TabIndex = 39;
             // 
             // oneway_groupBox
@@ -231,7 +231,7 @@ namespace Air3550
             this.oneway_groupBox.Controls.Add(this.oneway_datagridview);
             this.oneway_groupBox.Location = new System.Drawing.Point(8, 133);
             this.oneway_groupBox.Name = "oneway_groupBox";
-            this.oneway_groupBox.Size = new System.Drawing.Size(413, 330);
+            this.oneway_groupBox.Size = new System.Drawing.Size(839, 315);
             this.oneway_groupBox.TabIndex = 36;
             this.oneway_groupBox.TabStop = false;
             this.oneway_groupBox.Text = "OneWay";
@@ -242,9 +242,11 @@ namespace Air3550
             this.oneway_datagridview.AllowUserToDeleteRows = false;
             this.oneway_datagridview.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.oneway_datagridview.Location = new System.Drawing.Point(9, 22);
+            this.oneway_datagridview.MultiSelect = false;
             this.oneway_datagridview.Name = "oneway_datagridview";
             this.oneway_datagridview.ReadOnly = true;
-            this.oneway_datagridview.Size = new System.Drawing.Size(265, 275);
+            this.oneway_datagridview.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.oneway_datagridview.Size = new System.Drawing.Size(626, 275);
             this.oneway_datagridview.TabIndex = 38;
             // 
             // arrow_label
@@ -415,7 +417,7 @@ namespace Air3550
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(922, 786);
+            this.ClientSize = new System.Drawing.Size(940, 1040);
             this.Controls.Add(this.rewardUsedValue_label);
             this.Controls.Add(this.rewardUsed_label);
             this.Controls.Add(this.currSysTime_DTP);

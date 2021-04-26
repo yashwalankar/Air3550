@@ -617,13 +617,27 @@ namespace Air3550
 
                         Console.WriteLine(fl.deptTime);
 
-                        TimeSpan timeofFlight = fl.deptTime.TimeOfDay;
-                        Console.WriteLine(timeofFlight);
-                        DateTime updatedDate = new DateTime(deptDateChosen.Year,deptDateChosen.Month,deptDateChosen.Day,timeofFlight.Hours,timeofFlight.Minutes,timeofFlight.Seconds);
+                        TimeSpan timeofFlightDept = fl.deptTime.TimeOfDay;
+                        Console.WriteLine(timeofFlightDept);
+                        DateTime updatedDeptDate = new DateTime(deptDateChosen.Year,deptDateChosen.Month,deptDateChosen.Day, timeofFlightDept.Hours, timeofFlightDept.Minutes, timeofFlightDept.Seconds);
                         
-                        fl.deptTime = updatedDate;
-
+                        fl.deptTime = updatedDeptDate;
                         Console.WriteLine(fl.deptTime);
+
+                        TimeSpan timeofFlightArrival = fl.arrivalTime.TimeOfDay;
+                        if (timeofFlightArrival < timeofFlightDept)
+                        {
+                            DateTime updatedArrivalDate = new DateTime(deptDateChosen.Year, deptDateChosen.Month, deptDateChosen.Day +1, timeofFlightDept.Hours, timeofFlightDept.Minutes, timeofFlightDept.Seconds);
+                            fl.arrivalTime = updatedArrivalDate;
+                        }
+                        else
+                        {
+                            DateTime updatedArrivalDate = new DateTime(deptDateChosen.Year, deptDateChosen.Month, deptDateChosen.Day + 1, timeofFlightDept.Hours, timeofFlightDept.Minutes, timeofFlightDept.Seconds);
+                            fl.arrivalTime = updatedArrivalDate;
+                        }
+                        
+
+
                         fl.currCapacity = 0;
                         //insert into BookedFlights table and get the id of the inserted flight in BookedFlights Table
                         int newid =  uploadFlight_bookedFlightsTable(fl);

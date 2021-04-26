@@ -17,11 +17,9 @@ namespace Air3550
              Application.EnableVisualStyles();
              Application.SetCompatibleTextRenderingDefault(false);
 
-             //Application.Run(new UserLandingPage(new User()));
+             Application.Run(new UserLandingPage(new User()));
 
-            Application.Run(new testForm());
-            /*
-                        FormDatabaseHelper.showAvailableFlights("ANC", "FAR", DateTime.Now);*/
+           
 
 
 
