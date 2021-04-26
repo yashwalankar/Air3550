@@ -581,8 +581,12 @@ namespace Air3550
         }
 
         //returns booked flights id for flights id given the departure date(if exists) 
-        public static int getBookedFlights_ID(int flightId, DateTime deptDateChosen)
+        public static int getBookedFlightsID_forFlight(int flightId, DateTime deptDateChosen)
         {
+            if(flightId == 0)
+            {
+                return 0;
+            }
             string dbString = Properties.Settings.Default.Air3550DBConnectionString;
             using (SqlConnection sqlConnection = new SqlConnection(dbString))
             {
@@ -608,11 +612,20 @@ namespace Air3550
                     {
                         //flight to insert 
                         flight fl = getFlight_fromFlightsTable(flightId);
-                        //insert into BookedFlights table
-
                         
-
-                        return 0;
+                        fl.deptTime = deptDateChosen;
+                        fl.currCapacity = 0;
+                        //insert into BookedFlights table and get the id of the inserted flight in BookedFlights Table
+                        int newid =  uploadFlight_bookedFlightsTable(fl);
+                        if (newid != 0)
+                        {
+                            return newid;
+                        }
+                        else
+                        {
+                            Console.WriteLine("insert failed");
+                        }
+                        
                     }
 
                     sqlReader.Close();
@@ -626,6 +639,28 @@ namespace Air3550
         public static void showAvailableFlights(String originAbv, String deptAbv,DateTime deptDate)
         {
             List<int[]> flightsFound = FindFlights_helper(originAbv, deptAbv);
+            List<int[]> bookedFlightsID = new List<int[]>();
+
+            foreach(int[] route in flightsFound)
+            {
+                flight fl_leg1 = getFlight_fromFlightsTable(route[0]);
+                flight fl_leg2 = getFlight_fromFlightsTable(route[1]);
+                
+
+                int leg1 = getBookedFlightsID_forFlight(route[0],deptDate);
+                int leg2 = 0;
+                if (fl_leg1.arrivalTime > fl_leg2.deptTime)
+                {
+                     leg2 = getBookedFlightsID_forFlight(route[1], deptDate.AddDays(1));
+                }
+                else
+                {
+                     leg2 = getBookedFlightsID_forFlight(route[1], deptDate);
+                }
+                
+                bookedFlightsID.Add(new int[] { leg1, leg2 });
+            }
+            
 
 
 
@@ -673,6 +708,47 @@ namespace Air3550
             return fl;
         }
 
+        public static int uploadFlight_bookedFlightsTable(flight newFlight)
+        {
+            int newid = 0;
+            string dbString = Properties.Settings.Default.Air3550DBConnectionString;
+            using (SqlConnection sqlConnection = new SqlConnection(dbString))
+            {
+                if (sqlConnection.State != ConnectionState.Open) sqlConnection.Open();
+
+                string sqlString = "INSERT INTO BookedFlights " +
+                    "(flightId,originAbv,destAbv,departureTime,arrivalTime,distance,PlaneType,cost,maxCapacity,currCapacity) " +
+                    "VALUES " +
+                    "(@flightId,@originAbv,@destAbv,@departureTime,@arrivalTime,@distance,@PlaneType,@cost,@maxCapacity,@currCapacity)" +
+                    "SELECT CAST(scope_identity() AS int)  ";
+                
+                SqlCommand command = new SqlCommand(sqlString, sqlConnection);
+
+                command.Parameters.AddWithValue("@flightId", newFlight.Id);
+                command.Parameters.AddWithValue("@originAbv", newFlight.origin);
+                command.Parameters.AddWithValue("@destAbv", newFlight.dest);
+                command.Parameters.AddWithValue("@departureTime", newFlight.deptTime);
+                command.Parameters.AddWithValue("@arrivalTime", newFlight.arrivalTime);
+                command.Parameters.AddWithValue("@distance", newFlight.distance);
+                command.Parameters.AddWithValue("@PlaneType", newFlight.planeType);
+                command.Parameters.AddWithValue("@cost", newFlight.cost);
+                command.Parameters.AddWithValue("@maxCapacity", newFlight.maxCapacity);
+                command.Parameters.AddWithValue("@currCapacity", newFlight.currCapacity);
+
+                 newid = (int) command.ExecuteScalar();
+
+               
+            }
+            return newid;
+        }
+        
+
+        
+
+
+          
+
+        
 
     } 
 }
