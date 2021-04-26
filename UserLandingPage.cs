@@ -26,6 +26,7 @@ namespace Air3550
             upcomingFlights_groupBox.Hide();
             pastFlights_groupBox.Hide();
 
+            oneway_groupBox.Hide();
             ShowReturnComponents(false);
         }
         
@@ -76,10 +77,12 @@ namespace Air3550
             if (return_rBtn.Checked == true)
             {
                 ShowReturnComponents(true);
+                
             }
             else
             {
                 ShowReturnComponents(false);
+                
             }
         }
 
@@ -101,11 +104,19 @@ namespace Air3550
             {
                 returnDate_label.Show();
                 returnDate_dtp.Show();
+                arrow_label.Text = "<---->";
+
+                return_groupBox.Show();
+
             }
             else
             {
                 returnDate_label.Hide();
                 returnDate_dtp.Hide();
+
+                arrow_label.Text = " ---->";
+
+                return_groupBox.Hide();
             }
 
         }
@@ -138,7 +149,7 @@ namespace Air3550
                     if (deptTime <= currSysTime.AddDays(60))
                     {
                         //find flight 
-
+                        //FormDatabaseHelper.showAvailableFlights(originAbv, destAbv, deptTime, oneway_datagridview);
 
 
 
@@ -159,5 +170,37 @@ namespace Air3550
                 Console.WriteLine("origin and dest not set");
             }
         }
+
+        private void showFlights_btn_Click(object sender, EventArgs e)
+        {
+            if(origin_comboBox.SelectedItem != null && destination_comboBox.SelectedItem != null)
+            {
+                String originCity  = origin_comboBox.SelectedItem.ToString();
+                String destCity = destination_comboBox.SelectedItem.ToString();
+
+                String originAbv = FormDatabaseHelper.getAirportAbvFromCity(originCity);
+                String destAbv = FormDatabaseHelper.getAirportAbvFromCity(destCity);
+
+                DateTime deptureDate = deptDate_dtp.Value;
+                oneway_groupBox.Text = originCity + "-->" + destCity;
+                return_groupBox.Text = destCity + "-->" + originCity;
+                if(return_rBtn.Checked == true)
+                {
+                    DateTime returnDate = deptDate_dtp.Value;
+                    return_groupBox.Show();
+                    oneway_groupBox.Show();
+                }
+                else
+                {
+                    return_groupBox.Hide();
+                    oneway_groupBox.Show();
+                }
+
+
+            }
+            
+            
+        }
+
     }
 }

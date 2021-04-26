@@ -14,16 +14,17 @@ namespace Air3550
         [STAThread]
         static void Main()
         {
-            /* Application.EnableVisualStyles();
+             Application.EnableVisualStyles();
              Application.SetCompatibleTextRenderingDefault(false);
 
-             Application.Run(new Login());*/
+             //Application.Run(new UserLandingPage(new User()));
 
-            flight fl = FormDatabaseHelper.getFlight_fromFlightsTable(150);
+            Application.Run(new testForm());
+            /*
+                        FormDatabaseHelper.showAvailableFlights("ANC", "FAR", DateTime.Now);*/
 
-           Console.WriteLine( FormDatabaseHelper.uploadFlight_bookedFlightsTable(fl));
-           
-            
+
+
         }
     }
 }

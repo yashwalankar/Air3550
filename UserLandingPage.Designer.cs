@@ -42,9 +42,15 @@ namespace Air3550
             this.upcomingFlights_groupBox = new System.Windows.Forms.GroupBox();
             this.upcomingFlights_datagridview = new System.Windows.Forms.DataGridView();
             this.bookFlights_groupBox = new System.Windows.Forms.GroupBox();
+            this.return_groupBox = new System.Windows.Forms.GroupBox();
+            this.return_datagridview = new System.Windows.Forms.DataGridView();
+            this.oneway_groupBox = new System.Windows.Forms.GroupBox();
+            this.oneway_datagridview = new System.Windows.Forms.DataGridView();
+            this.arrow_label = new System.Windows.Forms.Label();
+            this.showFlights_btn = new System.Windows.Forms.Button();
             this.returnDate_dtp = new System.Windows.Forms.DateTimePicker();
             this.returnDate_label = new System.Windows.Forms.Label();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.tripType_groupBox = new System.Windows.Forms.GroupBox();
             this.oneWay_rBtn = new System.Windows.Forms.RadioButton();
             this.return_rBtn = new System.Windows.Forms.RadioButton();
             this.origin_label = new System.Windows.Forms.Label();
@@ -60,7 +66,11 @@ namespace Air3550
             this.upcomingFlights_groupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.upcomingFlights_datagridview)).BeginInit();
             this.bookFlights_groupBox.SuspendLayout();
-            this.groupBox1.SuspendLayout();
+            this.return_groupBox.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.return_datagridview)).BeginInit();
+            this.oneway_groupBox.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.oneway_datagridview)).BeginInit();
+            this.tripType_groupBox.SuspendLayout();
             this.SuspendLayout();
             // 
             // logout_button
@@ -152,7 +162,7 @@ namespace Air3550
             // 
             this.pastFlights_groupBox.Location = new System.Drawing.Point(46, 155);
             this.pastFlights_groupBox.Name = "pastFlights_groupBox";
-            this.pastFlights_groupBox.Size = new System.Drawing.Size(774, 305);
+            this.pastFlights_groupBox.Size = new System.Drawing.Size(784, 405);
             this.pastFlights_groupBox.TabIndex = 20;
             this.pastFlights_groupBox.TabStop = false;
             this.pastFlights_groupBox.Text = "Past Flights";
@@ -177,9 +187,13 @@ namespace Air3550
             // 
             // bookFlights_groupBox
             // 
+            this.bookFlights_groupBox.Controls.Add(this.return_groupBox);
+            this.bookFlights_groupBox.Controls.Add(this.oneway_groupBox);
+            this.bookFlights_groupBox.Controls.Add(this.arrow_label);
+            this.bookFlights_groupBox.Controls.Add(this.showFlights_btn);
             this.bookFlights_groupBox.Controls.Add(this.returnDate_dtp);
             this.bookFlights_groupBox.Controls.Add(this.returnDate_label);
-            this.bookFlights_groupBox.Controls.Add(this.groupBox1);
+            this.bookFlights_groupBox.Controls.Add(this.tripType_groupBox);
             this.bookFlights_groupBox.Controls.Add(this.origin_label);
             this.bookFlights_groupBox.Controls.Add(this.deptDate_dtp);
             this.bookFlights_groupBox.Controls.Add(this.destination_label);
@@ -188,17 +202,75 @@ namespace Air3550
             this.bookFlights_groupBox.Controls.Add(this.departureDate_label);
             this.bookFlights_groupBox.Location = new System.Drawing.Point(46, 155);
             this.bookFlights_groupBox.Name = "bookFlights_groupBox";
-            this.bookFlights_groupBox.Size = new System.Drawing.Size(774, 324);
+            this.bookFlights_groupBox.Size = new System.Drawing.Size(864, 607);
             this.bookFlights_groupBox.TabIndex = 22;
             this.bookFlights_groupBox.TabStop = false;
             this.bookFlights_groupBox.Text = "Book Flight";
             this.bookFlights_groupBox.Enter += new System.EventHandler(this.bookFlights_groupBox_Enter);
             // 
+            // return_groupBox
+            // 
+            this.return_groupBox.Controls.Add(this.return_datagridview);
+            this.return_groupBox.Location = new System.Drawing.Point(445, 133);
+            this.return_groupBox.Name = "return_groupBox";
+            this.return_groupBox.Size = new System.Drawing.Size(398, 330);
+            this.return_groupBox.TabIndex = 37;
+            this.return_groupBox.TabStop = false;
+            this.return_groupBox.Text = "Return";
+            // 
+            // return_datagridview
+            // 
+            this.return_datagridview.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.return_datagridview.Location = new System.Drawing.Point(6, 22);
+            this.return_datagridview.Name = "return_datagridview";
+            this.return_datagridview.Size = new System.Drawing.Size(265, 275);
+            this.return_datagridview.TabIndex = 39;
+            // 
+            // oneway_groupBox
+            // 
+            this.oneway_groupBox.Controls.Add(this.oneway_datagridview);
+            this.oneway_groupBox.Location = new System.Drawing.Point(8, 133);
+            this.oneway_groupBox.Name = "oneway_groupBox";
+            this.oneway_groupBox.Size = new System.Drawing.Size(413, 330);
+            this.oneway_groupBox.TabIndex = 36;
+            this.oneway_groupBox.TabStop = false;
+            this.oneway_groupBox.Text = "OneWay";
+            // 
+            // oneway_datagridview
+            // 
+            this.oneway_datagridview.AllowUserToAddRows = false;
+            this.oneway_datagridview.AllowUserToDeleteRows = false;
+            this.oneway_datagridview.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.oneway_datagridview.Location = new System.Drawing.Point(9, 22);
+            this.oneway_datagridview.Name = "oneway_datagridview";
+            this.oneway_datagridview.ReadOnly = true;
+            this.oneway_datagridview.Size = new System.Drawing.Size(265, 275);
+            this.oneway_datagridview.TabIndex = 38;
+            // 
+            // arrow_label
+            // 
+            this.arrow_label.AutoSize = true;
+            this.arrow_label.Location = new System.Drawing.Point(107, 91);
+            this.arrow_label.Name = "arrow_label";
+            this.arrow_label.Size = new System.Drawing.Size(25, 13);
+            this.arrow_label.TabIndex = 35;
+            this.arrow_label.Text = " --->";
+            // 
+            // showFlights_btn
+            // 
+            this.showFlights_btn.Location = new System.Drawing.Point(573, 87);
+            this.showFlights_btn.Name = "showFlights_btn";
+            this.showFlights_btn.Size = new System.Drawing.Size(104, 23);
+            this.showFlights_btn.TabIndex = 27;
+            this.showFlights_btn.Text = "Show Flights";
+            this.showFlights_btn.UseVisualStyleBackColor = true;
+            this.showFlights_btn.Click += new System.EventHandler(this.showFlights_btn_Click);
+            // 
             // returnDate_dtp
             // 
             this.returnDate_dtp.CustomFormat = "yyyy/MM/dd";
             this.returnDate_dtp.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.returnDate_dtp.Location = new System.Drawing.Point(375, 90);
+            this.returnDate_dtp.Location = new System.Drawing.Point(372, 88);
             this.returnDate_dtp.Name = "returnDate_dtp";
             this.returnDate_dtp.Size = new System.Drawing.Size(103, 20);
             this.returnDate_dtp.TabIndex = 34;
@@ -212,16 +284,16 @@ namespace Air3550
             this.returnDate_label.TabIndex = 33;
             this.returnDate_label.Text = "Return";
             // 
-            // groupBox1
+            // tripType_groupBox
             // 
-            this.groupBox1.Controls.Add(this.oneWay_rBtn);
-            this.groupBox1.Controls.Add(this.return_rBtn);
-            this.groupBox1.Location = new System.Drawing.Point(8, 19);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(164, 39);
-            this.groupBox1.TabIndex = 32;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Trip Type";
+            this.tripType_groupBox.Controls.Add(this.oneWay_rBtn);
+            this.tripType_groupBox.Controls.Add(this.return_rBtn);
+            this.tripType_groupBox.Location = new System.Drawing.Point(8, 19);
+            this.tripType_groupBox.Name = "tripType_groupBox";
+            this.tripType_groupBox.Size = new System.Drawing.Size(164, 39);
+            this.tripType_groupBox.TabIndex = 32;
+            this.tripType_groupBox.TabStop = false;
+            this.tripType_groupBox.Text = "Trip Type";
             // 
             // oneWay_rBtn
             // 
@@ -261,7 +333,7 @@ namespace Air3550
             // 
             this.deptDate_dtp.CustomFormat = "yyyy/MM/dd";
             this.deptDate_dtp.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.deptDate_dtp.Location = new System.Drawing.Point(246, 90);
+            this.deptDate_dtp.Location = new System.Drawing.Point(256, 88);
             this.deptDate_dtp.Name = "deptDate_dtp";
             this.deptDate_dtp.Size = new System.Drawing.Size(98, 20);
             this.deptDate_dtp.TabIndex = 27;
@@ -270,7 +342,7 @@ namespace Air3550
             // destination_label
             // 
             this.destination_label.AutoSize = true;
-            this.destination_label.Location = new System.Drawing.Point(128, 73);
+            this.destination_label.Location = new System.Drawing.Point(140, 73);
             this.destination_label.Name = "destination_label";
             this.destination_label.Size = new System.Drawing.Size(60, 13);
             this.destination_label.TabIndex = 28;
@@ -280,7 +352,7 @@ namespace Air3550
             // 
             this.destination_comboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.destination_comboBox.FormattingEnabled = true;
-            this.destination_comboBox.Location = new System.Drawing.Point(131, 89);
+            this.destination_comboBox.Location = new System.Drawing.Point(140, 88);
             this.destination_comboBox.Name = "destination_comboBox";
             this.destination_comboBox.Size = new System.Drawing.Size(99, 21);
             this.destination_comboBox.TabIndex = 28;
@@ -289,7 +361,7 @@ namespace Air3550
             // 
             this.origin_comboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.origin_comboBox.FormattingEnabled = true;
-            this.origin_comboBox.Location = new System.Drawing.Point(8, 89);
+            this.origin_comboBox.Location = new System.Drawing.Point(5, 88);
             this.origin_comboBox.Name = "origin_comboBox";
             this.origin_comboBox.Size = new System.Drawing.Size(96, 21);
             this.origin_comboBox.TabIndex = 27;
@@ -297,7 +369,7 @@ namespace Air3550
             // departureDate_label
             // 
             this.departureDate_label.AutoSize = true;
-            this.departureDate_label.Location = new System.Drawing.Point(243, 73);
+            this.departureDate_label.Location = new System.Drawing.Point(256, 73);
             this.departureDate_label.Name = "departureDate_label";
             this.departureDate_label.Size = new System.Drawing.Size(54, 13);
             this.departureDate_label.TabIndex = 29;
@@ -343,7 +415,7 @@ namespace Air3550
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(832, 505);
+            this.ClientSize = new System.Drawing.Size(922, 786);
             this.Controls.Add(this.rewardUsedValue_label);
             this.Controls.Add(this.rewardUsed_label);
             this.Controls.Add(this.currSysTime_DTP);
@@ -366,8 +438,12 @@ namespace Air3550
             ((System.ComponentModel.ISupportInitialize)(this.upcomingFlights_datagridview)).EndInit();
             this.bookFlights_groupBox.ResumeLayout(false);
             this.bookFlights_groupBox.PerformLayout();
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
+            this.return_groupBox.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.return_datagridview)).EndInit();
+            this.oneway_groupBox.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.oneway_datagridview)).EndInit();
+            this.tripType_groupBox.ResumeLayout(false);
+            this.tripType_groupBox.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -398,10 +474,16 @@ namespace Air3550
         private System.Windows.Forms.Label destination_label;
         private System.Windows.Forms.Label origin_label;
         private System.Windows.Forms.DateTimePicker deptDate_dtp;
-        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.GroupBox tripType_groupBox;
         private System.Windows.Forms.RadioButton oneWay_rBtn;
         private System.Windows.Forms.RadioButton return_rBtn;
         private System.Windows.Forms.Label returnDate_label;
         private System.Windows.Forms.DateTimePicker returnDate_dtp;
+        private System.Windows.Forms.Button showFlights_btn;
+        private System.Windows.Forms.Label arrow_label;
+        private System.Windows.Forms.GroupBox return_groupBox;
+        private System.Windows.Forms.GroupBox oneway_groupBox;
+        private System.Windows.Forms.DataGridView return_datagridview;
+        private System.Windows.Forms.DataGridView oneway_datagridview;
     }
 }
