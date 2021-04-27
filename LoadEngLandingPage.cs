@@ -38,6 +38,11 @@ namespace Air3550
             s.Visible = true;
         }
 
+        private void LoadEngLandingPage_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Application.Exit();
+        }
+
         // ==================================================================================
         // Add Route Group Methods ==========================================================
         // ==================================================================================

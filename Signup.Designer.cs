@@ -49,6 +49,8 @@ namespace Air3550
             this.label3 = new System.Windows.Forms.Label();
             this.phone_textbox = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
+            this.password_error_label = new System.Windows.Forms.Label();
+            this.field_error_label = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // userID_label
@@ -217,11 +219,33 @@ namespace Air3550
             this.label4.TabIndex = 20;
             this.label4.Text = "Phone";
             // 
+            // password_error_label
+            // 
+            this.password_error_label.AutoSize = true;
+            this.password_error_label.ForeColor = System.Drawing.Color.Red;
+            this.password_error_label.Location = new System.Drawing.Point(327, 45);
+            this.password_error_label.Name = "password_error_label";
+            this.password_error_label.Size = new System.Drawing.Size(53, 13);
+            this.password_error_label.TabIndex = 22;
+            this.password_error_label.Text = "pass error";
+            // 
+            // field_error_label
+            // 
+            this.field_error_label.AutoSize = true;
+            this.field_error_label.ForeColor = System.Drawing.Color.Red;
+            this.field_error_label.Location = new System.Drawing.Point(327, 68);
+            this.field_error_label.Name = "field_error_label";
+            this.field_error_label.Size = new System.Drawing.Size(50, 13);
+            this.field_error_label.TabIndex = 23;
+            this.field_error_label.Text = "field error";
+            // 
             // Signup
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.field_error_label);
+            this.Controls.Add(this.password_error_label);
             this.Controls.Add(this.phone_textbox);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.email_textbox);
@@ -272,5 +296,7 @@ namespace Air3550
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox phone_textbox;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label password_error_label;
+        private System.Windows.Forms.Label field_error_label;
     }
 }

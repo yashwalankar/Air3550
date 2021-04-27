@@ -67,6 +67,7 @@ namespace Air3550
             // 
             this.pass_textbox.Location = new System.Drawing.Point(273, 101);
             this.pass_textbox.Name = "pass_textbox";
+            this.pass_textbox.PasswordChar = '*';
             this.pass_textbox.Size = new System.Drawing.Size(100, 20);
             this.pass_textbox.TabIndex = 3;
             // 
