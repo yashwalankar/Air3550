@@ -17,6 +17,12 @@ namespace Air3550
         public Login()
         {
             InitializeComponent();
+            error_label.Text = "";
+        }
+
+        private void Login_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Application.Exit();
         }
 
         private void login_btn_Click(object sender, EventArgs e)
@@ -40,10 +46,12 @@ namespace Air3550
 
             if (userExists == true)
             {
+                error_label.Text = "";
                 userData = AccountInformation(userID, encryptedPassword);
             }
             else
             {
+                error_label.Text = "* error logging in please retype username and password";
                 userData.type = 99;
             }
 
@@ -178,5 +186,4 @@ namespace Air3550
             }
         }
     }
-
 }

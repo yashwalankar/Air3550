@@ -14,14 +14,10 @@ namespace Air3550
         [STAThread]
         static void Main()
         {
-            /* Application.EnableVisualStyles();
+             Application.EnableVisualStyles();
              Application.SetCompatibleTextRenderingDefault(false);
 
-             Application.Run(new Login());*/
-
-            flight fl = FormDatabaseHelper.getFlight_fromFlightsTable(150);
-
-           Console.WriteLine( FormDatabaseHelper.uploadFlight_bookedFlightsTable(fl));
+             Application.Run(new Login());
            
             
         }
