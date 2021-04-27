@@ -51,7 +51,6 @@ namespace Air3550
             this.date_before_checkbox = new System.Windows.Forms.CheckBox();
             this.tools_groupbox = new System.Windows.Forms.GroupBox();
             this.single_report_button = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
             this.singleflight_report_groupbox = new System.Windows.Forms.GroupBox();
             this.single_transactions_datagridview = new System.Windows.Forms.DataGridView();
             this.single_arrivalDate_label = new System.Windows.Forms.Label();
@@ -77,10 +76,22 @@ namespace Air3550
             this.close_single_report_button = new System.Windows.Forms.Button();
             this.label7 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
+            this.fullReport_groupbox = new System.Windows.Forms.GroupBox();
+            this.full_report_close_button = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.full_flightCount_label = new System.Windows.Forms.Label();
+            this.label26 = new System.Windows.Forms.Label();
+            this.full_pointRev_label = new System.Windows.Forms.Label();
+            this.full_cardRev_label = new System.Windows.Forms.Label();
+            this.label29 = new System.Windows.Forms.Label();
+            this.label30 = new System.Windows.Forms.Label();
+            this.full_report_datagridview = new System.Windows.Forms.DataGridView();
             ((System.ComponentModel.ISupportInitialize)(this.flights_dataview)).BeginInit();
             this.tools_groupbox.SuspendLayout();
             this.singleflight_report_groupbox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.single_transactions_datagridview)).BeginInit();
+            this.fullReport_groupbox.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.full_report_datagridview)).BeginInit();
             this.SuspendLayout();
             // 
             // logout_button
@@ -244,11 +255,12 @@ namespace Air3550
             this.generate_submit_button.TabIndex = 60;
             this.generate_submit_button.Text = "Generate Report";
             this.generate_submit_button.UseVisualStyleBackColor = true;
+            this.generate_submit_button.Click += new System.EventHandler(this.generate_submit_button_Click);
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(11, 155);
+            this.label3.Location = new System.Drawing.Point(11, 166);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(437, 13);
             this.label3.TabIndex = 61;
@@ -258,12 +270,11 @@ namespace Air3550
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(11, 139);
+            this.label4.Location = new System.Drawing.Point(11, 143);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(408, 13);
+            this.label4.Size = new System.Drawing.Size(366, 13);
             this.label4.TabIndex = 62;
-            this.label4.Text = "To generate report using above criteria or for all flights use \"Generate Report\" " +
-    "button.";
+            this.label4.Text = "To generate full revenue report for all airports use \"Generate Report\" button.";
             // 
             // date_after_checkbox
             // 
@@ -291,7 +302,6 @@ namespace Air3550
             // 
             this.tools_groupbox.Controls.Add(this.single_report_button);
             this.tools_groupbox.Controls.Add(this.flights_dataview);
-            this.tools_groupbox.Controls.Add(this.label1);
             this.tools_groupbox.Controls.Add(this.date_before_checkbox);
             this.tools_groupbox.Controls.Add(this.label4);
             this.tools_groupbox.Controls.Add(this.label3);
@@ -324,16 +334,6 @@ namespace Air3550
             this.single_report_button.Text = "Single Report";
             this.single_report_button.UseVisualStyleBackColor = true;
             this.single_report_button.Click += new System.EventHandler(this.single_report_button_Click);
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(11, 170);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(445, 13);
-            this.label1.TabIndex = 63;
-            this.label1.Text = "A report is generated only including the flights shown below when \"Generate Repor" +
-    "t\" is used.";
             // 
             // singleflight_report_groupbox
             // 
@@ -587,6 +587,105 @@ namespace Air3550
             this.label14.TabIndex = 26;
             this.label14.Text = "$";
             // 
+            // fullReport_groupbox
+            // 
+            this.fullReport_groupbox.Controls.Add(this.full_report_datagridview);
+            this.fullReport_groupbox.Controls.Add(this.label1);
+            this.fullReport_groupbox.Controls.Add(this.full_report_close_button);
+            this.fullReport_groupbox.Controls.Add(this.label26);
+            this.fullReport_groupbox.Controls.Add(this.full_flightCount_label);
+            this.fullReport_groupbox.Controls.Add(this.label30);
+            this.fullReport_groupbox.Controls.Add(this.label29);
+            this.fullReport_groupbox.Controls.Add(this.full_cardRev_label);
+            this.fullReport_groupbox.Controls.Add(this.full_pointRev_label);
+            this.fullReport_groupbox.Location = new System.Drawing.Point(21, 49);
+            this.fullReport_groupbox.Name = "fullReport_groupbox";
+            this.fullReport_groupbox.Size = new System.Drawing.Size(669, 548);
+            this.fullReport_groupbox.TabIndex = 67;
+            this.fullReport_groupbox.TabStop = false;
+            this.fullReport_groupbox.Text = "Full Report";
+            // 
+            // full_report_close_button
+            // 
+            this.full_report_close_button.Location = new System.Drawing.Point(579, 18);
+            this.full_report_close_button.Name = "full_report_close_button";
+            this.full_report_close_button.Size = new System.Drawing.Size(75, 23);
+            this.full_report_close_button.TabIndex = 1;
+            this.full_report_close_button.Text = "CloseReport";
+            this.full_report_close_button.UseVisualStyleBackColor = true;
+            this.full_report_close_button.Click += new System.EventHandler(this.full_report_close_button_Click);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(188, 44);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(13, 13);
+            this.label1.TabIndex = 89;
+            this.label1.Text = "$";
+            // 
+            // full_flightCount_label
+            // 
+            this.full_flightCount_label.AutoSize = true;
+            this.full_flightCount_label.Location = new System.Drawing.Point(186, 24);
+            this.full_flightCount_label.Name = "full_flightCount_label";
+            this.full_flightCount_label.Size = new System.Drawing.Size(10, 13);
+            this.full_flightCount_label.TabIndex = 83;
+            this.full_flightCount_label.Text = "-";
+            // 
+            // label26
+            // 
+            this.label26.AutoSize = true;
+            this.label26.Location = new System.Drawing.Point(11, 24);
+            this.label26.Name = "label26";
+            this.label26.Size = new System.Drawing.Size(168, 13);
+            this.label26.TabIndex = 78;
+            this.label26.Text = "Number of currently booked flights";
+            // 
+            // full_pointRev_label
+            // 
+            this.full_pointRev_label.AutoSize = true;
+            this.full_pointRev_label.Location = new System.Drawing.Point(144, 65);
+            this.full_pointRev_label.Name = "full_pointRev_label";
+            this.full_pointRev_label.Size = new System.Drawing.Size(10, 13);
+            this.full_pointRev_label.TabIndex = 77;
+            this.full_pointRev_label.Text = "-";
+            // 
+            // full_cardRev_label
+            // 
+            this.full_cardRev_label.AutoSize = true;
+            this.full_cardRev_label.Location = new System.Drawing.Point(144, 44);
+            this.full_cardRev_label.Name = "full_cardRev_label";
+            this.full_cardRev_label.Size = new System.Drawing.Size(10, 13);
+            this.full_cardRev_label.TabIndex = 76;
+            this.full_cardRev_label.Text = "-";
+            // 
+            // label29
+            // 
+            this.label29.AutoSize = true;
+            this.label29.Location = new System.Drawing.Point(11, 65);
+            this.label29.Name = "label29";
+            this.label29.Size = new System.Drawing.Size(118, 13);
+            this.label29.TabIndex = 75;
+            this.label29.Text = "Reward Point Revenue";
+            // 
+            // label30
+            // 
+            this.label30.AutoSize = true;
+            this.label30.Location = new System.Drawing.Point(11, 44);
+            this.label30.Name = "label30";
+            this.label30.Size = new System.Drawing.Size(104, 13);
+            this.label30.TabIndex = 74;
+            this.label30.Text = "Revenue from Cards";
+            // 
+            // full_report_datagridview
+            // 
+            this.full_report_datagridview.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.full_report_datagridview.Location = new System.Drawing.Point(14, 90);
+            this.full_report_datagridview.Name = "full_report_datagridview";
+            this.full_report_datagridview.Size = new System.Drawing.Size(640, 438);
+            this.full_report_datagridview.TabIndex = 90;
+            // 
             // AccountantLandingPage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -595,6 +694,7 @@ namespace Air3550
             this.Controls.Add(this.welcome_label);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.logout_button);
+            this.Controls.Add(this.fullReport_groupbox);
             this.Controls.Add(this.singleflight_report_groupbox);
             this.Controls.Add(this.tools_groupbox);
             this.Name = "AccountantLandingPage";
@@ -606,6 +706,9 @@ namespace Air3550
             this.singleflight_report_groupbox.ResumeLayout(false);
             this.singleflight_report_groupbox.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.single_transactions_datagridview)).EndInit();
+            this.fullReport_groupbox.ResumeLayout(false);
+            this.fullReport_groupbox.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.full_report_datagridview)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -635,7 +738,6 @@ namespace Air3550
         private System.Windows.Forms.CheckBox date_before_checkbox;
         private System.Windows.Forms.GroupBox tools_groupbox;
         private System.Windows.Forms.GroupBox singleflight_report_groupbox;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button close_single_report_button;
         private System.Windows.Forms.DataGridView single_transactions_datagridview;
         private System.Windows.Forms.Label single_arrivalDate_label;
@@ -661,5 +763,15 @@ namespace Air3550
         private System.Windows.Forms.Button single_report_button;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.GroupBox fullReport_groupbox;
+        private System.Windows.Forms.Button full_report_close_button;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label26;
+        private System.Windows.Forms.Label full_flightCount_label;
+        private System.Windows.Forms.Label label30;
+        private System.Windows.Forms.Label label29;
+        private System.Windows.Forms.Label full_cardRev_label;
+        private System.Windows.Forms.Label full_pointRev_label;
+        private System.Windows.Forms.DataGridView full_report_datagridview;
     }
 }
