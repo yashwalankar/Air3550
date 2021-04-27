@@ -610,10 +610,39 @@ namespace Air3550
                     }
                     else
                     {
-                        //flight to insert 
+                        //flight to insert has the departure time 
                         flight fl = getFlight_fromFlightsTable(flightId);
+
                         
-                        fl.deptTime = deptDateChosen;
+
+                        TimeSpan timeofFlightDept = fl.deptTime.TimeOfDay;
+                        DateTime updatedDeptDate;
+                        if (timeofFlightDept.Hours == 0 && timeofFlightDept.Minutes == 0 && timeofFlightDept.Seconds == 0)
+                        {
+                             updatedDeptDate = new DateTime(deptDateChosen.Year, deptDateChosen.Month, deptDateChosen.Day,0, 0, 0);
+
+                        }
+                        else
+                        {
+                             updatedDeptDate = new DateTime(deptDateChosen.Year, deptDateChosen.Month, deptDateChosen.Day, timeofFlightDept.Hours, timeofFlightDept.Minutes, timeofFlightDept.Seconds);
+                        }
+                        fl.deptTime = updatedDeptDate;
+                        
+
+                        TimeSpan timeofFlightArrival = fl.arrivalTime.TimeOfDay;
+                        if (timeofFlightDept > timeofFlightArrival)
+                        {
+                            DateTime updatedArrivalDate = new DateTime(deptDateChosen.Year, deptDateChosen.Month, deptDateChosen.Day +1, timeofFlightArrival.Hours, timeofFlightArrival.Minutes, timeofFlightArrival.Seconds);
+                            fl.arrivalTime = updatedArrivalDate;
+                        }
+                        else
+                        {
+                            DateTime updatedArrivalDate = new DateTime(deptDateChosen.Year, deptDateChosen.Month, deptDateChosen.Day , timeofFlightArrival.Hours, timeofFlightArrival.Minutes, timeofFlightArrival.Seconds);
+                            fl.arrivalTime = updatedArrivalDate;
+                        }
+                        
+
+
                         fl.currCapacity = 0;
                         //insert into BookedFlights table and get the id of the inserted flight in BookedFlights Table
                         int newid =  uploadFlight_bookedFlightsTable(fl);
@@ -636,7 +665,7 @@ namespace Air3550
         }
 
 
-        public static void showAvailableFlights(String originAbv, String deptAbv,DateTime deptDate)
+        public static DataTable getAvailableFlights(String originAbv, String deptAbv,DateTime deptDate)
         {
             List<int[]> flightsFound = FindFlights_helper(originAbv, deptAbv);
             List<int[]> bookedFlightsID = new List<int[]>();
@@ -648,26 +677,116 @@ namespace Air3550
                 
 
                 int leg1 = getBookedFlightsID_forFlight(route[0],deptDate);
-                int leg2 = 0;
-                if (fl_leg1.arrivalTime > fl_leg2.deptTime)
+                int leg2 =0 ;
+
+                if (fl_leg2 != null)
                 {
-                     leg2 = getBookedFlightsID_forFlight(route[1], deptDate.AddDays(1));
+                    if (fl_leg2.deptTime < fl_leg1.arrivalTime)
+                    {
+                        leg2 = getBookedFlightsID_forFlight(route[1], deptDate.AddDays(1));
+                    }
+                    else
+                    {
+                        leg2 = getBookedFlightsID_forFlight(route[1], deptDate);
+                    }
                 }
-                else
-                {
-                     leg2 = getBookedFlightsID_forFlight(route[1], deptDate);
-                }
-                
                 bookedFlightsID.Add(new int[] { leg1, leg2 });
+            }
+
+            DataTable FlightOptions = generateDataTable(bookedFlightsID);
+
+            return FlightOptions;
+          //  attachDataTableToGrid(datagrid, FlightOptions);
+            
+            
+
+            /*foreach(int[] options in bookedFlightsID)
+            {
+                Console.WriteLine(options[0]+" AND " +options[1]);
+            }*/
+
+
+        }
+       
+        public static DataTable generateDataTable(List<int[]> bookedFlightsID)
+        {
+            DataTable FlightOptions = new DataTable();
+            
+
+            int i = 1;
+            foreach (int[] ids in bookedFlightsID)
+            {
+                int leg1 = ids[0];
+                int leg2 = ids[1];
+                Console.WriteLine(leg1+"-----"+leg2);
+                string dbString = Properties.Settings.Default.Air3550DBConnectionString;
+
+                
+
+                using (SqlConnection sqlConnection = new SqlConnection(dbString))
+                {
+                    if (sqlConnection.State != ConnectionState.Open) sqlConnection.Open();
+
+
+                    using (SqlCommand sqlCommand = new SqlCommand("SELECT " +
+                                                                  " ( @index ) AS id ,"+
+                                                                  " ( SELECT OriginAbv FROM BookedFlights WHERE id LIKE @leg1 ) AS originAbv , " +
+                                                                  " ( SELECT destAbv   FROM BookedFlights WHERE id LIKE @leg1 ) AS leg1Dest , " +
+                                                                  " ( SELECT CAST(departureTime AS DATETIME) FROM BookedFlights WHERE id LIKE @leg1 ) AS leg1DeptTime , " +
+                                                                  " ( SELECT arrivalTime   FROM BookedFlights WHERE id LIKE @leg1 ) AS leg1ArrivalTime , " +
+                                                                  " ( @leg1 ) AS leg1id , "+
+                                                                  " ( SELECT OriginAbv FROM BookedFlights WHERE id LIKE @leg2 ) AS leg2origin , " +
+                                                                  " ( SELECT destAbv   FROM BookedFlights WHERE id LIKE @leg2 ) AS leg2Dest , " +
+                                                                  " ( SELECT departureTime   FROM BookedFlights WHERE id LIKE @leg2 ) AS leg2deptTime , " +
+                                                                  " ( SELECT arrivalTime   FROM BookedFlights WHERE id LIKE @leg2 ) AS leg2ArrivalTime , " +
+                                                                  " ( @leg2 ) AS leg2id " ,sqlConnection))
+                    {
+                        sqlCommand.Parameters.AddWithValue("@index", i);
+                        sqlCommand.Parameters.AddWithValue("@leg1", leg1);
+                        sqlCommand.Parameters.AddWithValue("@leg2", leg2);
+
+
+                        SqlDataAdapter adapter = new SqlDataAdapter(sqlCommand);
+
+                       
+                        adapter.Fill(FlightOptions);
+                    }
+                }
+
+                i = i + 1;
+            }
+
+            foreach(DataColumn column in FlightOptions.Columns)
+            {
+                Console.Write(column.ColumnName);
+                Console.Write(" ");
+            }
+            Console.WriteLine("-------------------");
+
+            foreach (DataRow dataRow in FlightOptions.Rows)
+            {
+                foreach (var item in dataRow.ItemArray)
+                {
+                    Console.Write(item+" ");
+                }
+                Console.WriteLine("");
             }
             
 
-
-
+            /*DataColumn column = new DataColumn();
+                column.DataType = System.Type.GetType("System.Int32");
+                column.AutoIncrement = true;
+                column.AutoIncrementSeed = 1000;
+                column.AutoIncrementStep = 10;*/
+            return FlightOptions;
         }
 
         public static flight getFlight_fromFlightsTable(int flightID)
         {
+            if(flightID == 0)
+            {
+                return null;
+            }
             flight fl = new flight();
             fl.Id = flightID ;
             string dbString = Properties.Settings.Default.Air3550DBConnectionString;
@@ -710,7 +829,13 @@ namespace Air3550
 
         public static int uploadFlight_bookedFlightsTable(flight newFlight)
         {
+            
             int newid = 0;
+
+            /*if (newFlight.arrivalTime < newFlight.deptTime)
+            {
+                newFlight.arrivalTime = newFlight.arrivalTime.AddDays(1);
+            }*/
             string dbString = Properties.Settings.Default.Air3550DBConnectionString;
             using (SqlConnection sqlConnection = new SqlConnection(dbString))
             {
@@ -742,13 +867,87 @@ namespace Air3550
             return newid;
         }
         
-
         
-
-
-          
-
         
+        public static double getCostFromBookingTable(int bookingid)
+        {
+            double cost = 0;
+            string dbString = Properties.Settings.Default.Air3550DBConnectionString;
+            using (SqlConnection sqlConnection = new SqlConnection(dbString))
+            {
+                if (sqlConnection.State != ConnectionState.Open) sqlConnection.Open();
+
+
+                using (SqlCommand sqlCommand = new SqlCommand("SELECT cost FROM BookedFlights WHERE id LIKE @id ", sqlConnection))
+                {
+                    sqlCommand.Parameters.AddWithValue("@id", bookingid);
+
+                    SqlDataReader sqlReader = sqlCommand.ExecuteReader();
+
+                    if (sqlReader.HasRows)
+                    {
+                        while (sqlReader.Read())
+                        {
+                            cost = Double.Parse( sqlReader["cost"].ToString());
+
+                        }
+                    }
+
+                    sqlReader.Close();
+                }
+            }
+
+
+            return cost;
+        }
+
+        public static flight getFlight_fromBookingTable(int id)
+        {
+            if (id == 0)
+            {
+                return null;
+            }
+            flight fl = new flight();
+            
+            string dbString = Properties.Settings.Default.Air3550DBConnectionString;
+            using (SqlConnection sqlConnection = new SqlConnection(dbString))
+            {
+                if (sqlConnection.State != ConnectionState.Open) sqlConnection.Open();
+
+
+                using (SqlCommand sqlCommand = new SqlCommand("SELECT * FROM BookedFlights WHERE id LIKE @id ", sqlConnection))
+                {
+                    sqlCommand.Parameters.AddWithValue("@id", id);
+
+                    SqlDataReader sqlReader = sqlCommand.ExecuteReader();
+
+
+
+                    while (sqlReader.Read())
+                    {
+                        fl.origin = sqlReader["originAbv"].ToString();
+                        fl.dest = sqlReader["destAbv"].ToString();
+                        fl.deptTime = DateTime.Parse(sqlReader["departureTime"].ToString());
+                        fl.arrivalTime = DateTime.Parse(sqlReader["arrivalTime"].ToString());
+                        fl.planeType = sqlReader["PlaneType"].ToString();
+                        fl.cost = Convert.ToDouble(sqlReader["cost"].ToString());
+                        fl.maxCapacity = (int)sqlReader["maxCapacity"];
+                        fl.currCapacity = (int)sqlReader["currCapacity"];
+                        fl.distance = (double)sqlReader["distance"];
+
+                    }
+
+                    sqlReader.Close();
+                }
+            }
+
+
+
+
+            return fl;
+        }
+
+
 
     } 
 }

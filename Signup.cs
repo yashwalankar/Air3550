@@ -184,7 +184,11 @@ namespace Air3550
                 command.ExecuteNonQuery();
             }
         }
-        
+
+        private void Signup_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Application.Exit();
+        }
     }
 }
                  

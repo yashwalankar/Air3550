@@ -268,6 +268,7 @@ namespace Air3550
             this.Controls.Add(this.userID_label);
             this.Name = "Signup";
             this.Text = "Create new account";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Signup_FormClosing);
             this.Load += new System.EventHandler(this.Signup_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
