@@ -392,7 +392,19 @@ namespace Air3550
                     string beforeStr = before.ToString();
                     string afterStr = after.ToString();
 
-                    string search = $"departureTime >= '{afterStr}' AND departureTime <= '{beforeStr}'";
+                    string search = null;
+                    if (date_after_checkbox.Checked && date_before_checkbox.Checked)
+                    {
+                        search = $"departureTime >= '{afterStr}' AND departureTime <= '{beforeStr}'";
+                    }
+                    else if (!date_after_checkbox.Checked && date_before_checkbox.Checked)
+                    {
+                        search = $"departureTime <= '{beforeStr}'";
+                    }
+                    else if (date_after_checkbox.Checked && !date_before_checkbox.Checked)
+                    {
+                        search = $"departureTime >= '{afterStr}'";
+                    }
 
                     if (newEditTable.Select(search).Length > 0)
                     {
