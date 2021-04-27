@@ -29,6 +29,7 @@ namespace Air3550
 
             tools_groupbox.Show();
             singleflight_report_groupbox.Hide();
+            fullReport_groupbox.Hide();
         }
 
         private void AccountantLandingPage_FormClosing(object sender, FormClosingEventArgs e)
@@ -138,7 +139,7 @@ namespace Air3550
         {
             int flightID = int.Parse(flights_dataview.CurrentRow.Cells["id"].Value.ToString());
 
-            DataTable bookedFlightInfo = returnSingleFlightInformation(flightID);
+            DataTable bookedFlightInfo = returnFlightInformation(flightID);
             DataTable flightTransactions = returnSingleFlightTransactions(flightID);
 
             fillSingleReport(bookedFlightInfo, flightTransactions);
@@ -171,31 +172,11 @@ namespace Air3550
             single_percFill_label.Text = percCap.ToString();
 
             // calculate revenue from card payments
-            DataTable cardTransactions = new DataTable();
-            string search = "PaymentType = 1";
-            if (transactions.Select(search).Length > 0)
-            {
-                cardTransactions = transactions.Select(search).CopyToDataTable();
-            }
-            double revenue = 0;
-            foreach (DataRow row in cardTransactions.Rows)
-            {
-                revenue = revenue + row.Field<double>("Cost");
-            }
+            double revenue = findRevenue(transactions, 1);
             single_cardRev_label.Text = revenue.ToString();
 
             // calculate revenue from reward reimbursement
-            DataTable rewardTransactions = new DataTable();
-            search = "PaymentType = 2";
-            if (transactions.Select(search).Length > 0)
-            {
-                rewardTransactions = transactions.Select(search).CopyToDataTable();
-            }
-            revenue = 0;
-            foreach (DataRow row in rewardTransactions.Rows)
-            {
-                revenue = revenue + row.Field<double>("Cost");
-            }
+            revenue = findRevenue(transactions, 2);
             single_pointRev_label.Text = revenue.ToString();
 
             BindingSource SBind = new BindingSource();
@@ -207,8 +188,72 @@ namespace Air3550
         }
 
         // =================================================================================================
+        // Full Revenue Report Functionality ===============================================================
+        // =================================================================================================
+
+        private void generate_submit_button_Click(object sender, EventArgs e)
+        { 
+            fillFullReport();
+
+            tools_groupbox.Hide();
+            fullReport_groupbox.Show();
+        }
+
+        private void full_report_close_button_Click(object sender, EventArgs e)
+        {
+            tools_groupbox.Show();
+            fullReport_groupbox.Hide();
+        }
+
+        private void fillFullReport()
+        {
+            DataTable allBookedFlights = returnFlightInformation();
+
+            int count = allBookedFlights.Rows.Count;
+            full_flightCount_label.Text = count.ToString();
+
+            int flightID;
+            double cardRev = 0.00;
+            double rewardRev = 0.00;
+            foreach (DataRow row in allBookedFlights.Rows)
+            {
+                flightID = row.Field<int>("id");
+
+                DataTable transactions = returnSingleFlightTransactions(flightID);
+
+                cardRev = cardRev + findRevenue(transactions, 1);
+                rewardRev = rewardRev + findRevenue(transactions, 2);
+            }
+            full_cardRev_label.Text = cardRev.ToString();
+            full_pointRev_label.Text = rewardRev.ToString();
+
+            BindingSource SBind = new BindingSource();
+            SBind.DataSource = allBookedFlights;
+            full_report_datagridview.Columns.Clear();
+            //singleTransactionsTableColumnSetup();
+            full_report_datagridview.DataSource = SBind;
+            full_report_datagridview.Refresh();
+        }
+
+        // =================================================================================================
         // General and Helper Functionality ================================================================
         // =================================================================================================
+        private static double findRevenue(DataTable table, int payType)
+        {
+            DataTable transactions = new DataTable();
+            string search = $"PaymentType = {payType}";
+            if (table.Select(search).Length > 0)
+            {
+                transactions = table.Select(search).CopyToDataTable();
+            }
+            double revenue = 0;
+            foreach (DataRow row in transactions.Rows)
+            {
+                revenue = revenue + row.Field<double>("Cost");
+            }
+            return revenue;
+        }
+
         private void updateTable()
         {
             DataTable newEditTable = new DataTable();
@@ -581,7 +626,7 @@ namespace Air3550
             }
         }
 
-        public static DataTable returnSingleFlightInformation(int flightID)
+        public static DataTable returnFlightInformation(int flightID = -1)
         {
             string dbString = Properties.Settings.Default.Air3550DBConnectionString;
 
@@ -592,13 +637,22 @@ namespace Air3550
                 SqlDataAdapter adapter = new SqlDataAdapter();
                 DataTable newDataTable = new DataTable();
 
-                string requestString = "SELECT * FROM BookedFlights " +
-                        "WHERE id = @flightID";
-
+                string requestString;
+                if (flightID == -1) {
+                    requestString = "SELECT * FROM BookedFlights";
+                }
+                else
+                {
+                    requestString = "SELECT * FROM BookedFlights " +
+                            "WHERE id = @flightID";
+                }
 
                 using (SqlCommand sqlCommand = new SqlCommand(requestString, sqlConnection))
                 {
-                    sqlCommand.Parameters.AddWithValue("@flightID", flightID);
+                    if (flightID != -1)
+                    {
+                        sqlCommand.Parameters.AddWithValue("@flightID", flightID);
+                    }
 
                     adapter.SelectCommand = sqlCommand;
                     adapter.Fill(newDataTable);
