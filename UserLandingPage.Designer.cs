@@ -42,7 +42,9 @@ namespace Air3550
             this.upcomingFlights_groupBox = new System.Windows.Forms.GroupBox();
             this.upcomingFlights_datagridview = new System.Windows.Forms.DataGridView();
             this.bookFlights_groupBox = new System.Windows.Forms.GroupBox();
+            this.checkout_btn = new System.Windows.Forms.Button();
             this.return_groupBox = new System.Windows.Forms.GroupBox();
+            this.return_cost_label = new System.Windows.Forms.Label();
             this.return_leg2_groupbox = new System.Windows.Forms.GroupBox();
             this.return_leg2_selectedflight_label = new System.Windows.Forms.Label();
             this.return_leg2_departure_label = new System.Windows.Forms.Label();
@@ -55,6 +57,7 @@ namespace Air3550
             this.return_selectedflight_label = new System.Windows.Forms.Label();
             this.return_datagridview = new System.Windows.Forms.DataGridView();
             this.oneway_groupBox = new System.Windows.Forms.GroupBox();
+            this.oneway_cost_label = new System.Windows.Forms.Label();
             this.oneway_leg2_groupBox = new System.Windows.Forms.GroupBox();
             this.one_leg2_selectedFlight_label = new System.Windows.Forms.Label();
             this.one_leg2_dept_label = new System.Windows.Forms.Label();
@@ -83,9 +86,10 @@ namespace Air3550
             this.currSysTime_label = new System.Windows.Forms.Label();
             this.rewardUsed_label = new System.Windows.Forms.Label();
             this.rewardUsedValue_label = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
-            this.return_cost_label = new System.Windows.Forms.Label();
-            this.oneway_cost_label = new System.Windows.Forms.Label();
+            this.oneway_leg1id_label = new System.Windows.Forms.Label();
+            this.oneway_leg2_id = new System.Windows.Forms.Label();
+            this.return_leg1id_label = new System.Windows.Forms.Label();
+            this.return_leg2id_label = new System.Windows.Forms.Label();
             this.upcomingFlights_groupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.upcomingFlights_datagridview)).BeginInit();
             this.bookFlights_groupBox.SuspendLayout();
@@ -214,7 +218,7 @@ namespace Air3550
             // 
             // bookFlights_groupBox
             // 
-            this.bookFlights_groupBox.Controls.Add(this.button1);
+            this.bookFlights_groupBox.Controls.Add(this.checkout_btn);
             this.bookFlights_groupBox.Controls.Add(this.return_groupBox);
             this.bookFlights_groupBox.Controls.Add(this.oneway_groupBox);
             this.bookFlights_groupBox.Controls.Add(this.arrow_label);
@@ -236,6 +240,16 @@ namespace Air3550
             this.bookFlights_groupBox.Text = "Book Flight";
             this.bookFlights_groupBox.Enter += new System.EventHandler(this.bookFlights_groupBox_Enter);
             // 
+            // checkout_btn
+            // 
+            this.checkout_btn.Location = new System.Drawing.Point(674, 811);
+            this.checkout_btn.Name = "checkout_btn";
+            this.checkout_btn.Size = new System.Drawing.Size(75, 23);
+            this.checkout_btn.TabIndex = 38;
+            this.checkout_btn.Text = "Check Out";
+            this.checkout_btn.UseVisualStyleBackColor = true;
+            this.checkout_btn.Click += new System.EventHandler(this.checkout_btn_Click);
+            // 
             // return_groupBox
             // 
             this.return_groupBox.Controls.Add(this.return_cost_label);
@@ -251,8 +265,18 @@ namespace Air3550
             this.return_groupBox.TabStop = false;
             this.return_groupBox.Text = "Return";
             // 
+            // return_cost_label
+            // 
+            this.return_cost_label.AutoSize = true;
+            this.return_cost_label.Location = new System.Drawing.Point(652, 255);
+            this.return_cost_label.Name = "return_cost_label";
+            this.return_cost_label.Size = new System.Drawing.Size(31, 13);
+            this.return_cost_label.TabIndex = 44;
+            this.return_cost_label.Text = "Cost:";
+            // 
             // return_leg2_groupbox
             // 
+            this.return_leg2_groupbox.Controls.Add(this.return_leg2id_label);
             this.return_leg2_groupbox.Controls.Add(this.return_leg2_selectedflight_label);
             this.return_leg2_groupbox.Controls.Add(this.return_leg2_departure_label);
             this.return_leg2_groupbox.Controls.Add(this.return_leg2_arrival_label);
@@ -292,6 +316,7 @@ namespace Air3550
             // 
             // return_leg1_groupbox
             // 
+            this.return_leg1_groupbox.Controls.Add(this.return_leg1id_label);
             this.return_leg1_groupbox.Controls.Add(this.return_leg1_selectedflight_label);
             this.return_leg1_groupbox.Controls.Add(this.return_leg1_departure_label);
             this.return_leg1_groupbox.Controls.Add(this.return_leg1_arrival_label);
@@ -338,7 +363,6 @@ namespace Air3550
             this.return_confirm_checkBox.TabIndex = 46;
             this.return_confirm_checkBox.Text = "Confirm Selection";
             this.return_confirm_checkBox.UseVisualStyleBackColor = true;
-            this.return_confirm_checkBox.CheckedChanged += new System.EventHandler(this.return_confirm_checkBox_CheckedChanged);
             // 
             // return_selectedflight_label
             // 
@@ -378,8 +402,18 @@ namespace Air3550
             this.oneway_groupBox.TabStop = false;
             this.oneway_groupBox.Text = "OneWay";
             // 
+            // oneway_cost_label
+            // 
+            this.oneway_cost_label.AutoSize = true;
+            this.oneway_cost_label.Location = new System.Drawing.Point(651, 239);
+            this.oneway_cost_label.Name = "oneway_cost_label";
+            this.oneway_cost_label.Size = new System.Drawing.Size(31, 13);
+            this.oneway_cost_label.TabIndex = 49;
+            this.oneway_cost_label.Text = "Cost:";
+            // 
             // oneway_leg2_groupBox
             // 
+            this.oneway_leg2_groupBox.Controls.Add(this.oneway_leg2_id);
             this.oneway_leg2_groupBox.Controls.Add(this.one_leg2_selectedFlight_label);
             this.oneway_leg2_groupBox.Controls.Add(this.one_leg2_dept_label);
             this.oneway_leg2_groupBox.Controls.Add(this.one_leg2_arrival_label);
@@ -419,6 +453,7 @@ namespace Air3550
             // 
             // oneway_leg1_groupBox
             // 
+            this.oneway_leg1_groupBox.Controls.Add(this.oneway_leg1id_label);
             this.oneway_leg1_groupBox.Controls.Add(this.one_leg1_selectedFlight_label);
             this.oneway_leg1_groupBox.Controls.Add(this.one_leg1_departure_label);
             this.oneway_leg1_groupBox.Controls.Add(this.one_leg1_arrival_label);
@@ -653,32 +688,41 @@ namespace Air3550
             this.rewardUsedValue_label.TabIndex = 26;
             this.rewardUsedValue_label.Text = "_____";
             // 
-            // button1
+            // oneway_leg1id_label
             // 
-            this.button1.Location = new System.Drawing.Point(674, 811);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 38;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
+            this.oneway_leg1id_label.AutoSize = true;
+            this.oneway_leg1id_label.Location = new System.Drawing.Point(11, 16);
+            this.oneway_leg1id_label.Name = "oneway_leg1id_label";
+            this.oneway_leg1id_label.Size = new System.Drawing.Size(13, 13);
+            this.oneway_leg1id_label.TabIndex = 42;
+            this.oneway_leg1id_label.Text = "_";
             // 
-            // return_cost_label
+            // oneway_leg2_id
             // 
-            this.return_cost_label.AutoSize = true;
-            this.return_cost_label.Location = new System.Drawing.Point(652, 255);
-            this.return_cost_label.Name = "return_cost_label";
-            this.return_cost_label.Size = new System.Drawing.Size(31, 13);
-            this.return_cost_label.TabIndex = 44;
-            this.return_cost_label.Text = "Cost:";
+            this.oneway_leg2_id.AutoSize = true;
+            this.oneway_leg2_id.Location = new System.Drawing.Point(11, 16);
+            this.oneway_leg2_id.Name = "oneway_leg2_id";
+            this.oneway_leg2_id.Size = new System.Drawing.Size(13, 13);
+            this.oneway_leg2_id.TabIndex = 43;
+            this.oneway_leg2_id.Text = "_";
             // 
-            // oneway_cost_label
+            // return_leg1id_label
             // 
-            this.oneway_cost_label.AutoSize = true;
-            this.oneway_cost_label.Location = new System.Drawing.Point(651, 239);
-            this.oneway_cost_label.Name = "oneway_cost_label";
-            this.oneway_cost_label.Size = new System.Drawing.Size(31, 13);
-            this.oneway_cost_label.TabIndex = 49;
-            this.oneway_cost_label.Text = "Cost:";
+            this.return_leg1id_label.AutoSize = true;
+            this.return_leg1id_label.Location = new System.Drawing.Point(11, 16);
+            this.return_leg1id_label.Name = "return_leg1id_label";
+            this.return_leg1id_label.Size = new System.Drawing.Size(13, 13);
+            this.return_leg1id_label.TabIndex = 43;
+            this.return_leg1id_label.Text = "_";
+            // 
+            // return_leg2id_label
+            // 
+            this.return_leg2id_label.AutoSize = true;
+            this.return_leg2id_label.Location = new System.Drawing.Point(11, 16);
+            this.return_leg2id_label.Name = "return_leg2id_label";
+            this.return_leg2id_label.Size = new System.Drawing.Size(13, 13);
+            this.return_leg2id_label.TabIndex = 44;
+            this.return_leg2id_label.Text = "_";
             // 
             // UserLandingPage
             // 
@@ -784,8 +828,12 @@ namespace Air3550
         private System.Windows.Forms.CheckBox return_confirm_checkBox;
         private System.Windows.Forms.Label return_selectedflight_label;
         private System.Windows.Forms.DataGridView return_datagridview;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button checkout_btn;
         private System.Windows.Forms.Label return_cost_label;
         private System.Windows.Forms.Label oneway_cost_label;
+        private System.Windows.Forms.Label return_leg2id_label;
+        private System.Windows.Forms.Label return_leg1id_label;
+        private System.Windows.Forms.Label oneway_leg2_id;
+        private System.Windows.Forms.Label oneway_leg1id_label;
     }
 }

@@ -901,9 +901,53 @@ namespace Air3550
             return cost;
         }
 
-          
+        public static flight getFlight_fromBookingTable(int id)
+        {
+            if (id == 0)
+            {
+                return null;
+            }
+            flight fl = new flight();
+            
+            string dbString = Properties.Settings.Default.Air3550DBConnectionString;
+            using (SqlConnection sqlConnection = new SqlConnection(dbString))
+            {
+                if (sqlConnection.State != ConnectionState.Open) sqlConnection.Open();
 
-        
+
+                using (SqlCommand sqlCommand = new SqlCommand("SELECT * FROM BookedFlights WHERE id LIKE @id ", sqlConnection))
+                {
+                    sqlCommand.Parameters.AddWithValue("@id", id);
+
+                    SqlDataReader sqlReader = sqlCommand.ExecuteReader();
+
+
+
+                    while (sqlReader.Read())
+                    {
+                        fl.origin = sqlReader["originAbv"].ToString();
+                        fl.dest = sqlReader["destAbv"].ToString();
+                        fl.deptTime = DateTime.Parse(sqlReader["departureTime"].ToString());
+                        fl.arrivalTime = DateTime.Parse(sqlReader["arrivalTime"].ToString());
+                        fl.planeType = sqlReader["PlaneType"].ToString();
+                        fl.cost = Convert.ToDouble(sqlReader["cost"].ToString());
+                        fl.maxCapacity = (int)sqlReader["maxCapacity"];
+                        fl.currCapacity = (int)sqlReader["currCapacity"];
+                        fl.distance = (double)sqlReader["distance"];
+
+                    }
+
+                    sqlReader.Close();
+                }
+            }
+
+
+
+
+            return fl;
+        }
+
+
 
     } 
 }

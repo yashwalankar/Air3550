@@ -12,8 +12,15 @@ namespace Air3550
 {
     public partial class UserLandingPage : Form
     {
+        User USER;
+        int oneway_leg1;
+        int oneway_leg2;
+        int return_leg1;
+        int return_leg2;
+
         public UserLandingPage(User user)
         {
+            USER = user;
             InitializeComponent();
             welcome_label.Text = "Welcome, " + user.firstName + " " + user.lastName;
             userId_value_label.Text = user.id.ToString();
@@ -29,6 +36,11 @@ namespace Air3550
             oneway_groupBox.Hide();
             return_groupBox.Hide();
             ShowReturnComponents(false);
+
+            oneway_leg1=0;
+            oneway_leg2=0;
+            return_leg1=0;
+            return_leg2=0;
         }
         
         private void logout_button_Click(object sender, EventArgs e)
@@ -267,13 +279,14 @@ namespace Air3550
 
                 if (currentRow != null)
                 {
+                    
                     String originAbv = currentRow.Cells["originAbv"].Value.ToString();
                     String leg1destAbv = currentRow.Cells["leg1dest"].Value.ToString();
                     String leg1deptTime = currentRow.Cells["leg1DeptTime"].Value.ToString();
                     String leg1ArrivalTime = currentRow.Cells["leg1ArrivalTime"].Value.ToString();
 
-                    String leg1id = currentRow.Cells["leg1id"].Value.ToString();
-                    Console.WriteLine("-------------->" + leg1id);
+                    int leg1id = (int) currentRow.Cells["leg1id"].Value;
+                    
                     one_leg1_selectedFlight_label.Text = originAbv + "-->" + leg1destAbv;
                     one_leg1_departure_label.Text = "Departure: " + leg1deptTime;
                     one_leg1_arrival_label.Text = "Arrival: " + leg1ArrivalTime;
@@ -288,8 +301,15 @@ namespace Air3550
                     String leg2deptTime = ""; //8
                     String leg2arrivalTime = "";//9
                     double cost_leg2 = 0;
-                    int leg2id = (int)currentRow.Cells["leg2id"].Value; 
-                    if(leg2id != 0)
+                    int leg2id = (int)currentRow.Cells["leg2id"].Value;
+
+                    oneway_leg1 = 0;
+                    oneway_leg2 = 0;
+
+                    oneway_leg1 = leg1id;
+                    oneway_leg2 = leg2id;
+
+                    if (leg2id != 0)
                     {
                         leg2origin = currentRow.Cells["leg2origin"].Value.ToString();
                         leg2dest = currentRow.Cells["leg2Dest"].Value.ToString();
@@ -304,13 +324,15 @@ namespace Air3550
                         cost_leg2 = FormDatabaseHelper.getCostFromBookingTable(Convert.ToInt32(leg2id));
                         cost_str_oneway = cost_str_oneway+ " + " + cost_leg2.ToString() + " + 8 = " ;
                         cost_total_oneway += (cost_leg2 +8);
+                        cost_str_oneway = cost_str_oneway + cost_total_oneway.ToString();
+                        
                     }
                     else
                     {
                         oneway_leg2_groupBox.Hide();
                     }
 
-                    cost_str_oneway = cost_str_oneway + cost_total_oneway.ToString();
+                   
                     oneway_cost_label.Text = cost_str_oneway;
                 }
             }
@@ -329,7 +351,7 @@ namespace Air3550
                     String leg1deptTime = currentRow.Cells["leg1DeptTime"].Value.ToString();
                     String leg1ArrivalTime = currentRow.Cells["leg1ArrivalTime"].Value.ToString();
 
-                    String leg1id = currentRow.Cells["leg1id"].Value.ToString();
+                    int leg1id = (int) currentRow.Cells["leg1id"].Value;
                     Console.WriteLine("-------------->" + leg1id);
                     return_leg1_selectedflight_label.Text = originAbv + "-->" + leg1destAbv;
                     return_leg1_departure_label.Text = "Departure: " + leg1deptTime;
@@ -347,6 +369,15 @@ namespace Air3550
                     String leg2arrivalTime = "";//9
                     double cost_leg2 = 0;
                     int leg2id = (int)currentRow.Cells["leg2id"].Value;
+
+                    return_leg1 = 0;
+                    return_leg2 = 0;
+
+                    return_leg1 = leg1id;
+                    return_leg2 = leg2id;
+
+
+
                     if (leg2id != 0)
                     {
                         leg2origin = currentRow.Cells["leg2origin"].Value.ToString();
@@ -359,22 +390,54 @@ namespace Air3550
                         return_leg2_arrival_label.Text = "Arrival: " + leg2arrivalTime;
 
                         cost_leg2 = FormDatabaseHelper.getCostFromBookingTable(Convert.ToInt32(leg2id));
-                        cost_str_return += " + " + cost_leg2.ToString() + " + 8 = ";
+                        cost_str_return = cost_str_return + " + " + cost_leg2.ToString() + " + 8 = ";
                         cost_total_return += (cost_leg2 + 8);
+                        cost_str_return = cost_str_return + cost_total_return.ToString();
                     }
                     else
                     {
                         return_leg2_groupbox.Hide();
                     }
-                    cost_str_return += cost_str_return.ToString();
-                    oneway_cost_label.Text = cost_str_return;
+                    
+                    return_cost_label.Text = cost_str_return;
                 }
             }
         }
 
-        private void return_confirm_checkBox_CheckedChanged(object sender, EventArgs e)
+        private void checkout_btn_Click(object sender, EventArgs e)
         {
-
+            bool confirmed = false;
+            if(return_rBtn.Checked == true)
+            {
+                confirmed = onewayConfirm_checkbox.Checked && return_confirm_checkBox.Checked;
+            }
+            else
+            {
+                confirmed = onewayConfirm_checkbox.Checked;
+            }
+            
+            if (confirmed)
+            {
+                Console.WriteLine("one way ids" + oneway_leg1 + " &" + oneway_leg2);
+                Console.WriteLine("one way ids" + return_leg1 + " &" + return_leg2);
+                UserFlightHistory ticket1 = new UserFlightHistory(USER.id,oneway_leg1,oneway_leg2);
+                if (return_rBtn.Checked == true)
+                {
+                    UserFlightHistory ticket2 = new UserFlightHistory(USER.id, return_leg1, return_leg2);
+                    Checkout checkout = new Checkout(true,USER,ticket1,ticket2);
+                    checkout.Show();
+                }
+                else
+                {
+                    Checkout checkout = new Checkout(false, USER, ticket1, null);
+                    checkout.Show();
+                }
+                
+            }
+            else
+            {
+                Console.WriteLine("Confirm both flight");
+            }
         }
     }
 }
