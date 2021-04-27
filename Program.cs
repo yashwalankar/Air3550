@@ -18,6 +18,10 @@ namespace Air3550
             Application.SetCompatibleTextRenderingDefault(false);
 
             Application.Run(new Login());
+
+            
+
+            //  FormDatabaseHelper.getAvailableFlights("JFK", "ORD", DateTime.Now);
         }
     }
 }

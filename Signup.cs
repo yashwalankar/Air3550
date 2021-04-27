@@ -22,6 +22,9 @@ namespace Air3550
             InitializeComponent();
 
             ParentPage = LoginPage;
+
+            password_error_label.Text = "";
+            field_error_label.Text = "";
         }
 
         private void Signup_Load(object sender, EventArgs e)
@@ -32,6 +35,9 @@ namespace Air3550
 
         private void signup_btn_Click(object sender, EventArgs e)
         {
+            password_error_label.Text = "";
+            field_error_label.Text = "";
+
             //Add data to database/csv
             User newUser = new User();
 
@@ -39,7 +45,7 @@ namespace Air3550
             bool requiredFieldsFilled = false;
             int requiredFieldCount = 0;
 
-            if (pass_textbox.Text == confirmpass_textbox.Text)
+            if ((pass_textbox.Text == confirmpass_textbox.Text) && (pass_textbox.Text != ""))
             {
                 passwordsMatch = true;
             }
@@ -61,12 +67,26 @@ namespace Air3550
             {
                 newUser = setupUser();
                 addUserToDB(newUser);
-            }
 
-            //go back to login page 
-            this.Visible = false;
-            this.Dispose();
-            ParentPage.Visible = true;
+                this.Visible = false;
+                this.Dispose();
+                ParentPage.Visible = true;
+            }
+            else
+            {
+                if (passwordsMatch)
+                {
+                    password_error_label.Text = "Passwords do not match, Please retype";
+                    pass_textbox.Text = null;
+                    confirmpass_textbox = null;
+                }
+                if (requiredFieldsFilled)
+                {
+                    field_error_label.Text = "One or more fields missing or incorrect";
+                }
+            }
+            
+            
         }
 
         private void cancelbutton_Click(object sender, EventArgs e)
@@ -164,7 +184,11 @@ namespace Air3550
                 command.ExecuteNonQuery();
             }
         }
-        
+
+        private void Signup_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Application.Exit();
+        }
     }
 }
                  

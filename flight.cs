@@ -11,8 +11,8 @@ namespace Air3550
         public int Id { get; set; }
         public string origin { get; set; }
         public string dest { get; set; }
-        public DateTime deptTime { get; set; }
-        public DateTime arrivalTime { get; set; }
+        public DateTime deptTime;
+        public DateTime arrivalTime;
         public double distance { get; set; }
         public string planeType { get; set; }
         public double cost { get; set; }

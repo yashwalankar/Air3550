@@ -1,4 +1,4 @@
-﻿ using System;
+﻿  using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -36,6 +36,11 @@ namespace Air3550
             this.Dispose();
             Login s = new Login();
             s.Visible = true;
+        }
+
+        private void LoadEngLandingPage_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Application.Exit();
         }
 
         // ==================================================================================
