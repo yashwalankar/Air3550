@@ -44,14 +44,11 @@ namespace Air3550
             this.edit_origin_label = new System.Windows.Forms.Label();
             this.origin_dest_checkbox = new System.Windows.Forms.CheckBox();
             this.date_checkbox = new System.Windows.Forms.CheckBox();
-            this.time_checkbox = new System.Windows.Forms.CheckBox();
-            this.beforeTime_DTP = new System.Windows.Forms.DateTimePicker();
-            this.label1 = new System.Windows.Forms.Label();
-            this.afterTime_DTP = new System.Windows.Forms.DateTimePicker();
-            this.label2 = new System.Windows.Forms.Label();
             this.generate_submit_button = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
+            this.date_after_checkbox = new System.Windows.Forms.CheckBox();
+            this.date_before_checkbox = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.flights_dataview)).BeginInit();
             this.SuspendLayout();
             // 
@@ -63,7 +60,6 @@ namespace Air3550
             this.logout_button.TabIndex = 12;
             this.logout_button.Text = "Logout";
             this.logout_button.UseVisualStyleBackColor = true;
-            this.logout_button.Click += new System.EventHandler(this.logout_button_Click);
             // 
             // flights_dataview
             // 
@@ -85,6 +81,7 @@ namespace Air3550
             this.button1.TabIndex = 29;
             this.button1.Text = "Logout";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.logout_button_Click);
             // 
             // welcome_label
             // 
@@ -111,15 +108,16 @@ namespace Air3550
             this.beforeDate_DTP.CustomFormat = "h:mm tt";
             this.beforeDate_DTP.Enabled = false;
             this.beforeDate_DTP.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.beforeDate_DTP.Location = new System.Drawing.Point(300, 124);
+            this.beforeDate_DTP.Location = new System.Drawing.Point(342, 124);
             this.beforeDate_DTP.Name = "beforeDate_DTP";
             this.beforeDate_DTP.Size = new System.Drawing.Size(106, 20);
             this.beforeDate_DTP.TabIndex = 45;
+            this.beforeDate_DTP.ValueChanged += new System.EventHandler(this.beforeDate_DTP_ValueChanged);
             // 
             // edit_arrival_label
             // 
             this.edit_arrival_label.AutoSize = true;
-            this.edit_arrival_label.Location = new System.Drawing.Point(256, 126);
+            this.edit_arrival_label.Location = new System.Drawing.Point(273, 126);
             this.edit_arrival_label.Name = "edit_arrival_label";
             this.edit_arrival_label.Size = new System.Drawing.Size(38, 13);
             this.edit_arrival_label.TabIndex = 49;
@@ -130,15 +128,16 @@ namespace Air3550
             this.afterDate_DTP.CustomFormat = "h:mm tt";
             this.afterDate_DTP.Enabled = false;
             this.afterDate_DTP.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.afterDate_DTP.Location = new System.Drawing.Point(300, 93);
+            this.afterDate_DTP.Location = new System.Drawing.Point(342, 93);
             this.afterDate_DTP.Name = "afterDate_DTP";
             this.afterDate_DTP.Size = new System.Drawing.Size(106, 20);
             this.afterDate_DTP.TabIndex = 44;
+            this.afterDate_DTP.ValueChanged += new System.EventHandler(this.afterDate_DTP_ValueChanged);
             // 
             // edit_dept_label
             // 
             this.edit_dept_label.AutoSize = true;
-            this.edit_dept_label.Location = new System.Drawing.Point(256, 99);
+            this.edit_dept_label.Location = new System.Drawing.Point(273, 99);
             this.edit_dept_label.Name = "edit_dept_label";
             this.edit_dept_label.Size = new System.Drawing.Size(29, 13);
             this.edit_dept_label.TabIndex = 48;
@@ -153,7 +152,7 @@ namespace Air3550
             this.dest_combobox.Name = "dest_combobox";
             this.dest_combobox.Size = new System.Drawing.Size(121, 21);
             this.dest_combobox.TabIndex = 43;
-            this.dest_combobox.TextUpdate += new System.EventHandler(this.dest_combobox_TextChanged);
+            this.dest_combobox.SelectedIndexChanged += new System.EventHandler(this.dest_combobox_SelectedIndexChanged);
             // 
             // edit_dest_label
             // 
@@ -173,7 +172,7 @@ namespace Air3550
             this.origin_combobox.Name = "origin_combobox";
             this.origin_combobox.Size = new System.Drawing.Size(121, 21);
             this.origin_combobox.TabIndex = 42;
-            this.origin_combobox.TextUpdate += new System.EventHandler(this.origin_combobox_TextChanged);
+            this.origin_combobox.SelectedIndexChanged += new System.EventHandler(this.origin_combobox_SelectedIndexChanged);
             // 
             // edit_origin_label
             // 
@@ -198,63 +197,13 @@ namespace Air3550
             // date_checkbox
             // 
             this.date_checkbox.AutoSize = true;
-            this.date_checkbox.Location = new System.Drawing.Point(259, 67);
+            this.date_checkbox.Location = new System.Drawing.Point(276, 67);
             this.date_checkbox.Name = "date_checkbox";
             this.date_checkbox.Size = new System.Drawing.Size(147, 17);
             this.date_checkbox.TabIndex = 54;
             this.date_checkbox.Text = "Only include flights dated:";
             this.date_checkbox.UseVisualStyleBackColor = true;
             this.date_checkbox.CheckedChanged += new System.EventHandler(this.date_checkbox_CheckedChanged);
-            // 
-            // time_checkbox
-            // 
-            this.time_checkbox.AutoSize = true;
-            this.time_checkbox.Location = new System.Drawing.Point(459, 67);
-            this.time_checkbox.Name = "time_checkbox";
-            this.time_checkbox.Size = new System.Drawing.Size(164, 17);
-            this.time_checkbox.TabIndex = 59;
-            this.time_checkbox.Text = "Only include flights occurring:";
-            this.time_checkbox.UseVisualStyleBackColor = true;
-            this.time_checkbox.CheckedChanged += new System.EventHandler(this.time_checkbox_CheckedChanged);
-            // 
-            // beforeTime_DTP
-            // 
-            this.beforeTime_DTP.CustomFormat = "h:mm tt";
-            this.beforeTime_DTP.Enabled = false;
-            this.beforeTime_DTP.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.beforeTime_DTP.Location = new System.Drawing.Point(500, 124);
-            this.beforeTime_DTP.Name = "beforeTime_DTP";
-            this.beforeTime_DTP.ShowUpDown = true;
-            this.beforeTime_DTP.Size = new System.Drawing.Size(81, 20);
-            this.beforeTime_DTP.TabIndex = 56;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(456, 126);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(38, 13);
-            this.label1.TabIndex = 58;
-            this.label1.Text = "Before";
-            // 
-            // afterTime_DTP
-            // 
-            this.afterTime_DTP.CustomFormat = "h:mm tt";
-            this.afterTime_DTP.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.afterTime_DTP.Location = new System.Drawing.Point(500, 93);
-            this.afterTime_DTP.Name = "afterTime_DTP";
-            this.afterTime_DTP.ShowUpDown = true;
-            this.afterTime_DTP.Size = new System.Drawing.Size(81, 20);
-            this.afterTime_DTP.TabIndex = 55;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(456, 99);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(29, 13);
-            this.label2.TabIndex = 57;
-            this.label2.Text = "After";
             // 
             // generate_submit_button
             // 
@@ -284,19 +233,38 @@ namespace Air3550
             this.label4.TabIndex = 62;
             this.label4.Text = "To generate report using above criteria use \"Generate Report\" button.";
             // 
+            // date_after_checkbox
+            // 
+            this.date_after_checkbox.AutoSize = true;
+            this.date_after_checkbox.Enabled = false;
+            this.date_after_checkbox.Location = new System.Drawing.Point(321, 96);
+            this.date_after_checkbox.Name = "date_after_checkbox";
+            this.date_after_checkbox.Size = new System.Drawing.Size(15, 14);
+            this.date_after_checkbox.TabIndex = 63;
+            this.date_after_checkbox.UseVisualStyleBackColor = true;
+            this.date_after_checkbox.CheckedChanged += new System.EventHandler(this.date_after_checkbox_CheckedChanged);
+            // 
+            // date_before_checkbox
+            // 
+            this.date_before_checkbox.AutoSize = true;
+            this.date_before_checkbox.Enabled = false;
+            this.date_before_checkbox.Location = new System.Drawing.Point(321, 126);
+            this.date_before_checkbox.Name = "date_before_checkbox";
+            this.date_before_checkbox.Size = new System.Drawing.Size(15, 14);
+            this.date_before_checkbox.TabIndex = 64;
+            this.date_before_checkbox.UseVisualStyleBackColor = true;
+            this.date_before_checkbox.CheckedChanged += new System.EventHandler(this.date_before_checkbox_CheckedChanged);
+            // 
             // AccountantLandingPage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(714, 609);
+            this.Controls.Add(this.date_before_checkbox);
+            this.Controls.Add(this.date_after_checkbox);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.generate_submit_button);
-            this.Controls.Add(this.time_checkbox);
-            this.Controls.Add(this.beforeTime_DTP);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.afterTime_DTP);
-            this.Controls.Add(this.label2);
             this.Controls.Add(this.date_checkbox);
             this.Controls.Add(this.origin_dest_checkbox);
             this.Controls.Add(this.clearSort_button);
@@ -338,13 +306,10 @@ namespace Air3550
         private System.Windows.Forms.Label edit_origin_label;
         private System.Windows.Forms.CheckBox origin_dest_checkbox;
         private System.Windows.Forms.CheckBox date_checkbox;
-        private System.Windows.Forms.CheckBox time_checkbox;
-        private System.Windows.Forms.DateTimePicker beforeTime_DTP;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.DateTimePicker afterTime_DTP;
-        private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button generate_submit_button;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.CheckBox date_after_checkbox;
+        private System.Windows.Forms.CheckBox date_before_checkbox;
     }
 }
