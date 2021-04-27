@@ -51,7 +51,7 @@ namespace Air3550
             {
                 finaldestAbv = leg1_flight.dest;
                 connectionAbv = null;
-                
+                arrivalDate = leg1ArrivalDate;
             }
             else
             {
