@@ -26,6 +26,9 @@ namespace Air3550
 
             FormDatabaseHelper.fillAirportsAbv(origin_combobox);
             FormDatabaseHelper.fillAirportsAbv(dest_combobox);
+
+            tools_groupbox.Show();
+            singleflight_report_groupbox.Hide();
         }
 
         private void AccountantLandingPage_FormClosing(object sender, FormClosingEventArgs e)
@@ -125,6 +128,82 @@ namespace Air3550
         private void beforeDate_DTP_ValueChanged(object sender, EventArgs e)
         {
             updateTable();
+        }
+
+        // =================================================================================================
+        // Single Flight Report Functionality ==============================================================
+        // =================================================================================================
+
+        private void single_report_button_Click(object sender, EventArgs e)
+        {
+            int flightID = int.Parse(flights_dataview.CurrentRow.Cells["id"].Value.ToString());
+
+            DataTable bookedFlightInfo = returnSingleFlightInformation(flightID);
+            DataTable flightTransactions = returnSingleFlightTransactions(flightID);
+
+            fillSingleReport(bookedFlightInfo, flightTransactions);
+
+            tools_groupbox.Hide();
+            singleflight_report_groupbox.Show();
+        }
+
+        private void close_single_report_button_Click(object sender, EventArgs e)
+        {
+            tools_groupbox.Show();
+            singleflight_report_groupbox.Hide();
+        }
+
+        private void fillSingleReport(DataTable flight, DataTable transactions)
+        {
+            single_flightID_label.Text      = flight.Rows[0].Field<int>("id").ToString();
+            single_originCode_label.Text    = flight.Rows[0].Field<string>("originAbv");
+            single_destCode_label.Text      = flight.Rows[0].Field<string>("destAbv");
+            single_depDate_label.Text       = flight.Rows[0].Field<DateTime>("departureTime").ToString();
+            single_arrivalDate_label.Text   = flight.Rows[0].Field<DateTime>("arrivalTime").ToString();
+
+            double maxCap  = flight.Rows[0].Field<int>("maxCapacity");
+            double currCap = flight.Rows[0].Field<int>("currCapacity");
+            double percCap = (currCap / maxCap) * 100.00;
+            percCap = Math.Round(percCap,2);
+
+            single_max_cap_label.Text = maxCap.ToString();
+            single_curr_cap_label.Text = currCap.ToString();
+            single_percFill_label.Text = percCap.ToString();
+
+            // calculate revenue from card payments
+            DataTable cardTransactions = new DataTable();
+            string search = "PaymentType = 1";
+            if (transactions.Select(search).Length > 0)
+            {
+                cardTransactions = transactions.Select(search).CopyToDataTable();
+            }
+            double revenue = 0;
+            foreach (DataRow row in cardTransactions.Rows)
+            {
+                revenue = revenue + row.Field<double>("Cost");
+            }
+            single_cardRev_label.Text = revenue.ToString();
+
+            // calculate revenue from reward reimbursement
+            DataTable rewardTransactions = new DataTable();
+            search = "PaymentType = 2";
+            if (transactions.Select(search).Length > 0)
+            {
+                rewardTransactions = transactions.Select(search).CopyToDataTable();
+            }
+            revenue = 0;
+            foreach (DataRow row in rewardTransactions.Rows)
+            {
+                revenue = revenue + row.Field<double>("Cost");
+            }
+            single_pointRev_label.Text = revenue.ToString();
+
+            BindingSource SBind = new BindingSource();
+            SBind.DataSource = transactions;
+            single_transactions_datagridview.Columns.Clear();
+            singleTransactionsTableColumnSetup();
+            single_transactions_datagridview.DataSource = SBind;
+            single_transactions_datagridview.Refresh();
         }
 
         // =================================================================================================
@@ -315,6 +394,44 @@ namespace Air3550
             flights_dataview.Columns[6].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
         }
 
+        private void singleTransactionsTableColumnSetup()
+        {
+            single_transactions_datagridview.DataSource = null;
+
+            single_transactions_datagridview.AutoGenerateColumns = false;
+            single_transactions_datagridview.ColumnCount = 6;
+
+            single_transactions_datagridview.Columns[0].Name = "FlightTransactionID";
+            single_transactions_datagridview.Columns[0].HeaderText = "Transaction #";
+            single_transactions_datagridview.Columns[0].DataPropertyName = "FlightTransactionID";
+            single_transactions_datagridview.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+
+            single_transactions_datagridview.Columns[1].Name = "FirstName";
+            single_transactions_datagridview.Columns[1].HeaderText = "First Name";
+            single_transactions_datagridview.Columns[1].DataPropertyName = "FirstName";
+            single_transactions_datagridview.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+
+            single_transactions_datagridview.Columns[2].Name = "LastName";
+            single_transactions_datagridview.Columns[2].HeaderText = "Last Name";
+            single_transactions_datagridview.Columns[2].DataPropertyName = "LastName";
+            single_transactions_datagridview.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+
+            single_transactions_datagridview.Columns[3].Name = "CardNumber";
+            single_transactions_datagridview.Columns[3].HeaderText = "Card Number";
+            single_transactions_datagridview.Columns[3].DataPropertyName = "CardNumber";
+            single_transactions_datagridview.Columns[3].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+
+            single_transactions_datagridview.Columns[4].Name = "PaymentType";
+            single_transactions_datagridview.Columns[4].HeaderText = "Payment\n1-Card 2-Reward";
+            single_transactions_datagridview.Columns[4].DataPropertyName = "PaymentType";
+            single_transactions_datagridview.Columns[4].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+
+            single_transactions_datagridview.Columns[5].Name = "Cost";
+            single_transactions_datagridview.Columns[5].HeaderText = "PaymentAmount";
+            single_transactions_datagridview.Columns[5].DataPropertyName = "Cost";
+            single_transactions_datagridview.Columns[5].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+        }
+
         // ===================================================================================================
         // METHODS TO BE MOVED TO FORMDATABASEHELPER LATER ===================================================
         // ===================================================================================================
@@ -453,6 +570,64 @@ namespace Air3550
                             return null;
                             break;
                     }
+
+                    adapter.SelectCommand = sqlCommand;
+                    adapter.Fill(newDataTable);
+
+                    return newDataTable;
+                }
+
+                return newDataTable;
+            }
+        }
+
+        public static DataTable returnSingleFlightInformation(int flightID)
+        {
+            string dbString = Properties.Settings.Default.Air3550DBConnectionString;
+
+            using (SqlConnection sqlConnection = new SqlConnection(dbString))
+            {
+                if (sqlConnection.State != ConnectionState.Open) sqlConnection.Open();
+
+                SqlDataAdapter adapter = new SqlDataAdapter();
+                DataTable newDataTable = new DataTable();
+
+                string requestString = "SELECT * FROM BookedFlights " +
+                        "WHERE id = @flightID";
+
+
+                using (SqlCommand sqlCommand = new SqlCommand(requestString, sqlConnection))
+                {
+                    sqlCommand.Parameters.AddWithValue("@flightID", flightID);
+
+                    adapter.SelectCommand = sqlCommand;
+                    adapter.Fill(newDataTable);
+
+                    return newDataTable;
+                }
+
+                return newDataTable;
+            }
+        }
+
+        public static DataTable returnSingleFlightTransactions(int flightID)
+        {
+            string dbString = Properties.Settings.Default.Air3550DBConnectionString;
+
+            using (SqlConnection sqlConnection = new SqlConnection(dbString))
+            {
+                if (sqlConnection.State != ConnectionState.Open) sqlConnection.Open();
+
+                SqlDataAdapter adapter = new SqlDataAdapter();
+                DataTable newDataTable = new DataTable();
+
+                string requestString = "SELECT * FROM FlightTransactions " +
+                        "WHERE BookedFlightID = @flightID";
+
+
+                using (SqlCommand sqlCommand = new SqlCommand(requestString, sqlConnection))
+                {
+                    sqlCommand.Parameters.AddWithValue("@flightID", flightID);
 
                     adapter.SelectCommand = sqlCommand;
                     adapter.Fill(newDataTable);
