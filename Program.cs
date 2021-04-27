@@ -14,15 +14,11 @@ namespace Air3550
         [STAThread]
         static void Main()
         {
-             Application.EnableVisualStyles();
-             Application.SetCompatibleTextRenderingDefault(false);
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
 
-             Application.Run(new UserLandingPage(new User()));
-
-           
-
-
-
+            Application.Run(new UserLandingPage(new User()));
+            //  FormDatabaseHelper.getAvailableFlights("JFK", "ORD", DateTime.Now);
         }
     }
 }

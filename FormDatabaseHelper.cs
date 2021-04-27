@@ -613,26 +613,31 @@ namespace Air3550
                         //flight to insert has the departure time 
                         flight fl = getFlight_fromFlightsTable(flightId);
 
-                        Console.WriteLine("--------------");
-
-                        Console.WriteLine(fl.deptTime);
+                        
 
                         TimeSpan timeofFlightDept = fl.deptTime.TimeOfDay;
-                        Console.WriteLine(timeofFlightDept);
-                        DateTime updatedDeptDate = new DateTime(deptDateChosen.Year,deptDateChosen.Month,deptDateChosen.Day, timeofFlightDept.Hours, timeofFlightDept.Minutes, timeofFlightDept.Seconds);
-                        
+                        DateTime updatedDeptDate;
+                        if (timeofFlightDept.Hours == 0 && timeofFlightDept.Minutes == 0 && timeofFlightDept.Seconds == 0)
+                        {
+                             updatedDeptDate = new DateTime(deptDateChosen.Year, deptDateChosen.Month, deptDateChosen.Day,0, 0, 0);
+
+                        }
+                        else
+                        {
+                             updatedDeptDate = new DateTime(deptDateChosen.Year, deptDateChosen.Month, deptDateChosen.Day, timeofFlightDept.Hours, timeofFlightDept.Minutes, timeofFlightDept.Seconds);
+                        }
                         fl.deptTime = updatedDeptDate;
-                        Console.WriteLine(fl.deptTime);
+                        
 
                         TimeSpan timeofFlightArrival = fl.arrivalTime.TimeOfDay;
-                        if (timeofFlightArrival < timeofFlightDept)
+                        if (timeofFlightDept > timeofFlightArrival)
                         {
-                            DateTime updatedArrivalDate = new DateTime(deptDateChosen.Year, deptDateChosen.Month, deptDateChosen.Day +1, timeofFlightDept.Hours, timeofFlightDept.Minutes, timeofFlightDept.Seconds);
+                            DateTime updatedArrivalDate = new DateTime(deptDateChosen.Year, deptDateChosen.Month, deptDateChosen.Day +1, timeofFlightArrival.Hours, timeofFlightArrival.Minutes, timeofFlightArrival.Seconds);
                             fl.arrivalTime = updatedArrivalDate;
                         }
                         else
                         {
-                            DateTime updatedArrivalDate = new DateTime(deptDateChosen.Year, deptDateChosen.Month, deptDateChosen.Day + 1, timeofFlightDept.Hours, timeofFlightDept.Minutes, timeofFlightDept.Seconds);
+                            DateTime updatedArrivalDate = new DateTime(deptDateChosen.Year, deptDateChosen.Month, deptDateChosen.Day , timeofFlightArrival.Hours, timeofFlightArrival.Minutes, timeofFlightArrival.Seconds);
                             fl.arrivalTime = updatedArrivalDate;
                         }
                         
@@ -713,6 +718,7 @@ namespace Air3550
             {
                 int leg1 = ids[0];
                 int leg2 = ids[1];
+                Console.WriteLine(leg1+"-----"+leg2);
                 string dbString = Properties.Settings.Default.Air3550DBConnectionString;
 
                 
@@ -726,7 +732,7 @@ namespace Air3550
                                                                   " ( @index ) AS id ,"+
                                                                   " ( SELECT OriginAbv FROM BookedFlights WHERE id LIKE @leg1 ) AS originAbv , " +
                                                                   " ( SELECT destAbv   FROM BookedFlights WHERE id LIKE @leg1 ) AS leg1Dest , " +
-                                                                  " ( SELECT departureTime   FROM BookedFlights WHERE id LIKE @leg1 ) AS leg1DeptTime , " +
+                                                                  " ( SELECT CAST(departureTime AS DATETIME) FROM BookedFlights WHERE id LIKE @leg1 ) AS leg1DeptTime , " +
                                                                   " ( SELECT arrivalTime   FROM BookedFlights WHERE id LIKE @leg1 ) AS leg1ArrivalTime , " +
                                                                   " ( @leg1 ) AS leg1id , "+
                                                                   " ( SELECT OriginAbv FROM BookedFlights WHERE id LIKE @leg2 ) AS leg2origin , " +
@@ -749,12 +755,13 @@ namespace Air3550
 
                 i = i + 1;
             }
+
             foreach(DataColumn column in FlightOptions.Columns)
             {
                 Console.Write(column.ColumnName);
                 Console.Write(" ");
             }
-
+            Console.WriteLine("-------------------");
 
             foreach (DataRow dataRow in FlightOptions.Rows)
             {
@@ -825,10 +832,10 @@ namespace Air3550
             
             int newid = 0;
 
-            if (newFlight.arrivalTime < newFlight.deptTime)
+            /*if (newFlight.arrivalTime < newFlight.deptTime)
             {
                 newFlight.arrivalTime = newFlight.arrivalTime.AddDays(1);
-            }
+            }*/
             string dbString = Properties.Settings.Default.Air3550DBConnectionString;
             using (SqlConnection sqlConnection = new SqlConnection(dbString))
             {
@@ -860,12 +867,39 @@ namespace Air3550
             return newid;
         }
         
-        public static void attachDataTableToGrid(DataGridView grid,DataTable table )
-        {
-            grid.DataSource = table;
-        }
         
+        
+        public static double getCostFromBookingTable(int bookingid)
+        {
+            double cost = 0;
+            string dbString = Properties.Settings.Default.Air3550DBConnectionString;
+            using (SqlConnection sqlConnection = new SqlConnection(dbString))
+            {
+                if (sqlConnection.State != ConnectionState.Open) sqlConnection.Open();
 
+
+                using (SqlCommand sqlCommand = new SqlCommand("SELECT cost FROM BookedFlights WHERE id LIKE @id ", sqlConnection))
+                {
+                    sqlCommand.Parameters.AddWithValue("@id", bookingid);
+
+                    SqlDataReader sqlReader = sqlCommand.ExecuteReader();
+
+                    if (sqlReader.HasRows)
+                    {
+                        while (sqlReader.Read())
+                        {
+                            cost = Double.Parse( sqlReader["cost"].ToString());
+
+                        }
+                    }
+
+                    sqlReader.Close();
+                }
+            }
+
+
+            return cost;
+        }
 
           
 
