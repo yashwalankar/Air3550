@@ -144,7 +144,7 @@ namespace Air3550
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(364, 52);
+            this.label1.Location = new System.Drawing.Point(364, 44);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(117, 13);
             this.label1.TabIndex = 9;
@@ -153,7 +153,7 @@ namespace Air3550
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(258, 52);
+            this.label2.Location = new System.Drawing.Point(258, 44);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(84, 13);
             this.label2.TabIndex = 10;
@@ -177,6 +177,7 @@ namespace Air3550
             this.Controls.Add(this.flight1_label);
             this.Name = "Checkout";
             this.Text = "Checkout";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Checkout_FormClosing);
             this.payemnt_groupBox.ResumeLayout(false);
             this.payemnt_groupBox.PerformLayout();
             this.ResumeLayout(false);

@@ -947,7 +947,154 @@ namespace Air3550
             return fl;
         }
 
+        public static void insert_UserFlightHistory(UserFlightHistory fh)
+        {
+            int userid = fh.userID;
+            int type = fh.type;
+            int status = fh.status;
+            String originAbv = fh.originAbv;
+            int leg1BookedId =fh.leg1bookingId;
+            DateTime leg1ArrivalTime = fh.leg1ArrivalDate;
+            int leg2BookedId = fh.leg2bookingId;
+            DateTime leg2departureTime = fh.leg2deptDate ;
+            String connectionAbv = fh.connectionAbv;
+            String finalDestAbv = fh.finaldestAbv;
+            DateTime departureDate =fh.departureDate;
+            DateTime arrivalDate =fh.arrivalDate;
+            int paymentType =fh.paymentType;
+            double paymentAmount = fh.paymentAmount;
 
+            Console.WriteLine(userid + " | " + type + " | " + status + " | " + originAbv + " | " +
+                            leg1BookedId + " | " + leg1ArrivalTime.ToString() + " | " + leg2BookedId + " | " + leg2departureTime.ToString() + " | " + connectionAbv +
+                            " | "+finalDestAbv+" | "+departureDate.ToString() + " | " + arrivalDate.ToString() + " | "+paymentType+" | "+paymentAmount  );
+
+            Console.WriteLine("----leg2 booking id---> " + leg2BookedId);
+
+            string dbString = Properties.Settings.Default.Air3550DBConnectionString;
+            using (SqlConnection sqlConnection = new SqlConnection(dbString))
+            {
+                if (sqlConnection.State != ConnectionState.Open) sqlConnection.Open();
+
+                string sqlString = "INSERT INTO UserFlightHistory " +
+                    "(userdID,OriginAbv,Leg1BookedID,Leg1ArrivalTime,Leg2BookedID,Leg2Departure,connectionAbv,finaldestAbv,DepartureDate,ArrivalDate,PaymentType,PaymentAmount)" +
+                    "VALUES " +
+                    "(@userID,@OriginAbv,@Leg1BookedID,@Leg1ArrivalTime,@Leg2BookedID,@Leg2Departure,@connectionAbv,@finaldestAbv,@DepartureDate,@ArrivalDate,@PaymentType,@PaymentAmount)";
+
+                SqlCommand command = new SqlCommand(sqlString, sqlConnection);
+
+                command.Parameters.AddWithValue("@userID", userid.ToString());
+                command.Parameters.AddWithValue("@OriginAbv", originAbv.ToString());
+                command.Parameters.AddWithValue("@Leg1BookedID", leg1BookedId.ToString());
+                command.Parameters.AddWithValue("@Leg1ArrivalTime", leg1ArrivalTime.ToString());
+                command.Parameters.AddWithValue("@Leg2BookedID", leg2BookedId.ToString());
+                
+                if(leg2BookedId == 0)
+                {
+                    command.Parameters.AddWithValue("@Leg2Departure", DBNull.Value);
+                    command.Parameters.AddWithValue("@connectionAbv", DBNull.Value);
+                }
+                else
+                {
+                    command.Parameters.AddWithValue("@Leg2Departure", leg2departureTime.ToString());
+                    command.Parameters.AddWithValue("@connectionAbv", connectionAbv.ToString());
+                }
+
+                command.Parameters.AddWithValue("@finaldestAbv", finalDestAbv.ToString());
+                command.Parameters.AddWithValue("@DepartureDate", departureDate.ToString());
+                command.Parameters.AddWithValue("@ArrivalDate", arrivalDate.ToString());
+                command.Parameters.AddWithValue("@PaymentType", paymentType.ToString());
+                command.Parameters.AddWithValue("@PaymentAmount", paymentAmount.ToString());
+
+                command.ExecuteNonQuery();
+
+            }
+
+
+        }
+        public static void updateCurrCapacityByOne(int bookingflightid)
+        {
+            if (bookingflightid == 0)
+            {
+                return;
+            }
+            string dbString = Properties.Settings.Default.Air3550DBConnectionString;
+            using (SqlConnection sqlConnection = new SqlConnection(dbString))
+            {
+                if (sqlConnection.State != ConnectionState.Open) sqlConnection.Open();
+
+                string sqlString = "UPDATE BookedFlights " +
+                    " SET currCapacity = currCapacity + 1  WHERE id LIKE @bookingflightid";
+                SqlCommand command = new SqlCommand(sqlString, sqlConnection);
+
+                command.Parameters.AddWithValue("@bookingflightid", bookingflightid);
+                
+                
+               
+
+                command.ExecuteNonQuery();
+
+            }
+        }
+        public static void insertToFlightTransaction(User user, int bookedflightId,int payType)
+        {
+            if(bookedflightId == 0)
+            {
+                return;
+            }
+            int BookedFlightID = bookedflightId;
+            int userID = user.id;
+            String FirstName= user.firstName ;
+            String LastName = user.lastName;
+            String CardNumber = user.cardNumber;
+            int PaymentType = payType;
+            double Cost = getCostFromBookingTable(BookedFlightID);
+
+            string dbString = Properties.Settings.Default.Air3550DBConnectionString;
+            using (SqlConnection sqlConnection = new SqlConnection(dbString))
+            {
+                if (sqlConnection.State != ConnectionState.Open) sqlConnection.Open();
+
+                string sqlString = "INSERT INTO FlightTransactions" +
+                    "(BookedFlightID,userID,FirstName,LastName,CardNumber,PaymentType,Cost) " +
+                    "VALUES " +
+                    "(@BookedFlightID,@userID,@FirstName,@LastName,@CardNumber,@PaymentType,@Cost)";
+
+                SqlCommand command = new SqlCommand(sqlString, sqlConnection);
+
+                command.Parameters.AddWithValue("@BookedFlightID", BookedFlightID.ToString());
+                command.Parameters.AddWithValue("@userID", userID.ToString());
+                command.Parameters.AddWithValue("@FirstName", FirstName.ToString());
+                command.Parameters.AddWithValue("@LastName", LastName.ToString());
+                command.Parameters.AddWithValue("@CardNumber", CardNumber.ToString());
+                command.Parameters.AddWithValue("@PaymentType", PaymentType.ToString());
+                command.Parameters.AddWithValue("@Cost", Cost.ToString());
+
+                command.ExecuteNonQuery();
+
+            }
+
+
+
+
+
+
+        }
+        public static void createBooking(UserFlightHistory fh , User user)
+        {
+            insert_UserFlightHistory(fh);
+
+            //leg1
+            updateCurrCapacityByOne(fh.leg1bookingId);
+            insertToFlightTransaction(user,fh.leg1bookingId,fh.paymentType);
+
+            //leg2
+            if (fh.leg2bookingId != 0)
+            {
+                
+                updateCurrCapacityByOne(fh.leg2bookingId);
+                insertToFlightTransaction(user, fh.leg2bookingId, fh.paymentType);
+            }
+        }
 
     } 
 }
