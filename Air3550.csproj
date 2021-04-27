@@ -78,12 +78,6 @@
     <Compile Include="Checkout.Designer.cs">
       <DependentUpon>Checkout.cs</DependentUpon>
     </Compile>
-    <Compile Include="flightManifest.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="flightManifest.Designer.cs">
-      <DependentUpon>flightManifest.cs</DependentUpon>
-    </Compile>
     <Compile Include="FlightManLandingPage.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -137,9 +131,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Checkout.resx">
       <DependentUpon>Checkout.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="flightManifest.resx">
-      <DependentUpon>flightManifest.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FlightManLandingPage.resx">
       <DependentUpon>FlightManLandingPage.cs</DependentUpon>

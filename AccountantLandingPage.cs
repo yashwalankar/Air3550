@@ -208,11 +208,15 @@ namespace Air3550
         private void fillFullReport()
         {
             DataTable allBookedFlights = returnFlightInformation();
+            allBookedFlights.Columns.Add("percCapacity", typeof(double));
+            allBookedFlights.Columns.Add("cardRev", typeof(double));
+            allBookedFlights.Columns.Add("rewardRev", typeof(double));
 
             int count = allBookedFlights.Rows.Count;
             full_flightCount_label.Text = count.ToString();
 
             int flightID;
+            int currentRow = 0;
             double cardRev = 0.00;
             double rewardRev = 0.00;
             foreach (DataRow row in allBookedFlights.Rows)
@@ -221,8 +225,24 @@ namespace Air3550
 
                 DataTable transactions = returnSingleFlightTransactions(flightID);
 
-                cardRev = cardRev + findRevenue(transactions, 1);
-                rewardRev = rewardRev + findRevenue(transactions, 2);
+                double currentCardRev = findRevenue(transactions, 1);
+                currentCardRev = Math.Round(currentCardRev, 2);
+                double currentRewardRev = findRevenue(transactions, 2);
+
+                allBookedFlights.Rows[currentRow].SetField<double>("cardRev",currentCardRev);
+                allBookedFlights.Rows[currentRow].SetField<double>("rewardRev", currentRewardRev);
+
+                cardRev = cardRev + currentCardRev;
+                rewardRev = rewardRev + currentRewardRev;
+
+                double maxCap = row.Field<int>("maxCapacity");
+                double currCap = row.Field<int>("currCapacity");
+                double percCap = (currCap / maxCap) * 100.00;
+                percCap = Math.Round(percCap, 2);
+
+                allBookedFlights.Rows[currentRow].SetField<double>("percCapacity", percCap);
+
+                currentRow++;
             }
             full_cardRev_label.Text = cardRev.ToString();
             full_pointRev_label.Text = rewardRev.ToString();
@@ -230,7 +250,7 @@ namespace Air3550
             BindingSource SBind = new BindingSource();
             SBind.DataSource = allBookedFlights;
             full_report_datagridview.Columns.Clear();
-            //singleTransactionsTableColumnSetup();
+            fullTransactionsTableColumnSetup();
             full_report_datagridview.DataSource = SBind;
             full_report_datagridview.Refresh();
         }
@@ -372,7 +392,19 @@ namespace Air3550
                     string beforeStr = before.ToString();
                     string afterStr = after.ToString();
 
-                    string search = $"departureTime >= '{afterStr}' AND departureTime <= '{beforeStr}'";
+                    string search = null;
+                    if (date_after_checkbox.Checked && date_before_checkbox.Checked)
+                    {
+                        search = $"departureTime >= '{afterStr}' AND departureTime <= '{beforeStr}'";
+                    }
+                    else if (!date_after_checkbox.Checked && date_before_checkbox.Checked)
+                    {
+                        search = $"departureTime <= '{beforeStr}'";
+                    }
+                    else if (date_after_checkbox.Checked && !date_before_checkbox.Checked)
+                    {
+                        search = $"departureTime >= '{afterStr}'";
+                    }
 
                     if (newEditTable.Select(search).Length > 0)
                     {
@@ -475,6 +507,54 @@ namespace Air3550
             single_transactions_datagridview.Columns[5].HeaderText = "PaymentAmount";
             single_transactions_datagridview.Columns[5].DataPropertyName = "Cost";
             single_transactions_datagridview.Columns[5].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+        }
+
+        private void fullTransactionsTableColumnSetup()
+        {
+            full_report_datagridview.DataSource = null;
+
+            full_report_datagridview.AutoGenerateColumns = false;
+            full_report_datagridview.ColumnCount = 7;
+
+            //full_report_datagridview.Columns[0].Name = "id";
+            //full_report_datagridview.Columns[0].HeaderText = "Flight ID";
+            //full_report_datagridview.Columns[0].DataPropertyName = "id";
+            //full_report_datagridview.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+
+            full_report_datagridview.Columns[0].Name = "originAbv";
+            full_report_datagridview.Columns[0].HeaderText = "Origin";
+            full_report_datagridview.Columns[0].DataPropertyName = "originAbv";
+            full_report_datagridview.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+
+            full_report_datagridview.Columns[1].Name = "destAbv";
+            full_report_datagridview.Columns[1].HeaderText = "Destination";
+            full_report_datagridview.Columns[1].DataPropertyName = "destAbv";
+            full_report_datagridview.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+
+            full_report_datagridview.Columns[2].Name = "departureTime";
+            full_report_datagridview.Columns[2].HeaderText = "Departure";
+            full_report_datagridview.Columns[2].DataPropertyName = "departureTime";
+            full_report_datagridview.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+
+            full_report_datagridview.Columns[3].Name = "arrivalTime";
+            full_report_datagridview.Columns[3].HeaderText = "Arrival";
+            full_report_datagridview.Columns[3].DataPropertyName = "arrivalTime";
+            full_report_datagridview.Columns[3].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+
+            full_report_datagridview.Columns[4].Name = "cardRev";
+            full_report_datagridview.Columns[4].HeaderText = "Card Revenue";
+            full_report_datagridview.Columns[4].DataPropertyName = "cardRev";
+            full_report_datagridview.Columns[4].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+
+            full_report_datagridview.Columns[5].Name = "rewardRev";
+            full_report_datagridview.Columns[5].HeaderText = "Point Revenue";
+            full_report_datagridview.Columns[5].DataPropertyName = "rewardRev";
+            full_report_datagridview.Columns[5].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+
+            full_report_datagridview.Columns[6].Name = "percCapacity";
+            full_report_datagridview.Columns[6].HeaderText = "Flight Fill %";
+            full_report_datagridview.Columns[6].DataPropertyName = "percCapacity";
+            full_report_datagridview.Columns[6].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
         }
 
         // ===================================================================================================

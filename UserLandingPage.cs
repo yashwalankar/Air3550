@@ -22,6 +22,7 @@ namespace Air3550
         {
             USER = user;
             InitializeComponent();
+            Console.WriteLine(user.firstName);
             welcome_label.Text = "Welcome, " + user.firstName + " " + user.lastName;
             userId_value_label.Text = user.id.ToString();
             rewardBalance_value_label.Text = user.rewardBalance.ToString();

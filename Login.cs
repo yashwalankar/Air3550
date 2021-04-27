@@ -176,7 +176,7 @@ namespace Air3550
                     if (!(userDataSet.Rows[0][9].Equals(DBNull.Value))) info.cardNumber     = userDataSet.Rows[0].Field<string>("CardNum");
                     if (!(userDataSet.Rows[0][10].Equals(DBNull.Value))) info.rewardBalance = userDataSet.Rows[0].Field<int>("RewardBalance");
                     if (!(userDataSet.Rows[0][11].Equals(DBNull.Value))) info.userHistoryID = userDataSet.Rows[0].Field<int>("UserHistID");
-                    if (!(userDataSet.Rows[0][3].Equals(DBNull.Value)))  info.passwordHash  = userDataSet.Rows[0].Field<string>("FirstName");
+                    if (!(userDataSet.Rows[0][3].Equals(DBNull.Value)))  info.firstName  = userDataSet.Rows[0].Field<string>("FirstName");
                     if (!(userDataSet.Rows[0][4].Equals(DBNull.Value)))  info.lastName      = userDataSet.Rows[0].Field<string>("LastName");
                     if (!(userDataSet.Rows[0][6].Equals(DBNull.Value)))  info.email         = userDataSet.Rows[0].Field<string>("Email");
                     if (!(userDataSet.Rows[0][7].Equals(DBNull.Value)))  info.phone         = userDataSet.Rows[0].Field<string>("Phone");
