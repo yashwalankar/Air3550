@@ -18,7 +18,7 @@ namespace Air3550
             Application.SetCompatibleTextRenderingDefault(false);
             //Application.Run(new Login());
 
-            Application.Run(new AccountantLandingPage());
+            Application.Run(new MarketingLandingPage());
         }
     }
 }

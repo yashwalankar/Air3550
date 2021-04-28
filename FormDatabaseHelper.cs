@@ -250,7 +250,7 @@ namespace Air3550
             {
                 if (sqlConnection.State != ConnectionState.Open) sqlConnection.Open();
 
-                string sqlString = "UPDATE Flights SET PlaneType = @PlaneType, maxCapacity = @maxCapacity WHERE Id = @flightId";
+                string sqlString = "UPDATE BookedFlights SET planeType = @PlaneType, maxCapacity = @maxCapacity WHERE id = @flightId";
                 
 
                 SqlCommand command = new SqlCommand(sqlString, sqlConnection);

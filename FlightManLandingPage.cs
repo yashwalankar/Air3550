@@ -103,6 +103,8 @@ namespace Air3550
                 dest_combobox.Enabled = false;
                 clearSort_button.Enabled = false;
             }
+
+            updateTable();
         }
 
         private void clearSort_button_Click(object sender, EventArgs e)
@@ -145,6 +147,8 @@ namespace Air3550
                 date_after_checkbox.Enabled = false;
                 date_before_checkbox.Enabled = false;
             }
+
+            updateTable();
         }
 
         private void date_after_checkbox_CheckedChanged(object sender, EventArgs e)
