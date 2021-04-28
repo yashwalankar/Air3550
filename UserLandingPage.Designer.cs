@@ -82,7 +82,6 @@ namespace Air3550
             this.oneway_selectedFlight_label = new System.Windows.Forms.Label();
             this.oneway_datagridview = new System.Windows.Forms.DataGridView();
             this.arrow_label = new System.Windows.Forms.Label();
-            this.showFlights_btn = new System.Windows.Forms.Button();
             this.returnDate_dtp = new System.Windows.Forms.DateTimePicker();
             this.returnDate_label = new System.Windows.Forms.Label();
             this.tripType_groupBox = new System.Windows.Forms.GroupBox();
@@ -98,6 +97,7 @@ namespace Air3550
             this.currSysTime_label = new System.Windows.Forms.Label();
             this.print_pass_label1 = new System.Windows.Forms.Label();
             this.print_pass_label2 = new System.Windows.Forms.Label();
+            this.booking_error_label = new System.Windows.Forms.Label();
             this.pastFlights_groupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.cancelled_datagridview)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pastflights_datagridview)).BeginInit();
@@ -324,11 +324,11 @@ namespace Air3550
             // 
             // bookFlights_groupBox
             // 
+            this.bookFlights_groupBox.Controls.Add(this.booking_error_label);
             this.bookFlights_groupBox.Controls.Add(this.checkout_btn);
             this.bookFlights_groupBox.Controls.Add(this.return_groupBox);
             this.bookFlights_groupBox.Controls.Add(this.oneway_groupBox);
             this.bookFlights_groupBox.Controls.Add(this.arrow_label);
-            this.bookFlights_groupBox.Controls.Add(this.showFlights_btn);
             this.bookFlights_groupBox.Controls.Add(this.returnDate_dtp);
             this.bookFlights_groupBox.Controls.Add(this.returnDate_label);
             this.bookFlights_groupBox.Controls.Add(this.tripType_groupBox);
@@ -674,16 +674,6 @@ namespace Air3550
             this.arrow_label.TabIndex = 35;
             this.arrow_label.Text = " --->";
             // 
-            // showFlights_btn
-            // 
-            this.showFlights_btn.Location = new System.Drawing.Point(573, 87);
-            this.showFlights_btn.Name = "showFlights_btn";
-            this.showFlights_btn.Size = new System.Drawing.Size(104, 23);
-            this.showFlights_btn.TabIndex = 27;
-            this.showFlights_btn.Text = "Show Flights";
-            this.showFlights_btn.UseVisualStyleBackColor = true;
-            this.showFlights_btn.Click += new System.EventHandler(this.showFlights_btn_Click);
-            // 
             // returnDate_dtp
             // 
             this.returnDate_dtp.CustomFormat = "yyyy/MM/dd";
@@ -692,6 +682,7 @@ namespace Air3550
             this.returnDate_dtp.Name = "returnDate_dtp";
             this.returnDate_dtp.Size = new System.Drawing.Size(103, 20);
             this.returnDate_dtp.TabIndex = 34;
+            this.returnDate_dtp.ValueChanged += new System.EventHandler(this.returnDate_dtp_ValueChanged);
             // 
             // returnDate_label
             // 
@@ -755,6 +746,7 @@ namespace Air3550
             this.deptDate_dtp.Name = "deptDate_dtp";
             this.deptDate_dtp.Size = new System.Drawing.Size(98, 20);
             this.deptDate_dtp.TabIndex = 27;
+            this.deptDate_dtp.ValueChanged += new System.EventHandler(this.deptDate_dtp_ValueChanged);
             // 
             // destination_label
             // 
@@ -773,6 +765,7 @@ namespace Air3550
             this.destination_comboBox.Name = "destination_comboBox";
             this.destination_comboBox.Size = new System.Drawing.Size(99, 21);
             this.destination_comboBox.TabIndex = 28;
+            this.destination_comboBox.SelectedIndexChanged += new System.EventHandler(this.destination_comboBox_SelectedIndexChanged);
             // 
             // origin_comboBox
             // 
@@ -782,6 +775,7 @@ namespace Air3550
             this.origin_comboBox.Name = "origin_comboBox";
             this.origin_comboBox.Size = new System.Drawing.Size(96, 21);
             this.origin_comboBox.TabIndex = 27;
+            this.origin_comboBox.SelectedIndexChanged += new System.EventHandler(this.origin_comboBox_SelectedIndexChanged);
             // 
             // departureDate_label
             // 
@@ -828,6 +822,16 @@ namespace Air3550
             this.print_pass_label2.Size = new System.Drawing.Size(108, 13);
             this.print_pass_label2.TabIndex = 6;
             this.print_pass_label2.Text = "to print boarding pass";
+            // 
+            // booking_error_label
+            // 
+            this.booking_error_label.AutoSize = true;
+            this.booking_error_label.ForeColor = System.Drawing.Color.Red;
+            this.booking_error_label.Location = new System.Drawing.Point(253, 117);
+            this.booking_error_label.Name = "booking_error_label";
+            this.booking_error_label.Size = new System.Drawing.Size(253, 13);
+            this.booking_error_label.TabIndex = 39;
+            this.booking_error_label.Text = "Error - Return date must be later than departure date";
             // 
             // UserLandingPage
             // 
@@ -910,7 +914,6 @@ namespace Air3550
         private System.Windows.Forms.RadioButton return_rBtn;
         private System.Windows.Forms.Label returnDate_label;
         private System.Windows.Forms.DateTimePicker returnDate_dtp;
-        private System.Windows.Forms.Button showFlights_btn;
         private System.Windows.Forms.Label arrow_label;
         private System.Windows.Forms.GroupBox return_groupBox;
         private System.Windows.Forms.GroupBox oneway_groupBox;
@@ -953,5 +956,6 @@ namespace Air3550
         private System.Windows.Forms.Label upcoming_selectedIDlabel;
         private System.Windows.Forms.Label print_pass_label2;
         private System.Windows.Forms.Label print_pass_label1;
+        private System.Windows.Forms.Label booking_error_label;
     }
 }

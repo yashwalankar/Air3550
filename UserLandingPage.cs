@@ -67,6 +67,7 @@ namespace Air3550
             upcomingFlights_groupBox.Hide();
             pastFlights_groupBox.Hide();
             bookFlights_groupBox.Show();
+            booking_error_label.Text = "";
         }
 
         private void return_rbtn_CheckedChanged(object sender, EventArgs e)
@@ -79,6 +80,8 @@ namespace Air3550
             {
                 ShowReturnComponents(false);
             }
+
+            updateTables();
         }
 
         private void oneWay_rBtn_CheckedChanged(object sender, EventArgs e)
@@ -91,6 +94,8 @@ namespace Air3550
             {
                 ShowReturnComponents(true);
             }
+
+            updateTables();
         }
 
         private void ShowReturnComponents(bool show)
@@ -110,10 +115,42 @@ namespace Air3550
             }
         }
 
-        private void showFlights_btn_Click(object sender, EventArgs e)
+        private void origin_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (origin_comboBox.SelectedItem != null && destination_comboBox.SelectedItem != null)
+            updateTables();
+        }
+
+        private void destination_comboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            updateTables();
+        }
+
+        private void deptDate_dtp_ValueChanged(object sender, EventArgs e)
+        {
+            updateTables();
+        }
+
+        private void returnDate_dtp_ValueChanged(object sender, EventArgs e)
+        {
+            updateTables();
+        }
+
+        private void updateTables()
+        {
+            DateTime currentDate = DateTime.Now;
+
+            if (deptDate_dtp.Value < currentDate)
             {
+                booking_error_label.Text = "Error - Departure date must be later than current date";
+            }
+            else if (origin_comboBox.SelectedItem == null || destination_comboBox.SelectedItem == null)
+            {
+                booking_error_label.Text = "Please select both origin and destination to view flights";
+            }
+            else if (origin_comboBox.SelectedItem != null && destination_comboBox.SelectedItem != null)
+            {
+                booking_error_label.Text = "";
+
                 String originCity = origin_comboBox.SelectedItem.ToString();
                 String destCity = destination_comboBox.SelectedItem.ToString();
 
@@ -135,8 +172,9 @@ namespace Air3550
                     if (returnBooking)
                     {
                         returnDate = returnDate_dtp.Value;
-                        if (returnDate > deptDate)
+                        if (returnDate >= deptDate.AddDays(1))
                         {
+                            booking_error_label.Text = "";
                             oneway_groupBox.Show();
                             DataTable onewayOptionsTable = FormDatabaseHelper.getAvailableFlights(originAbv, destAbv, deptDate);
                             populateDataGridView(oneway_datagridview, onewayOptionsTable);
@@ -146,7 +184,7 @@ namespace Air3550
                         }
                         else
                         {
-                            Console.WriteLine("return should be after departure date");
+                            booking_error_label.Text = "Error - Return date must be later than departure date";
                         }
                     }
                     else
@@ -326,11 +364,10 @@ namespace Air3550
                     Checkout checkout = new Checkout(false, USER, ticket1, null);
                     checkout.Show();
                 }
-
             }
             else
             {
-                Console.WriteLine("Confirm both flight");
+                booking_error_label.Text = "Error - Please confirm both flights";
             }
         }
 

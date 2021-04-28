@@ -33,6 +33,7 @@ namespace Air3550
             this.point_payment_rbtn = new System.Windows.Forms.RadioButton();
             this.payemnt_groupBox = new System.Windows.Forms.GroupBox();
             this.card_payment_rbtn = new System.Windows.Forms.RadioButton();
+            this.notenoughpoints_label = new System.Windows.Forms.Label();
             this.flight1_value_label = new System.Windows.Forms.Label();
             this.flight2_value_label = new System.Windows.Forms.Label();
             this.book_btn = new System.Windows.Forms.Button();
@@ -41,7 +42,7 @@ namespace Air3550
             this.userreward_balance_label = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.notenoughpoints_label = new System.Windows.Forms.Label();
+            this.cancel = new System.Windows.Forms.Button();
             this.payemnt_groupBox.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -88,6 +89,15 @@ namespace Air3550
             this.card_payment_rbtn.Text = "Pay By Card";
             this.card_payment_rbtn.UseVisualStyleBackColor = true;
             // 
+            // notenoughpoints_label
+            // 
+            this.notenoughpoints_label.AutoSize = true;
+            this.notenoughpoints_label.Location = new System.Drawing.Point(37, 21);
+            this.notenoughpoints_label.Name = "notenoughpoints_label";
+            this.notenoughpoints_label.Size = new System.Drawing.Size(151, 13);
+            this.notenoughpoints_label.TabIndex = 11;
+            this.notenoughpoints_label.Text = "Not Enough Points to Redeem";
+            // 
             // flight1_value_label
             // 
             this.flight1_value_label.AutoSize = true;
@@ -108,7 +118,7 @@ namespace Air3550
             // 
             // book_btn
             // 
-            this.book_btn.Location = new System.Drawing.Point(344, 243);
+            this.book_btn.Location = new System.Drawing.Point(122, 211);
             this.book_btn.Name = "book_btn";
             this.book_btn.Size = new System.Drawing.Size(75, 23);
             this.book_btn.TabIndex = 6;
@@ -162,20 +172,22 @@ namespace Air3550
             this.label2.Text = "Departure Origin";
             this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
-            // notenoughpoints_label
+            // cancel
             // 
-            this.notenoughpoints_label.AutoSize = true;
-            this.notenoughpoints_label.Location = new System.Drawing.Point(37, 21);
-            this.notenoughpoints_label.Name = "notenoughpoints_label";
-            this.notenoughpoints_label.Size = new System.Drawing.Size(151, 13);
-            this.notenoughpoints_label.TabIndex = 11;
-            this.notenoughpoints_label.Text = "Not Enough Points to Redeem";
+            this.cancel.Location = new System.Drawing.Point(267, 211);
+            this.cancel.Name = "cancel";
+            this.cancel.Size = new System.Drawing.Size(75, 23);
+            this.cancel.TabIndex = 11;
+            this.cancel.Text = "Cancel";
+            this.cancel.UseVisualStyleBackColor = true;
+            this.cancel.Click += new System.EventHandler(this.cancel_Click);
             // 
             // Checkout
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(525, 349);
+            this.Controls.Add(this.cancel);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.userreward_balance_label);
@@ -210,5 +222,6 @@ namespace Air3550
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label notenoughpoints_label;
+        private System.Windows.Forms.Button cancel;
     }
 }
