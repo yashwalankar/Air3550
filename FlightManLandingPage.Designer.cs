@@ -32,7 +32,6 @@ namespace Air3550
             this.flights_dataview = new System.Windows.Forms.DataGridView();
             this.flightman_welcome_label = new System.Windows.Forms.Label();
             this.printManifest_btn = new System.Windows.Forms.Button();
-            this.logout_button = new System.Windows.Forms.Button();
             this.flight_search_groupbox = new System.Windows.Forms.GroupBox();
             this.date_before_checkbox = new System.Windows.Forms.CheckBox();
             this.date_after_checkbox = new System.Windows.Forms.CheckBox();
@@ -97,16 +96,6 @@ namespace Air3550
             this.printManifest_btn.Text = "Print Manifest";
             this.printManifest_btn.UseVisualStyleBackColor = true;
             this.printManifest_btn.Click += new System.EventHandler(this.printManifest_btn_Click);
-            // 
-            // logout_button
-            // 
-            this.logout_button.Location = new System.Drawing.Point(713, 12);
-            this.logout_button.Name = "logout_button";
-            this.logout_button.Size = new System.Drawing.Size(75, 23);
-            this.logout_button.TabIndex = 11;
-            this.logout_button.Text = "Logout";
-            this.logout_button.UseVisualStyleBackColor = true;
-            this.logout_button.Click += new System.EventHandler(this.logout_button_Click);
             // 
             // flight_search_groupbox
             // 
@@ -414,9 +403,8 @@ namespace Air3550
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(714, 609);
+            this.ClientSize = new System.Drawing.Size(713, 609);
             this.Controls.Add(this.logout_btn);
-            this.Controls.Add(this.logout_button);
             this.Controls.Add(this.flightman_welcome_label);
             this.Controls.Add(this.manifest_groupbox);
             this.Controls.Add(this.flight_search_groupbox);
@@ -439,7 +427,6 @@ namespace Air3550
         private System.Windows.Forms.DataGridView flights_dataview;
         private System.Windows.Forms.Label flightman_welcome_label;
         private System.Windows.Forms.Button printManifest_btn;
-        private System.Windows.Forms.Button logout_button;
         private System.Windows.Forms.GroupBox flight_search_groupbox;
         private System.Windows.Forms.Button logout_btn;
         private System.Windows.Forms.CheckBox date_before_checkbox;

@@ -18,6 +18,9 @@ namespace Air3550
             InitializeComponent();
 
             DataTable newEditTable = FormDatabaseHelper.updateAccountGridViewTable();
+            string search = "currCapacity > 0";
+            newEditTable = newEditTable.Select(search).CopyToDataTable();
+
             BindingSource SBind = new BindingSource();
             SBind.DataSource = newEditTable;
             flightsTableColumnSetup();
@@ -323,7 +326,10 @@ namespace Air3550
                 newEditTable = FormDatabaseHelper.updateAccountGridViewTable(null, null);
             }
 
-           SBind.DataSource = newEditTable;
+            string srch = "currCapacity > 0";
+            newEditTable = newEditTable.Select(srch).CopyToDataTable();
+
+            SBind.DataSource = newEditTable;
             flights_dataview.Columns.Clear();
             flightsTableColumnSetup();
             flights_dataview.DataSource = SBind;
