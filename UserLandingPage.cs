@@ -17,7 +17,8 @@ namespace Air3550
         int oneway_leg2;
         int return_leg1;
         int return_leg2;
-
+        int upcoming_selectedID_ufh;
+        DateTime upcoming_selected_dept;
         public UserLandingPage(User user)
         {
             USER = user;
@@ -42,6 +43,11 @@ namespace Air3550
             oneway_leg2=0;
             return_leg1=0;
             return_leg2=0;
+
+            populateUpcomingFlightsGrid(upcomingFlights_datagridview);
+            populatePastFlightsGrid(pastflights_datagridview);
+            populateCancelledFlightsGrid(cancelled_datagridview);
+
         }
         
         private void logout_button_Click(object sender, EventArgs e)
@@ -67,6 +73,8 @@ namespace Air3550
             bookFlights_groupBox.Hide();
             upcomingFlights_groupBox.Hide();
             pastFlights_groupBox.Show();
+            populatePastFlightsGrid(pastflights_datagridview);
+            populateCancelledFlightsGrid(cancelled_datagridview);
         }
 
         private void upComingFlights_btn_Click(object sender, EventArgs e)
@@ -74,17 +82,12 @@ namespace Air3550
             bookFlights_groupBox.Hide();
             pastFlights_groupBox.Hide();
             upcomingFlights_groupBox.Show();
-        }
 
-        private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
-        {
+            populateUpcomingFlightsGrid(upcomingFlights_datagridview);
 
         }
 
-        private void bookFlights_groupBox_Enter(object sender, EventArgs e)
-        {
-
-        }
+        
 
         private void return_rbtn_CheckedChanged(object sender, EventArgs e)
         {
@@ -439,6 +442,251 @@ namespace Air3550
             {
                 Console.WriteLine("Confirm both flight");
             }
+        }
+
+        private void populateUpcomingFlightsGrid(DataGridView gridview)
+        {
+            //upcomingFlights_datagridview
+
+            Console.WriteLine("-------------currsys time->"+ currSysTime_DTP.Value.ToString());
+            DataTable upcoming = FormDatabaseHelper.generateUpcomingFlightsDataTable(USER.id, currSysTime_DTP.Value);
+
+            gridview.DefaultCellStyle.Format = "g";
+            gridview.DataSource = upcoming;
+            gridview.AutoGenerateColumns = false;
+            gridview.Columns[0].Name = "OriginAbv"; // name
+            gridview.Columns[0].HeaderText = "Origin "; // header text
+            gridview.Columns[0].DataPropertyName = "OriginAbv"; // field name
+            
+            gridview.Columns[1].Name = "connectionAbv"; // name
+            gridview.Columns[1].HeaderText = "Connection "; // header text
+            gridview.Columns[1].DataPropertyName = "connectionAbv"; // field name
+
+            gridview.Columns[2].Name = "finaldestAbv"; // name
+            gridview.Columns[2].HeaderText = "Destination"; // header text
+            gridview.Columns[2].DataPropertyName = "finaldestAbv"; // field name
+
+            gridview.Columns[3].Name = "DepartureDate"; // name
+            gridview.Columns[3].HeaderText = "Departure Origin"; // header text
+            gridview.Columns[3].DataPropertyName = "DepartureDate"; // field name
+
+            gridview.Columns[4].Name = "ArrivalDate"; // name
+            gridview.Columns[4].HeaderText = "Arrival final Dest"; // header text
+            gridview.Columns[4].DataPropertyName = "ArrivalDate"; // field name
+
+            gridview.Columns[5].Name = "PaymentType"; // name
+            gridview.Columns[5].HeaderText = "1- Card 2-Rewards"; // header text
+            gridview.Columns[5].DataPropertyName = "PaymentType"; // field name
+
+            gridview.Columns[6].Name = "PaymentAmount"; // name
+            gridview.Columns[6].HeaderText = "Cost"; // header text
+            gridview.Columns[6].DataPropertyName = "PaymentAmount"; // field name
+
+            gridview.Columns[7].Name = "UserHistId"; // name
+            gridview.Columns[7].HeaderText = "UserHist ID"; // header text
+            gridview.Columns[7].DataPropertyName = "UserHistId"; // field name
+            
+
+            gridview.Columns[8].Visible = false;
+
+            gridview.Columns[9].Visible = false;
+
+            gridview.Columns[10].Visible = false;
+
+            gridview.Columns[11].Visible = false;
+
+            gridview.Columns[12].Visible = false;
+
+            gridview.Columns[13].Visible = false;
+
+            gridview.Columns[14].Visible = false;
+
+        }
+
+        private void currSysTime_DTP_ValueChanged(object sender, EventArgs e)
+        {
+            Console.WriteLine(currSysTime_DTP.Value.ToString());
+            populateUpcomingFlightsGrid(upcomingFlights_datagridview);
+            populatePastFlightsGrid(pastflights_datagridview);
+            populateCancelledFlightsGrid(cancelled_datagridview);
+        }
+
+
+        private void populatePastFlightsGrid(DataGridView gridview)
+        {
+            
+
+            DataTable past = FormDatabaseHelper.generatePastFlightsDataTable(USER.id, currSysTime_DTP.Value);
+
+            gridview.DefaultCellStyle.Format = "g";
+            gridview.DataSource = past;
+            gridview.AutoGenerateColumns = false;
+            gridview.Columns[0].Name = "OriginAbv"; // name
+            gridview.Columns[0].HeaderText = "Origin "; // header text
+            gridview.Columns[0].DataPropertyName = "OriginAbv"; // field name
+
+            gridview.Columns[1].Name = "connectionAbv"; // name
+            gridview.Columns[1].HeaderText = "Connection "; // header text
+            gridview.Columns[1].DataPropertyName = "connectionAbv"; // field name
+
+            gridview.Columns[2].Name = "finaldestAbv"; // name
+            gridview.Columns[2].HeaderText = "Destination"; // header text
+            gridview.Columns[2].DataPropertyName = "finaldestAbv"; // field name
+
+            gridview.Columns[3].Name = "DepartureDate"; // name
+            gridview.Columns[3].HeaderText = "Departure Origin"; // header text
+            gridview.Columns[3].DataPropertyName = "DepartureDate"; // field name
+
+            gridview.Columns[4].Name = "ArrivalDate"; // name
+            gridview.Columns[4].HeaderText = "Arrival final Dest"; // header text
+            gridview.Columns[4].DataPropertyName = "ArrivalDate"; // field name
+
+            gridview.Columns[5].Name = "PaymentType"; // name
+            gridview.Columns[5].HeaderText = "1- Card 2-Rewards"; // header text
+            gridview.Columns[5].DataPropertyName = "PaymentType"; // field name
+
+            gridview.Columns[6].Name = "PaymentAmount"; // name
+            gridview.Columns[6].HeaderText = "Cost"; // header text
+            gridview.Columns[6].DataPropertyName = "PaymentAmount"; // field name
+
+
+            gridview.Columns[7].Name = "UserHistId"; // name
+            gridview.Columns[7].HeaderText = "UserHist ID"; // header text
+            gridview.Columns[7].DataPropertyName = "UserHistId"; // field name
+            gridview.Columns[7].Visible = false;
+
+            gridview.Columns[8].Visible = false;
+
+            gridview.Columns[9].Visible = false;
+
+            gridview.Columns[10].Visible = false;
+
+            gridview.Columns[11].Visible = false;
+
+            gridview.Columns[12].Visible = false;
+
+            gridview.Columns[13].Visible = false;
+
+            gridview.Columns[14].Visible = false;
+
+        }
+
+        private void populateCancelledFlightsGrid(DataGridView gridview)
+        {
+            DataTable past = FormDatabaseHelper.generateCancelledFlightsDataTable(USER.id);
+
+            gridview.DefaultCellStyle.Format = "g";
+            gridview.DataSource = past;
+            gridview.AutoGenerateColumns = false;
+
+            gridview.Columns[0].Name = "Status"; // name
+            gridview.Columns[0].HeaderText = "Status "; // header text
+            gridview.Columns[0].DataPropertyName = "Status"; // field name
+
+            gridview.Columns[1].Name = "OriginAbv"; // name
+            gridview.Columns[1].HeaderText = "Origin "; // header text
+            gridview.Columns[1].DataPropertyName = "OriginAbv"; // field name
+
+            gridview.Columns[2].Name = "connectionAbv"; // name
+            gridview.Columns[2].HeaderText = "Connection "; // header text
+            gridview.Columns[2].DataPropertyName = "connectionAbv"; // field name
+
+            gridview.Columns[3].Name = "finaldestAbv"; // name
+            gridview.Columns[3].HeaderText = "Destination"; // header text
+            gridview.Columns[3].DataPropertyName = "finaldestAbv"; // field name
+
+            gridview.Columns[4].Name = "DepartureDate"; // name
+            gridview.Columns[4].HeaderText = "Departure Origin"; // header text
+            gridview.Columns[4].DataPropertyName = "DepartureDate"; // field name
+
+            gridview.Columns[5].Name = "ArrivalDate"; // name
+            gridview.Columns[5].HeaderText = "Arrival final Dest"; // header text
+            gridview.Columns[5].DataPropertyName = "ArrivalDate"; // field name
+
+            gridview.Columns[6].Name = "PaymentType"; // name
+            gridview.Columns[6].HeaderText = "1- Card 2-Rewards"; // header text
+            gridview.Columns[6].DataPropertyName = "PaymentType"; // field name
+
+            gridview.Columns[7].Name = "PaymentAmount"; // name
+            gridview.Columns[7].HeaderText = "Cost"; // header text
+            gridview.Columns[7].DataPropertyName = "PaymentAmount"; // field name
+
+
+            gridview.Columns[8].Name = "UserHistId"; // name
+            gridview.Columns[8].HeaderText = "UserHist ID"; // header text
+            gridview.Columns[8].DataPropertyName = "UserHistId"; // field name
+            gridview.Columns[8].Visible = false;
+
+            gridview.Columns[9].Visible = false;
+
+            gridview.Columns[10].Visible = false;
+
+            
+            gridview.Columns[11].Visible = false;
+
+            gridview.Columns[12].Visible = false;
+
+            gridview.Columns[13].Visible = false;
+
+            gridview.Columns[14].Visible = false;
+        }
+        
+
+        private void upcomingFlights_datagridview_SelectionChanged(object sender, EventArgs e)
+        {
+            
+            if (upcomingFlights_datagridview.SelectedRows.Count > 0)
+            {
+                DataGridViewRow currentRow = upcomingFlights_datagridview.SelectedRows[0];
+
+                if (currentRow != null)
+                {
+                    string userhistID =  currentRow.Cells["UserHistID"].Value.ToString();
+                    upcoming_selectedval_label.Text = userhistID;
+
+                    upcoming_selectedID_ufh = Convert.ToInt32(userhistID);
+
+                    upcoming_selected_dept = DateTime.Parse(currentRow.Cells["DepartureDate"].Value.ToString()) ;
+
+
+                }
+            }
+        }
+
+        private void printboardingpass_btn_Click(object sender, EventArgs e)
+        {
+            if (upcoming_selected_dept.AddDays(-1) < currSysTime_DTP.Value)
+            {
+                //within 24hrs
+                //print boarding pass
+
+            }
+            else
+            {
+                MessageBox.Show("Boarding Pass Available 24hours prior to flight");
+            }
+        }
+
+        private void cancelFlight_btn_Click(object sender, EventArgs e)
+        {
+            if (currSysTime_DTP.Value > upcoming_selected_dept.AddDays(-1))
+            {
+                //flight within 24 hours cannot cancel
+                MessageBox.Show("Flight takes off in 24 hours cannot cancel");
+
+            }
+            else
+            {
+                //cancel in userhistid
+                Console.WriteLine("cancelling the booking");
+                FormDatabaseHelper.cancelBooking(upcoming_selectedID_ufh);
+                populateUpcomingFlightsGrid(upcomingFlights_datagridview);
+            }
+        }
+
+        private void UserLandingPage_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Application.Exit();
         }
     }
 }

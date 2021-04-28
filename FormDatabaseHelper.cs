@@ -583,7 +583,7 @@ namespace Air3550
         //returns booked flights id for flights id given the departure date(if exists) 
         public static int getBookedFlightsID_forFlight(int flightId, DateTime deptDateChosen)
         {
-            if(flightId == 0)
+            if(flightId == 0 || deptDateChosen == DateTime.MinValue)
             {
                 return 0;
             }
@@ -1027,10 +1027,6 @@ namespace Air3550
                 SqlCommand command = new SqlCommand(sqlString, sqlConnection);
 
                 command.Parameters.AddWithValue("@bookingflightid", bookingflightid);
-                
-                
-               
-
                 command.ExecuteNonQuery();
 
             }
@@ -1096,5 +1092,277 @@ namespace Air3550
             }
         }
 
+        public static DataTable generateUpcomingFlightsDataTable(int userid, DateTime currDate)
+        {
+            DataTable upcomingFlights = new DataTable();
+
+            string dbString = Properties.Settings.Default.Air3550DBConnectionString;
+
+            using (SqlConnection sqlConnection = new SqlConnection(dbString))
+            {
+                if (sqlConnection.State != ConnectionState.Open) sqlConnection.Open();
+
+
+                using (SqlCommand sqlCommand = new SqlCommand("SELECT * FROM UserFlightHistory WHERE ( DepartureDate >  @currSysDate )  AND userdID LIKE @userid " +
+                    "AND ( Status <> @cancelled  OR Status is NULL )  ", sqlConnection))
+                {
+                    sqlCommand.Parameters.AddWithValue("@currSysDate", currDate.ToString());
+                    sqlCommand.Parameters.AddWithValue("@userid", userid);
+                    sqlCommand.Parameters.AddWithValue("@cancelled", "cancelled");
+                    SqlDataAdapter adapter = new SqlDataAdapter(sqlCommand);
+
+
+                    adapter.Fill(upcomingFlights);
+                }
+            }
+
+            foreach (DataColumn column in upcomingFlights.Columns)
+            {
+                Console.Write(column.ColumnName);
+                Console.Write(" ");
+            }
+            Console.WriteLine("-------------------");
+
+            foreach (DataRow dataRow in upcomingFlights.Rows)
+            {
+                foreach (var item in dataRow.ItemArray)
+                {
+                    Console.Write(item + " ");
+                }
+                Console.WriteLine("");
+            }
+
+            return upcomingFlights;
+        }
+
+        public static DataTable generatePastFlightsDataTable(int userid, DateTime currDate)
+        {
+            DataTable pastFlights = new DataTable();
+
+            string dbString = Properties.Settings.Default.Air3550DBConnectionString;
+
+            using (SqlConnection sqlConnection = new SqlConnection(dbString))
+            {
+                if (sqlConnection.State != ConnectionState.Open) sqlConnection.Open();
+
+
+                using (SqlCommand sqlCommand = new SqlCommand("SELECT * FROM UserFlightHistory WHERE DepartureDate <  @currSysDate  AND userdID LIKE @userid " +
+                    "AND ( Status <> @cancelled  OR Status is NULL  )", sqlConnection))
+                {
+                    sqlCommand.Parameters.AddWithValue("@currSysDate", currDate.ToString());
+                    sqlCommand.Parameters.AddWithValue("@userid", userid);
+                    sqlCommand.Parameters.AddWithValue("@cancelled", "cancelled");
+                    SqlDataAdapter adapter = new SqlDataAdapter(sqlCommand);
+
+
+                    adapter.Fill(pastFlights);
+                }
+            }
+
+            foreach (DataColumn column in pastFlights.Columns)
+            {
+                Console.Write(column.ColumnName);
+                Console.Write(" ");
+            }
+            Console.WriteLine("\n-------------------\n");
+
+            foreach (DataRow dataRow in pastFlights.Rows)
+            {
+                foreach (var item in dataRow.ItemArray)
+                {
+                    Console.Write(item + " ");
+                }
+                Console.WriteLine("");
+            }
+
+            return pastFlights;
+        }
+
+        public static DataTable generateCancelledFlightsDataTable(int userid)
+        {
+            DataTable pastFlights = new DataTable();
+
+            string dbString = Properties.Settings.Default.Air3550DBConnectionString;
+
+            using (SqlConnection sqlConnection = new SqlConnection(dbString))
+            {
+                if (sqlConnection.State != ConnectionState.Open) sqlConnection.Open();
+
+
+                using (SqlCommand sqlCommand = new SqlCommand("SELECT * FROM UserFlightHistory WHERE userdID LIKE @userid " +
+                    "AND Status LIKE @cancelled ", sqlConnection))
+                {
+                    
+                    sqlCommand.Parameters.AddWithValue("@userid", userid);
+                    sqlCommand.Parameters.AddWithValue("@cancelled", "cancelled");
+                    SqlDataAdapter adapter = new SqlDataAdapter(sqlCommand);
+
+
+                    adapter.Fill(pastFlights);
+                }
+            }
+
+            foreach (DataColumn column in pastFlights.Columns)
+            {
+                Console.Write(column.ColumnName);
+                Console.Write(" ");
+            }
+            Console.WriteLine("\n-------------------\n");
+
+            foreach (DataRow dataRow in pastFlights.Rows)
+            {
+                foreach (var item in dataRow.ItemArray)
+                {
+                    Console.Write(item + " ");
+                }
+                Console.WriteLine("");
+            }
+
+            return pastFlights;
+        }
+        public static void cancelBooking(int userFlightHistoryid)
+        {
+            Console.WriteLine("------------------\n cancelling UFH ID" + userFlightHistoryid + "\n---------------------");
+            //updateticket status to cancelled
+            updateStatusUFH(userFlightHistoryid);
+
+            //get tick deets
+            UserFlightHistory fh = GetUserFlightHistory(userFlightHistoryid);
+
+            //Make seat available in bookedflights
+            updateCurrCapacityByNegOne(fh.leg1bookingId);
+            updateCurrCapacityByNegOne(fh.leg2bookingId);
+
+
+            //reward refund
+            // User Payed by card
+            if (fh.paymentType == 1)
+            {
+                int pointEarnedByBooking = getPointsEarnedFromCost(fh.paymentAmount);
+                int costRefundInPoints = getPointsNeededForCost(fh.paymentAmount);
+
+                updateUserReward(fh.userID,pointEarnedByBooking + costRefundInPoints);
+
+            }
+            else if(fh.paymentType == 2)//user payed in points
+            {
+                int pointRefund = getPointsNeededForCost(fh.paymentAmount);
+                updateUserReward(fh.userID, pointRefund);
+            }
+            else
+            {
+                //shouldnt get here payment type can only be 1 or 2
+            }
+
+        }
+        public static void updateStatusUFH(int userFlightHistoryID)
+        {
+
+
+            string dbString = Properties.Settings.Default.Air3550DBConnectionString;
+            using (SqlConnection sqlConnection = new SqlConnection(dbString))
+            {
+                if (sqlConnection.State != ConnectionState.Open) sqlConnection.Open();
+
+                string sqlString = "UPDATE UserFlightHistory SET Status = @status " +
+                    "WHERE UserHistId = @UserHistId";
+
+                SqlCommand command = new SqlCommand(sqlString, sqlConnection);
+
+                command.Parameters.AddWithValue("@status", "cancelled");
+                command.Parameters.AddWithValue("@UserHistId", userFlightHistoryID);
+
+                command.ExecuteNonQuery();
+            }
+        }
+        public static UserFlightHistory GetUserFlightHistory(int userhistID)
+        {
+            if (userhistID == 0)
+                return null;
+
+            UserFlightHistory fh = new UserFlightHistory();
+            fh.userhistID = userhistID;
+            string dbString = Properties.Settings.Default.Air3550DBConnectionString;
+            using (SqlConnection sqlConnection = new SqlConnection(dbString))
+            {
+                if (sqlConnection.State != ConnectionState.Open) sqlConnection.Open();
+                using (SqlCommand sqlCommand = new SqlCommand("SELECT * FROM UserFlightHistory WHERE UserHistId LIKE @userhistID", sqlConnection))
+                {
+                    sqlCommand.Parameters.AddWithValue("@userhistID", userhistID);
+
+                    SqlDataReader sqlReader = sqlCommand.ExecuteReader();
+                    if (sqlReader.HasRows)
+                    {
+                        while (sqlReader.Read())
+                        {
+                            fh.userID = Convert.ToInt32(sqlReader["userdID"].ToString());
+                            fh.leg1bookingId = Convert.ToInt32(sqlReader["Leg1BookedID"].ToString());
+                            fh.leg2bookingId = Convert.ToInt32(sqlReader["Leg2BookedID"].ToString());
+                            fh.paymentAmount = (double) sqlReader["PaymentAmount"];
+
+                            //Add fields later don't need those rn
+                            /*fh.originAbv = sqlReader["OriginAbv"].ToString();
+                            fh.userhistID=Convert.ToInt32(sqlReader["userdID"].ToString());
+                            */
+                        }
+
+                        sqlReader.Close();
+                    }
+                }
+            }
+            return fh;
+        }
+
+        public static void updateCurrCapacityByNegOne(int bookingflightid)
+        {
+            if (bookingflightid == 0)
+            {
+                return;
+            }
+            string dbString = Properties.Settings.Default.Air3550DBConnectionString;
+            using (SqlConnection sqlConnection = new SqlConnection(dbString))
+            {
+                if (sqlConnection.State != ConnectionState.Open) sqlConnection.Open();
+
+                string sqlString = "UPDATE BookedFlights " +
+                    " SET currCapacity = currCapacity - 1  WHERE id LIKE @bookingflightid";
+                SqlCommand command = new SqlCommand(sqlString, sqlConnection);
+
+                command.Parameters.AddWithValue("@bookingflightid", bookingflightid);
+                command.ExecuteNonQuery();
+
+            }
+        }
+
+        public static void updateUserReward(int userID, int points)
+        {
+            string dbString = Properties.Settings.Default.Air3550DBConnectionString;
+            using (SqlConnection sqlConnection = new SqlConnection(dbString))
+            {
+                if (sqlConnection.State != ConnectionState.Open) sqlConnection.Open();
+
+                string sqlString = "UPDATE UserAccountData SET RewardBalance = RewardBalance + @points WHERE UserID = @userID";
+
+
+                SqlCommand command = new SqlCommand(sqlString, sqlConnection);
+
+                command.Parameters.AddWithValue("@points", points);
+                command.Parameters.AddWithValue("@userID", userID);
+
+
+                command.ExecuteNonQuery();
+
+            }
+        }
+
+        public static int getPointsEarnedFromCost(double cost)
+        {
+
+            return (int) cost * 10;
+        }
+        public static int getPointsNeededForCost(double cost)
+        {
+            return (int)cost * 100;
+        }
     } 
 }

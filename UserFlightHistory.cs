@@ -8,6 +8,7 @@ namespace Air3550
 {
     public class UserFlightHistory
     {
+        public int userhistID;
         public int userID;
         public int type;
         public int status;
@@ -68,6 +69,7 @@ namespace Air3550
 
 
         }
+        public UserFlightHistory() { }
 
     }
 }
