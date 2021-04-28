@@ -44,6 +44,8 @@ namespace Air3550
             this.cancelledflights_label = new System.Windows.Forms.Label();
             this.pastflights_label = new System.Windows.Forms.Label();
             this.upcomingFlights_groupBox = new System.Windows.Forms.GroupBox();
+            this.print_pass_label2 = new System.Windows.Forms.Label();
+            this.print_pass_label1 = new System.Windows.Forms.Label();
             this.upcoming_selectedval_label = new System.Windows.Forms.Label();
             this.upcoming_selectedIDlabel = new System.Windows.Forms.Label();
             this.printboardingpass_btn = new System.Windows.Forms.Button();
@@ -96,8 +98,6 @@ namespace Air3550
             this.departureDate_label = new System.Windows.Forms.Label();
             this.currSysTime_DTP = new System.Windows.Forms.DateTimePicker();
             this.currSysTime_label = new System.Windows.Forms.Label();
-            this.print_pass_label1 = new System.Windows.Forms.Label();
-            this.print_pass_label2 = new System.Windows.Forms.Label();
             this.pastFlights_groupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.cancelled_datagridview)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pastflights_datagridview)).BeginInit();
@@ -270,6 +270,24 @@ namespace Air3550
             this.upcomingFlights_groupBox.TabIndex = 21;
             this.upcomingFlights_groupBox.TabStop = false;
             this.upcomingFlights_groupBox.Text = "Upcoming Flights";
+            // 
+            // print_pass_label2
+            // 
+            this.print_pass_label2.AutoSize = true;
+            this.print_pass_label2.Location = new System.Drawing.Point(671, 97);
+            this.print_pass_label2.Name = "print_pass_label2";
+            this.print_pass_label2.Size = new System.Drawing.Size(108, 13);
+            this.print_pass_label2.TabIndex = 6;
+            this.print_pass_label2.Text = "to print boarding pass";
+            // 
+            // print_pass_label1
+            // 
+            this.print_pass_label1.AutoSize = true;
+            this.print_pass_label1.Location = new System.Drawing.Point(671, 84);
+            this.print_pass_label1.Name = "print_pass_label1";
+            this.print_pass_label1.Size = new System.Drawing.Size(146, 13);
+            this.print_pass_label1.TabIndex = 5;
+            this.print_pass_label1.Text = "Flight must be within 24 hours";
             // 
             // upcoming_selectedval_label
             // 
@@ -811,24 +829,6 @@ namespace Air3550
             this.currSysTime_label.TabIndex = 23;
             this.currSysTime_label.Text = "System Time:";
             // 
-            // print_pass_label1
-            // 
-            this.print_pass_label1.AutoSize = true;
-            this.print_pass_label1.Location = new System.Drawing.Point(671, 84);
-            this.print_pass_label1.Name = "print_pass_label1";
-            this.print_pass_label1.Size = new System.Drawing.Size(146, 13);
-            this.print_pass_label1.TabIndex = 5;
-            this.print_pass_label1.Text = "Flight must be within 24 hours";
-            // 
-            // print_pass_label2
-            // 
-            this.print_pass_label2.AutoSize = true;
-            this.print_pass_label2.Location = new System.Drawing.Point(671, 97);
-            this.print_pass_label2.Name = "print_pass_label2";
-            this.print_pass_label2.Size = new System.Drawing.Size(108, 13);
-            this.print_pass_label2.TabIndex = 6;
-            this.print_pass_label2.Text = "to print boarding pass";
-            // 
             // UserLandingPage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -846,9 +846,9 @@ namespace Air3550
             this.Controls.Add(this.userID_label);
             this.Controls.Add(this.welcome_label);
             this.Controls.Add(this.logout_button);
-            this.Controls.Add(this.bookFlights_groupBox);
             this.Controls.Add(this.upcomingFlights_groupBox);
             this.Controls.Add(this.pastFlights_groupBox);
+            this.Controls.Add(this.bookFlights_groupBox);
             this.Name = "UserLandingPage";
             this.Text = "UserLandingPage";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.UserLandingPage_FormClosing);

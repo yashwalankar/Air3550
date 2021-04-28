@@ -648,11 +648,14 @@ namespace Air3550
 
         private void printboardingpass_btn_Click(object sender, EventArgs e)
         {
+            Console.WriteLine("Print Pass Select flight dept Date: "+upcoming_selected_dept.ToString());
+            Console.WriteLine("Print Pass curr sys time: " + currSysTime_DTP.ToString());
             if (upcoming_selected_dept.AddDays(-1) < currSysTime_DTP.Value)
             {
                 //within 24hrs
                 //print boarding pass
-
+                BoardingPass pass = new BoardingPass(USER, upcoming_selectedID_ufh);
+                pass.Show();
             }
             else
             {
