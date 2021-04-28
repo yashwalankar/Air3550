@@ -96,6 +96,8 @@ namespace Air3550
             this.departureDate_label = new System.Windows.Forms.Label();
             this.currSysTime_DTP = new System.Windows.Forms.DateTimePicker();
             this.currSysTime_label = new System.Windows.Forms.Label();
+            this.print_pass_label1 = new System.Windows.Forms.Label();
+            this.print_pass_label2 = new System.Windows.Forms.Label();
             this.pastFlights_groupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.cancelled_datagridview)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pastflights_datagridview)).BeginInit();
@@ -206,7 +208,7 @@ namespace Air3550
             this.pastFlights_groupBox.Controls.Add(this.pastflights_label);
             this.pastFlights_groupBox.Location = new System.Drawing.Point(46, 155);
             this.pastFlights_groupBox.Name = "pastFlights_groupBox";
-            this.pastFlights_groupBox.Size = new System.Drawing.Size(859, 621);
+            this.pastFlights_groupBox.Size = new System.Drawing.Size(859, 508);
             this.pastFlights_groupBox.TabIndex = 20;
             this.pastFlights_groupBox.TabStop = false;
             this.pastFlights_groupBox.Text = "History";
@@ -255,6 +257,8 @@ namespace Air3550
             // 
             // upcomingFlights_groupBox
             // 
+            this.upcomingFlights_groupBox.Controls.Add(this.print_pass_label2);
+            this.upcomingFlights_groupBox.Controls.Add(this.print_pass_label1);
             this.upcomingFlights_groupBox.Controls.Add(this.upcoming_selectedval_label);
             this.upcomingFlights_groupBox.Controls.Add(this.upcoming_selectedIDlabel);
             this.upcomingFlights_groupBox.Controls.Add(this.printboardingpass_btn);
@@ -262,7 +266,7 @@ namespace Air3550
             this.upcomingFlights_groupBox.Controls.Add(this.upcomingFlights_datagridview);
             this.upcomingFlights_groupBox.Location = new System.Drawing.Point(46, 155);
             this.upcomingFlights_groupBox.Name = "upcomingFlights_groupBox";
-            this.upcomingFlights_groupBox.Size = new System.Drawing.Size(865, 515);
+            this.upcomingFlights_groupBox.Size = new System.Drawing.Size(865, 369);
             this.upcomingFlights_groupBox.TabIndex = 21;
             this.upcomingFlights_groupBox.TabStop = false;
             this.upcomingFlights_groupBox.Text = "Upcoming Flights";
@@ -287,7 +291,7 @@ namespace Air3550
             // 
             // printboardingpass_btn
             // 
-            this.printboardingpass_btn.Location = new System.Drawing.Point(699, 233);
+            this.printboardingpass_btn.Location = new System.Drawing.Point(674, 58);
             this.printboardingpass_btn.Name = "printboardingpass_btn";
             this.printboardingpass_btn.Size = new System.Drawing.Size(125, 23);
             this.printboardingpass_btn.TabIndex = 2;
@@ -297,7 +301,7 @@ namespace Air3550
             // 
             // cancelFlight_btn
             // 
-            this.cancelFlight_btn.Location = new System.Drawing.Point(699, 184);
+            this.cancelFlight_btn.Location = new System.Drawing.Point(674, 152);
             this.cancelFlight_btn.Name = "cancelFlight_btn";
             this.cancelFlight_btn.Size = new System.Drawing.Size(125, 23);
             this.cancelFlight_btn.TabIndex = 1;
@@ -807,6 +811,24 @@ namespace Air3550
             this.currSysTime_label.TabIndex = 23;
             this.currSysTime_label.Text = "System Time:";
             // 
+            // print_pass_label1
+            // 
+            this.print_pass_label1.AutoSize = true;
+            this.print_pass_label1.Location = new System.Drawing.Point(671, 84);
+            this.print_pass_label1.Name = "print_pass_label1";
+            this.print_pass_label1.Size = new System.Drawing.Size(146, 13);
+            this.print_pass_label1.TabIndex = 5;
+            this.print_pass_label1.Text = "Flight must be within 24 hours";
+            // 
+            // print_pass_label2
+            // 
+            this.print_pass_label2.AutoSize = true;
+            this.print_pass_label2.Location = new System.Drawing.Point(671, 97);
+            this.print_pass_label2.Name = "print_pass_label2";
+            this.print_pass_label2.Size = new System.Drawing.Size(108, 13);
+            this.print_pass_label2.TabIndex = 6;
+            this.print_pass_label2.Text = "to print boarding pass";
+            // 
             // UserLandingPage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -824,9 +846,9 @@ namespace Air3550
             this.Controls.Add(this.userID_label);
             this.Controls.Add(this.welcome_label);
             this.Controls.Add(this.logout_button);
+            this.Controls.Add(this.bookFlights_groupBox);
             this.Controls.Add(this.upcomingFlights_groupBox);
             this.Controls.Add(this.pastFlights_groupBox);
-            this.Controls.Add(this.bookFlights_groupBox);
             this.Name = "UserLandingPage";
             this.Text = "UserLandingPage";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.UserLandingPage_FormClosing);
@@ -929,5 +951,7 @@ namespace Air3550
         private System.Windows.Forms.Button cancelFlight_btn;
         private System.Windows.Forms.Label upcoming_selectedval_label;
         private System.Windows.Forms.Label upcoming_selectedIDlabel;
+        private System.Windows.Forms.Label print_pass_label2;
+        private System.Windows.Forms.Label print_pass_label1;
     }
 }

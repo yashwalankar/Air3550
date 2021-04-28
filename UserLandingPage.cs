@@ -19,6 +19,7 @@ namespace Air3550
         int return_leg2;
         int upcoming_selectedID_ufh;
         DateTime upcoming_selected_dept;
+
         public UserLandingPage(User user)
         {
             USER = user;
@@ -32,7 +33,7 @@ namespace Air3550
             FormDatabaseHelper.fillAirportsCity(destination_comboBox);
 
             bookFlights_groupBox.Hide();
-            upcomingFlights_groupBox.Hide();
+            upcomingFlights_groupBox.Show();
             pastFlights_groupBox.Hide();
 
             oneway_groupBox.Hide();
@@ -47,7 +48,6 @@ namespace Air3550
             populateUpcomingFlightsGrid(upcomingFlights_datagridview);
             populatePastFlightsGrid(pastflights_datagridview);
             populateCancelledFlightsGrid(cancelled_datagridview);
-
         }
         
         private void logout_button_Click(object sender, EventArgs e)
@@ -58,48 +58,26 @@ namespace Air3550
             s.Visible = true;
         }
 
+        // ==============================================================================
+        // Book Flights Functionality ===================================================
+        // ==============================================================================
+
         private void bookFlights_btn_Click(object sender, EventArgs e)
         {
-            
             upcomingFlights_groupBox.Hide();
             pastFlights_groupBox.Hide();
             bookFlights_groupBox.Show();
         }
-
-        
-
-        private void pastFlights_btn_Click(object sender, EventArgs e)
-        {
-            bookFlights_groupBox.Hide();
-            upcomingFlights_groupBox.Hide();
-            pastFlights_groupBox.Show();
-            populatePastFlightsGrid(pastflights_datagridview);
-            populateCancelledFlightsGrid(cancelled_datagridview);
-        }
-
-        private void upComingFlights_btn_Click(object sender, EventArgs e)
-        {
-            bookFlights_groupBox.Hide();
-            pastFlights_groupBox.Hide();
-            upcomingFlights_groupBox.Show();
-
-            populateUpcomingFlightsGrid(upcomingFlights_datagridview);
-
-        }
-
-        
 
         private void return_rbtn_CheckedChanged(object sender, EventArgs e)
         {
             if (return_rBtn.Checked == true)
             {
                 ShowReturnComponents(true);
-                
             }
             else
             {
                 ShowReturnComponents(false);
-                
             }
         }
 
@@ -122,9 +100,6 @@ namespace Air3550
                 returnDate_label.Show();
                 returnDate_dtp.Show();
                 arrow_label.Text = "<---->";
-
-                
-                
             }
             else
             {
@@ -132,19 +107,14 @@ namespace Air3550
                 returnDate_dtp.Hide();
 
                 arrow_label.Text = " ---->";
-
-                
             }
-
         }
-
-       
 
         private void showFlights_btn_Click(object sender, EventArgs e)
         {
-            if(origin_comboBox.SelectedItem != null && destination_comboBox.SelectedItem != null)
+            if (origin_comboBox.SelectedItem != null && destination_comboBox.SelectedItem != null)
             {
-                String originCity  = origin_comboBox.SelectedItem.ToString();
+                String originCity = origin_comboBox.SelectedItem.ToString();
                 String destCity = destination_comboBox.SelectedItem.ToString();
 
                 String originAbv = FormDatabaseHelper.getAirportAbvFromCity(originCity);
@@ -158,10 +128,10 @@ namespace Air3550
 
                 oneway_groupBox.Text = originCity + "-->" + destCity;
                 return_groupBox.Text = destCity + "-->" + originCity;
-                
+
                 if (originAbv != destAbv && (deptDate <= currSysTime.AddDays(60)))
                 {
-                 
+
                     if (returnBooking)
                     {
                         returnDate = returnDate_dtp.Value;
@@ -186,20 +156,204 @@ namespace Air3550
                         DataTable onewayOptionsTable = FormDatabaseHelper.getAvailableFlights(originAbv, destAbv, deptDate);
                         populateDataGridView(oneway_datagridview, onewayOptionsTable);
                     }
-
-                    
-                    
                 }
                 else
                 {
                     Console.WriteLine("Depature date should be within 6 months AND ");
                     Console.WriteLine("origin and dest cannot be same");
                 }
+            }
+        }
 
+        private void oneway_datagridview_SelectionChanged(object sender, EventArgs e)
+        {
+            if (oneway_datagridview.SelectedRows.Count > 0)
+            {
+                DataGridViewRow currentRow = oneway_datagridview.SelectedRows[0];
+
+                if (currentRow != null)
+                {
+
+                    String originAbv = currentRow.Cells["originAbv"].Value.ToString();
+                    String leg1destAbv = currentRow.Cells["leg1dest"].Value.ToString();
+                    String leg1deptTime = currentRow.Cells["leg1DeptTime"].Value.ToString();
+                    String leg1ArrivalTime = currentRow.Cells["leg1ArrivalTime"].Value.ToString();
+
+                    int leg1id = (int)currentRow.Cells["leg1id"].Value;
+
+                    one_leg1_selectedFlight_label.Text = originAbv + "-->" + leg1destAbv;
+                    one_leg1_departure_label.Text = "Departure: " + leg1deptTime;
+                    one_leg1_arrival_label.Text = "Arrival: " + leg1ArrivalTime;
+
+                    double cost_total_oneway = 0;
+                    double cost_leg1 = FormDatabaseHelper.getCostFromBookingTable(Convert.ToInt32(leg1id));
+                    cost_total_oneway += cost_leg1;
+                    string cost_str_oneway = "Cost: " + cost_leg1.ToString();
+
+                    String leg2origin = "";//6 
+                    String leg2dest = ""; //7
+                    String leg2deptTime = ""; //8
+                    String leg2arrivalTime = "";//9
+                    double cost_leg2 = 0;
+                    int leg2id = (int)currentRow.Cells["leg2id"].Value;
+
+                    oneway_leg1 = 0;
+                    oneway_leg2 = 0;
+
+                    oneway_leg1 = leg1id;
+                    oneway_leg2 = leg2id;
+
+                    if (leg2id != 0)
+                    {
+                        leg2origin = currentRow.Cells["leg2origin"].Value.ToString();
+                        leg2dest = currentRow.Cells["leg2Dest"].Value.ToString();
+                        leg2deptTime = currentRow.Cells["leg2deptTime"].Value.ToString();
+                        leg2arrivalTime = currentRow.Cells["leg2ArrivalTime"].Value.ToString();
+
+                        oneway_leg2_groupBox.Show();
+                        one_leg2_selectedFlight_label.Text = leg2origin + "-->" + leg2dest;
+                        one_leg2_dept_label.Text = "Departure: " + leg2deptTime;
+                        one_leg2_arrival_label.Text = "Arrival: " + leg2arrivalTime;
+
+                        cost_leg2 = FormDatabaseHelper.getCostFromBookingTable(Convert.ToInt32(leg2id));
+                        cost_str_oneway = cost_str_oneway + " + " + cost_leg2.ToString() + " + 8 = ";
+                        cost_total_oneway += (cost_leg2 + 8);
+                        cost_str_oneway = cost_str_oneway + cost_total_oneway.ToString();
+
+                    }
+                    else
+                    {
+                        oneway_leg2_groupBox.Hide();
+                    }
+
+
+                    oneway_cost_label.Text = cost_str_oneway;
+                }
+            }
+        }
+
+        private void return_datagridview_SelectionChanged(object sender, EventArgs e)
+        {
+            if (return_datagridview.SelectedRows.Count > 0)
+            {
+                DataGridViewRow currentRow = return_datagridview.SelectedRows[0];
+
+                if (currentRow != null)
+                {
+                    String originAbv = currentRow.Cells["originAbv"].Value.ToString();
+                    String leg1destAbv = currentRow.Cells["leg1dest"].Value.ToString();
+                    String leg1deptTime = currentRow.Cells["leg1DeptTime"].Value.ToString();
+                    String leg1ArrivalTime = currentRow.Cells["leg1ArrivalTime"].Value.ToString();
+
+                    int leg1id = (int)currentRow.Cells["leg1id"].Value;
+                    Console.WriteLine("-------------->" + leg1id);
+                    return_leg1_selectedflight_label.Text = originAbv + "-->" + leg1destAbv;
+                    return_leg1_departure_label.Text = "Departure: " + leg1deptTime;
+                    return_leg1_arrival_label.Text = "Arrival: " + leg1ArrivalTime;
+
+                    double cost_total_return = 0;
+                    double cost_leg1 = FormDatabaseHelper.getCostFromBookingTable(Convert.ToInt32(leg1id));
+                    cost_total_return += cost_leg1;
+                    string cost_str_return = "Cost: " + cost_leg1.ToString();
+
+
+                    String leg2origin = "";//6 
+                    String leg2dest = ""; //7
+                    String leg2deptTime = ""; //8
+                    String leg2arrivalTime = "";//9
+                    double cost_leg2 = 0;
+                    int leg2id = (int)currentRow.Cells["leg2id"].Value;
+
+                    return_leg1 = 0;
+                    return_leg2 = 0;
+
+                    return_leg1 = leg1id;
+                    return_leg2 = leg2id;
+
+
+
+                    if (leg2id != 0)
+                    {
+                        leg2origin = currentRow.Cells["leg2origin"].Value.ToString();
+                        leg2dest = currentRow.Cells["leg2Dest"].Value.ToString();
+                        leg2deptTime = currentRow.Cells["leg2deptTime"].Value.ToString();
+                        leg2arrivalTime = currentRow.Cells["leg2ArrivalTime"].Value.ToString();
+                        return_leg2_groupbox.Show();
+                        return_leg2_selectedflight_label.Text = leg2origin + "-->" + leg2dest;
+                        return_leg2_departure_label.Text = "Departure: " + leg2deptTime;
+                        return_leg2_arrival_label.Text = "Arrival: " + leg2arrivalTime;
+
+                        cost_leg2 = FormDatabaseHelper.getCostFromBookingTable(Convert.ToInt32(leg2id));
+                        cost_str_return = cost_str_return + " + " + cost_leg2.ToString() + " + 8 = ";
+                        cost_total_return += (cost_leg2 + 8);
+                        cost_str_return = cost_str_return + cost_total_return.ToString();
+                    }
+                    else
+                    {
+                        return_leg2_groupbox.Hide();
+                    }
+
+                    return_cost_label.Text = cost_str_return;
+                }
+            }
+        }
+
+        private void checkout_btn_Click(object sender, EventArgs e)
+        {
+            bool confirmed = false;
+            if (return_rBtn.Checked == true)
+            {
+                confirmed = onewayConfirm_checkbox.Checked && return_confirm_checkBox.Checked;
+            }
+            else
+            {
+                confirmed = onewayConfirm_checkbox.Checked;
+            }
+
+            if (confirmed)
+            {
+                Console.WriteLine("one way ids" + oneway_leg1 + " &" + oneway_leg2);
+                Console.WriteLine("one way ids" + return_leg1 + " &" + return_leg2);
+                UserFlightHistory ticket1 = new UserFlightHistory(USER.id, oneway_leg1, oneway_leg2);
+                if (return_rBtn.Checked == true)
+                {
+                    UserFlightHistory ticket2 = new UserFlightHistory(USER.id, return_leg1, return_leg2);
+                    Checkout checkout = new Checkout(true, USER, ticket1, ticket2);
+                    checkout.Show();
+                }
+                else
+                {
+                    Checkout checkout = new Checkout(false, USER, ticket1, null);
+                    checkout.Show();
+                }
 
             }
-            
-            
+            else
+            {
+                Console.WriteLine("Confirm both flight");
+            }
+        }
+
+        // ==============================================================================
+        // Upcoming Flights Functionality ===============================================
+        // ==============================================================================
+
+        private void pastFlights_btn_Click(object sender, EventArgs e)
+        {
+            bookFlights_groupBox.Hide();
+            upcomingFlights_groupBox.Hide();
+            pastFlights_groupBox.Show();
+            populatePastFlightsGrid(pastflights_datagridview);
+            populateCancelledFlightsGrid(cancelled_datagridview);
+        }
+
+        private void upComingFlights_btn_Click(object sender, EventArgs e)
+        {
+            bookFlights_groupBox.Hide();
+            pastFlights_groupBox.Hide();
+            upcomingFlights_groupBox.Show();
+
+            populateUpcomingFlightsGrid(upcomingFlights_datagridview);
         }
 
         public static void populateDataGridView(DataGridView gridview,DataTable table)
@@ -264,183 +418,12 @@ namespace Air3550
                 gridview.Columns[9].Name = "leg2id"; // name
                 gridview.Columns[9].HeaderText = "leg 2 id"; // header text
                 gridview.Columns[9].DataPropertyName = "leg2id"; // field name
-
-
-                
+   
                 gridview.Columns[10].Visible = false;
             }
             else
             {
                 gridview.DataSource = new DataTable();
-            }
-        }
-
-        private void oneway_datagridview_SelectionChanged(object sender, EventArgs e)
-        { 
-            if (oneway_datagridview.SelectedRows.Count>0)
-            {
-                DataGridViewRow currentRow = oneway_datagridview.SelectedRows[0];
-
-                if (currentRow != null)
-                {
-                    
-                    String originAbv = currentRow.Cells["originAbv"].Value.ToString();
-                    String leg1destAbv = currentRow.Cells["leg1dest"].Value.ToString();
-                    String leg1deptTime = currentRow.Cells["leg1DeptTime"].Value.ToString();
-                    String leg1ArrivalTime = currentRow.Cells["leg1ArrivalTime"].Value.ToString();
-
-                    int leg1id = (int) currentRow.Cells["leg1id"].Value;
-                    
-                    one_leg1_selectedFlight_label.Text = originAbv + "-->" + leg1destAbv;
-                    one_leg1_departure_label.Text = "Departure: " + leg1deptTime;
-                    one_leg1_arrival_label.Text = "Arrival: " + leg1ArrivalTime;
-                    
-                    double cost_total_oneway = 0;
-                    double cost_leg1 = FormDatabaseHelper.getCostFromBookingTable(Convert.ToInt32(leg1id));
-                    cost_total_oneway += cost_leg1;
-                    string cost_str_oneway = "Cost: "+cost_leg1.ToString();
-
-                    String leg2origin = "";//6 
-                    String leg2dest = ""; //7
-                    String leg2deptTime = ""; //8
-                    String leg2arrivalTime = "";//9
-                    double cost_leg2 = 0;
-                    int leg2id = (int)currentRow.Cells["leg2id"].Value;
-
-                    oneway_leg1 = 0;
-                    oneway_leg2 = 0;
-
-                    oneway_leg1 = leg1id;
-                    oneway_leg2 = leg2id;
-
-                    if (leg2id != 0)
-                    {
-                        leg2origin = currentRow.Cells["leg2origin"].Value.ToString();
-                        leg2dest = currentRow.Cells["leg2Dest"].Value.ToString();
-                        leg2deptTime = currentRow.Cells["leg2deptTime"].Value.ToString();
-                        leg2arrivalTime = currentRow.Cells["leg2ArrivalTime"].Value.ToString();
-                        
-                        oneway_leg2_groupBox.Show();
-                        one_leg2_selectedFlight_label.Text = leg2origin + "-->" + leg2dest;
-                        one_leg2_dept_label.Text = "Departure: " + leg2deptTime;
-                        one_leg2_arrival_label.Text = "Arrival: " + leg2arrivalTime;
-
-                        cost_leg2 = FormDatabaseHelper.getCostFromBookingTable(Convert.ToInt32(leg2id));
-                        cost_str_oneway = cost_str_oneway+ " + " + cost_leg2.ToString() + " + 8 = " ;
-                        cost_total_oneway += (cost_leg2 +8);
-                        cost_str_oneway = cost_str_oneway + cost_total_oneway.ToString();
-                        
-                    }
-                    else
-                    {
-                        oneway_leg2_groupBox.Hide();
-                    }
-
-                   
-                    oneway_cost_label.Text = cost_str_oneway;
-                }
-            }
-        }
-
-        private void return_datagridview_SelectionChanged(object sender, EventArgs e)
-        {
-            if (return_datagridview.SelectedRows.Count > 0)
-            {
-                DataGridViewRow currentRow = return_datagridview.SelectedRows[0];
-
-                if (currentRow != null)
-                {
-                    String originAbv = currentRow.Cells["originAbv"].Value.ToString();
-                    String leg1destAbv = currentRow.Cells["leg1dest"].Value.ToString();
-                    String leg1deptTime = currentRow.Cells["leg1DeptTime"].Value.ToString();
-                    String leg1ArrivalTime = currentRow.Cells["leg1ArrivalTime"].Value.ToString();
-
-                    int leg1id = (int) currentRow.Cells["leg1id"].Value;
-                    Console.WriteLine("-------------->" + leg1id);
-                    return_leg1_selectedflight_label.Text = originAbv + "-->" + leg1destAbv;
-                    return_leg1_departure_label.Text = "Departure: " + leg1deptTime;
-                    return_leg1_arrival_label.Text = "Arrival: " + leg1ArrivalTime;
-
-                    double cost_total_return = 0;
-                    double cost_leg1 = FormDatabaseHelper.getCostFromBookingTable(Convert.ToInt32(leg1id));
-                    cost_total_return += cost_leg1;
-                    string cost_str_return = "Cost: " + cost_leg1.ToString();
-
-
-                    String leg2origin = "";//6 
-                    String leg2dest = ""; //7
-                    String leg2deptTime = ""; //8
-                    String leg2arrivalTime = "";//9
-                    double cost_leg2 = 0;
-                    int leg2id = (int)currentRow.Cells["leg2id"].Value;
-
-                    return_leg1 = 0;
-                    return_leg2 = 0;
-
-                    return_leg1 = leg1id;
-                    return_leg2 = leg2id;
-
-
-
-                    if (leg2id != 0)
-                    {
-                        leg2origin = currentRow.Cells["leg2origin"].Value.ToString();
-                        leg2dest = currentRow.Cells["leg2Dest"].Value.ToString();
-                        leg2deptTime = currentRow.Cells["leg2deptTime"].Value.ToString();
-                        leg2arrivalTime = currentRow.Cells["leg2ArrivalTime"].Value.ToString();
-                        return_leg2_groupbox.Show();
-                        return_leg2_selectedflight_label.Text = leg2origin + "-->" + leg2dest;
-                        return_leg2_departure_label.Text = "Departure: " + leg2deptTime;
-                        return_leg2_arrival_label.Text = "Arrival: " + leg2arrivalTime;
-
-                        cost_leg2 = FormDatabaseHelper.getCostFromBookingTable(Convert.ToInt32(leg2id));
-                        cost_str_return = cost_str_return + " + " + cost_leg2.ToString() + " + 8 = ";
-                        cost_total_return += (cost_leg2 + 8);
-                        cost_str_return = cost_str_return + cost_total_return.ToString();
-                    }
-                    else
-                    {
-                        return_leg2_groupbox.Hide();
-                    }
-                    
-                    return_cost_label.Text = cost_str_return;
-                }
-            }
-        }
-
-        private void checkout_btn_Click(object sender, EventArgs e)
-        {
-            bool confirmed = false;
-            if(return_rBtn.Checked == true)
-            {
-                confirmed = onewayConfirm_checkbox.Checked && return_confirm_checkBox.Checked;
-            }
-            else
-            {
-                confirmed = onewayConfirm_checkbox.Checked;
-            }
-            
-            if (confirmed)
-            {
-                Console.WriteLine("one way ids" + oneway_leg1 + " &" + oneway_leg2);
-                Console.WriteLine("one way ids" + return_leg1 + " &" + return_leg2);
-                UserFlightHistory ticket1 = new UserFlightHistory(USER.id,oneway_leg1,oneway_leg2);
-                if (return_rBtn.Checked == true)
-                {
-                    UserFlightHistory ticket2 = new UserFlightHistory(USER.id, return_leg1, return_leg2);
-                    Checkout checkout = new Checkout(true,USER,ticket1,ticket2);
-                    checkout.Show();
-                }
-                else
-                {
-                    Checkout checkout = new Checkout(false, USER, ticket1, null);
-                    checkout.Show();
-                }
-                
-            }
-            else
-            {
-                Console.WriteLine("Confirm both flight");
             }
         }
 
@@ -510,7 +493,6 @@ namespace Air3550
             populatePastFlightsGrid(pastflights_datagridview);
             populateCancelledFlightsGrid(cancelled_datagridview);
         }
-
 
         private void populatePastFlightsGrid(DataGridView gridview)
         {
@@ -648,7 +630,18 @@ namespace Air3550
 
                     upcoming_selected_dept = DateTime.Parse(currentRow.Cells["DepartureDate"].Value.ToString()) ;
 
-
+                    if (upcoming_selected_dept.AddDays(-1) < currSysTime_DTP.Value)
+                    {
+                        printboardingpass_btn.Enabled = true;
+                        print_pass_label1.Visible = false;
+                        print_pass_label2.Visible = false;
+                    }
+                    else
+                    {
+                        printboardingpass_btn.Enabled = false;
+                        print_pass_label1.Visible = true;
+                        print_pass_label2.Visible = true;
+                    }
                 }
             }
         }
