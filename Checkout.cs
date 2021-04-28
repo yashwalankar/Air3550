@@ -66,7 +66,7 @@ namespace Air3550
 
             int pointsReq = FormDatabaseHelper.getPointsNeededForCost(totalcost);
             
-            if (pointsReq < user.rewardBalance)
+            if (pointsReq > user.rewardBalance)
             {
                 point_payment_rbtn.Hide();
                 notenoughpoints_label.Show();

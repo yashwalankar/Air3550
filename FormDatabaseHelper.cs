@@ -585,7 +585,10 @@ namespace Air3550
         //returns booked flights id for flights id given the departure date(if exists) 
         public static int getBookedFlightsID_forFlight(int flightId, DateTime deptDateChosen)
         {
-            if(flightId == 0 || deptDateChosen == DateTime.MinValue)
+
+            Console.WriteLine("\nin getBookedFlightsID_forFlight\n");
+            Console.WriteLine("INPUT flightid=" + flightId + " deptDate = " + deptDateChosen.ToString() );
+            if (flightId == 0 || deptDateChosen == DateTime.MinValue)
             {
                 return 0;
             }
@@ -629,17 +632,20 @@ namespace Air3550
                              updatedDeptDate = new DateTime(deptDateChosen.Year, deptDateChosen.Month, deptDateChosen.Day, timeofFlightDept.Hours, timeofFlightDept.Minutes, timeofFlightDept.Seconds);
                         }
                         fl.deptTime = updatedDeptDate;
-                        
+
+                        Console.WriteLine("--updated dept date:" + updatedDeptDate.ToString());
 
                         TimeSpan timeofFlightArrival = fl.arrivalTime.TimeOfDay;
+                        DateTime updatedArrivalDate = updatedDeptDate;
                         if (timeofFlightDept > timeofFlightArrival)
                         {
-                            DateTime updatedArrivalDate = new DateTime(deptDateChosen.Year, deptDateChosen.Month, deptDateChosen.Day +1, timeofFlightArrival.Hours, timeofFlightArrival.Minutes, timeofFlightArrival.Seconds);
+                            updatedArrivalDate = new DateTime(updatedDeptDate.Year, updatedDeptDate.Month, updatedDeptDate.Day, timeofFlightArrival.Hours, timeofFlightArrival.Minutes, timeofFlightArrival.Seconds);
+                            updatedArrivalDate = updatedArrivalDate.AddDays(1);
                             fl.arrivalTime = updatedArrivalDate;
                         }
                         else
                         {
-                            DateTime updatedArrivalDate = new DateTime(deptDateChosen.Year, deptDateChosen.Month, deptDateChosen.Day , timeofFlightArrival.Hours, timeofFlightArrival.Minutes, timeofFlightArrival.Seconds);
+                            updatedArrivalDate = new DateTime(updatedDeptDate.Year, updatedDeptDate.Month, updatedDeptDate.Day , timeofFlightArrival.Hours, timeofFlightArrival.Minutes, timeofFlightArrival.Seconds);
                             fl.arrivalTime = updatedArrivalDate;
                         }
                         
@@ -668,6 +674,7 @@ namespace Air3550
 
         public static DataTable getAvailableFlights(String originAbv, String deptAbv,DateTime deptDate)
         {
+            Console.WriteLine("\nin getAvailable Fligts\n");
             List<int[]> flightsFound = FindFlights_helper(originAbv, deptAbv);
             List<int[]> bookedFlightsID = new List<int[]>();
 
@@ -1293,7 +1300,20 @@ namespace Air3550
                             fh.userID = Convert.ToInt32(sqlReader["userdID"].ToString());
                             fh.leg1bookingId = Convert.ToInt32(sqlReader["Leg1BookedID"].ToString());
                             fh.leg2bookingId = Convert.ToInt32(sqlReader["Leg2BookedID"].ToString());
+                            fh.departureDate = DateTime.Parse(sqlReader["DepartureDate"].ToString());
+                            fh.leg1ArrivalDate = DateTime.Parse(sqlReader["Leg1ArrivalTime"].ToString());
+                            
+                            fh.arrivalDate = DateTime.Parse(sqlReader["ArrivalDate"].ToString());
+                            fh.originAbv= sqlReader["OriginAbv"].ToString();
+                            
+                            fh.finaldestAbv= sqlReader["finaldestAbv"].ToString();
+                            fh.paymentType = Convert.ToInt32(sqlReader["PaymentType"].ToString());
                             fh.paymentAmount = (double) sqlReader["PaymentAmount"];
+                            if(fh.leg2bookingId != 0)
+                            {
+                                fh.leg2deptDate = DateTime.Parse(sqlReader["Leg2Departure"].ToString());
+                                fh.connectionAbv = sqlReader["connectionAbv"].ToString();
+                            }
 
                             //Add fields later don't need those rn
                             /*fh.originAbv = sqlReader["OriginAbv"].ToString();
