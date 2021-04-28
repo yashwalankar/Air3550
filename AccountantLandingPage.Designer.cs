@@ -29,7 +29,6 @@ namespace Air3550
         /// </summary>
         private void InitializeComponent()
         {
-            this.logout_button = new System.Windows.Forms.Button();
             this.flights_dataview = new System.Windows.Forms.DataGridView();
             this.button1 = new System.Windows.Forms.Button();
             this.welcome_label = new System.Windows.Forms.Label();
@@ -93,15 +92,6 @@ namespace Air3550
             this.fullReport_groupbox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.full_report_datagridview)).BeginInit();
             this.SuspendLayout();
-            // 
-            // logout_button
-            // 
-            this.logout_button.Location = new System.Drawing.Point(713, 12);
-            this.logout_button.Name = "logout_button";
-            this.logout_button.Size = new System.Drawing.Size(75, 23);
-            this.logout_button.TabIndex = 12;
-            this.logout_button.Text = "Logout";
-            this.logout_button.UseVisualStyleBackColor = true;
             // 
             // flights_dataview
             // 
@@ -693,7 +683,6 @@ namespace Air3550
             this.ClientSize = new System.Drawing.Size(714, 609);
             this.Controls.Add(this.welcome_label);
             this.Controls.Add(this.button1);
-            this.Controls.Add(this.logout_button);
             this.Controls.Add(this.tools_groupbox);
             this.Controls.Add(this.fullReport_groupbox);
             this.Controls.Add(this.singleflight_report_groupbox);
@@ -715,8 +704,6 @@ namespace Air3550
         }
 
         #endregion
-
-        private System.Windows.Forms.Button logout_button;
         private System.Windows.Forms.DataGridView flights_dataview;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Label welcome_label;
