@@ -74,6 +74,7 @@ namespace Air3550
             this.flights_dataview.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.flights_dataview.Location = new System.Drawing.Point(15, 194);
             this.flights_dataview.Name = "flights_dataview";
+            this.flights_dataview.ReadOnly = true;
             this.flights_dataview.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.flights_dataview.Size = new System.Drawing.Size(640, 339);
             this.flights_dataview.TabIndex = 0;
@@ -304,6 +305,7 @@ namespace Air3550
             this.manifest_datagridview.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.manifest_datagridview.Location = new System.Drawing.Point(15, 103);
             this.manifest_datagridview.Name = "manifest_datagridview";
+            this.manifest_datagridview.ReadOnly = true;
             this.manifest_datagridview.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.manifest_datagridview.Size = new System.Drawing.Size(640, 430);
             this.manifest_datagridview.TabIndex = 34;
@@ -413,11 +415,11 @@ namespace Air3550
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(714, 609);
-            this.Controls.Add(this.flight_search_groupbox);
             this.Controls.Add(this.logout_btn);
             this.Controls.Add(this.logout_button);
             this.Controls.Add(this.flightman_welcome_label);
             this.Controls.Add(this.manifest_groupbox);
+            this.Controls.Add(this.flight_search_groupbox);
             this.Name = "FlightManLandingPage";
             this.Text = "FlightManLandingPage";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FlightManLandingPage_FormClosing);
