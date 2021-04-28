@@ -34,7 +34,6 @@ namespace Air3550
             this.printManifest_btn = new System.Windows.Forms.Button();
             this.logout_button = new System.Windows.Forms.Button();
             this.flight_search_groupbox = new System.Windows.Forms.GroupBox();
-            this.logout_btn = new System.Windows.Forms.Button();
             this.date_before_checkbox = new System.Windows.Forms.CheckBox();
             this.date_after_checkbox = new System.Windows.Forms.CheckBox();
             this.date_checkbox = new System.Windows.Forms.CheckBox();
@@ -48,8 +47,9 @@ namespace Air3550
             this.edit_dest_label = new System.Windows.Forms.Label();
             this.origin_combobox = new System.Windows.Forms.ComboBox();
             this.edit_origin_label = new System.Windows.Forms.Label();
+            this.logout_btn = new System.Windows.Forms.Button();
             this.manifest_groupbox = new System.Windows.Forms.GroupBox();
-            this.manifest_close_button = new System.Windows.Forms.Button();
+            this.manifest_datagridview = new System.Windows.Forms.DataGridView();
             this.single_arrivalDate_label = new System.Windows.Forms.Label();
             this.single_depDate_label = new System.Windows.Forms.Label();
             this.single_destCode_label = new System.Windows.Forms.Label();
@@ -60,7 +60,7 @@ namespace Air3550
             this.label9 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.label24 = new System.Windows.Forms.Label();
-            this.manifest_datagridview = new System.Windows.Forms.DataGridView();
+            this.manifest_close_button = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.flights_dataview)).BeginInit();
             this.flight_search_groupbox.SuspendLayout();
             this.manifest_groupbox.SuspendLayout();
@@ -130,16 +130,6 @@ namespace Air3550
             this.flight_search_groupbox.TabIndex = 27;
             this.flight_search_groupbox.TabStop = false;
             this.flight_search_groupbox.Text = "Flight Selection";
-            // 
-            // logout_btn
-            // 
-            this.logout_btn.Location = new System.Drawing.Point(627, 12);
-            this.logout_btn.Name = "logout_btn";
-            this.logout_btn.Size = new System.Drawing.Size(75, 23);
-            this.logout_btn.TabIndex = 30;
-            this.logout_btn.Text = "Logout";
-            this.logout_btn.UseVisualStyleBackColor = true;
-            this.logout_btn.Click += new System.EventHandler(this.logout_button_Click);
             // 
             // date_before_checkbox
             // 
@@ -276,6 +266,16 @@ namespace Air3550
             this.edit_origin_label.TabIndex = 69;
             this.edit_origin_label.Text = "Origin";
             // 
+            // logout_btn
+            // 
+            this.logout_btn.Location = new System.Drawing.Point(627, 12);
+            this.logout_btn.Name = "logout_btn";
+            this.logout_btn.Size = new System.Drawing.Size(75, 23);
+            this.logout_btn.TabIndex = 30;
+            this.logout_btn.Text = "Logout";
+            this.logout_btn.UseVisualStyleBackColor = true;
+            this.logout_btn.Click += new System.EventHandler(this.logout_button_Click);
+            // 
             // manifest_groupbox
             // 
             this.manifest_groupbox.Controls.Add(this.manifest_datagridview);
@@ -297,15 +297,16 @@ namespace Air3550
             this.manifest_groupbox.TabStop = false;
             this.manifest_groupbox.Text = "Flight Manifest";
             // 
-            // manifest_close_button
+            // manifest_datagridview
             // 
-            this.manifest_close_button.Location = new System.Drawing.Point(567, 19);
-            this.manifest_close_button.Name = "manifest_close_button";
-            this.manifest_close_button.Size = new System.Drawing.Size(88, 23);
-            this.manifest_close_button.TabIndex = 2;
-            this.manifest_close_button.Text = "Close Manifest";
-            this.manifest_close_button.UseVisualStyleBackColor = true;
-            this.manifest_close_button.Click += new System.EventHandler(this.manifest_close_button_Click);
+            this.manifest_datagridview.AllowUserToAddRows = false;
+            this.manifest_datagridview.AllowUserToDeleteRows = false;
+            this.manifest_datagridview.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.manifest_datagridview.Location = new System.Drawing.Point(15, 103);
+            this.manifest_datagridview.Name = "manifest_datagridview";
+            this.manifest_datagridview.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.manifest_datagridview.Size = new System.Drawing.Size(640, 430);
+            this.manifest_datagridview.TabIndex = 34;
             // 
             // single_arrivalDate_label
             // 
@@ -397,27 +398,26 @@ namespace Air3550
             this.label24.TabIndex = 24;
             this.label24.Text = "Flight ID";
             // 
-            // manifest_datagridview
+            // manifest_close_button
             // 
-            this.manifest_datagridview.AllowUserToAddRows = false;
-            this.manifest_datagridview.AllowUserToDeleteRows = false;
-            this.manifest_datagridview.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.manifest_datagridview.Location = new System.Drawing.Point(15, 103);
-            this.manifest_datagridview.Name = "manifest_datagridview";
-            this.manifest_datagridview.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.manifest_datagridview.Size = new System.Drawing.Size(640, 430);
-            this.manifest_datagridview.TabIndex = 34;
+            this.manifest_close_button.Location = new System.Drawing.Point(567, 19);
+            this.manifest_close_button.Name = "manifest_close_button";
+            this.manifest_close_button.Size = new System.Drawing.Size(88, 23);
+            this.manifest_close_button.TabIndex = 2;
+            this.manifest_close_button.Text = "Close Manifest";
+            this.manifest_close_button.UseVisualStyleBackColor = true;
+            this.manifest_close_button.Click += new System.EventHandler(this.manifest_close_button_Click);
             // 
             // FlightManLandingPage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(714, 609);
+            this.Controls.Add(this.flight_search_groupbox);
             this.Controls.Add(this.logout_btn);
             this.Controls.Add(this.logout_button);
             this.Controls.Add(this.flightman_welcome_label);
             this.Controls.Add(this.manifest_groupbox);
-            this.Controls.Add(this.flight_search_groupbox);
             this.Name = "FlightManLandingPage";
             this.Text = "FlightManLandingPage";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FlightManLandingPage_FormClosing);

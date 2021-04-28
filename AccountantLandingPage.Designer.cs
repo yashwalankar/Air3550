@@ -694,9 +694,9 @@ namespace Air3550
             this.Controls.Add(this.welcome_label);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.logout_button);
-            this.Controls.Add(this.singleflight_report_groupbox);
             this.Controls.Add(this.tools_groupbox);
             this.Controls.Add(this.fullReport_groupbox);
+            this.Controls.Add(this.singleflight_report_groupbox);
             this.Name = "AccountantLandingPage";
             this.Text = "Accountant Tools";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.AccountantLandingPage_FormClosing);
