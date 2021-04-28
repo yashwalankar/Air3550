@@ -35,6 +35,7 @@ namespace Air3550
                 }
             }
         }
+
         public static void fillAirportsCity(ComboBox box)
         {
             string dbString = Properties.Settings.Default.Air3550DBConnectionString;
@@ -330,6 +331,7 @@ namespace Air3550
                 }
             }
         }
+
         public static String getAirportAbvFromCity(String city)
         {
             string airportAbv="";
@@ -664,7 +666,6 @@ namespace Air3550
             return 0;
         }
 
-
         public static DataTable getAvailableFlights(String originAbv, String deptAbv,DateTime deptDate)
         {
             List<int[]> flightsFound = FindFlights_helper(originAbv, deptAbv);
@@ -867,8 +868,6 @@ namespace Air3550
             return newid;
         }
         
-        
-        
         public static double getCostFromBookingTable(int bookingid)
         {
             double cost = 0;
@@ -1008,9 +1007,8 @@ namespace Air3550
                 command.ExecuteNonQuery();
 
             }
-
-
         }
+
         public static void updateCurrCapacityByOne(int bookingflightid)
         {
             if (bookingflightid == 0)
@@ -1031,6 +1029,7 @@ namespace Air3550
 
             }
         }
+
         public static void insertToFlightTransaction(User user, int bookedflightId,int payType)
         {
             if(bookedflightId == 0)
@@ -1068,13 +1067,8 @@ namespace Air3550
                 command.ExecuteNonQuery();
 
             }
-
-
-
-
-
-
         }
+
         public static void createBooking(UserFlightHistory fh , User user)
         {
             insert_UserFlightHistory(fh);
@@ -1275,6 +1269,7 @@ namespace Air3550
                 command.ExecuteNonQuery();
             }
         }
+
         public static UserFlightHistory GetUserFlightHistory(int userhistID)
         {
             if (userhistID == 0)
@@ -1357,12 +1352,224 @@ namespace Air3550
 
         public static int getPointsEarnedFromCost(double cost)
         {
-
             return (int) cost * 10;
         }
+
         public static int getPointsNeededForCost(double cost)
         {
             return (int)cost * 100;
+        }
+
+        // may be a similar method to something already existing
+        public static DataTable updateAccountGridViewTable(string orig = null, string dest = null)
+        {
+            string dbString = Properties.Settings.Default.Air3550DBConnectionString;
+
+            using (SqlConnection sqlConnection = new SqlConnection(dbString))
+            {
+                if (sqlConnection.State != ConnectionState.Open) sqlConnection.Open();
+
+                SqlDataAdapter adapter = new SqlDataAdapter();
+                DataTable newDataTable = new DataTable();
+
+                string requestString;
+                int option = 0;
+                if (!(orig == null) && (dest == null))
+                {
+                    requestString = "SELECT * FROM BookedFlights WHERE originAbv LIKE @origin";
+                    option = 1;
+                }
+                else if ((orig == null) && !(dest == null))
+                {
+                    requestString = "SELECT * FROM BookedFlights WHERE destAbv LIKE @destination";
+                    option = 2;
+                }
+                else if (!(orig == null) && !(dest == null))
+                {
+                    requestString = "SELECT * FROM BookedFlights WHERE originAbv LIKE @origin AND destAbv LIKE @destination";
+                    option = 3;
+                }
+                else
+                {
+                    requestString = "SELECT * FROM BookedFlights";
+                    option = 4;
+                }
+
+                using (SqlCommand sqlCommand = new SqlCommand(requestString, sqlConnection))
+                {
+                    switch (option)
+                    {
+                        case 1: // origin only supplied
+                            sqlCommand.Parameters.AddWithValue("@origin", orig);
+
+                            break;
+                        case 2: // destination only supplied
+                            sqlCommand.Parameters.AddWithValue("@destination", dest);
+
+                            break;
+                        case 3: // origin and destination supplied
+                            sqlCommand.Parameters.AddWithValue("@origin", orig);
+                            sqlCommand.Parameters.AddWithValue("@destination", dest);
+
+                            break;
+                        case 4: // nothing supplied
+                                // nothing happens here
+                            break;
+                        default:
+                            return null;
+                            break;
+                    }
+
+                    adapter.SelectCommand = sqlCommand;
+                    adapter.Fill(newDataTable);
+
+                    return newDataTable;
+                }
+                return newDataTable;
+            }
+        }
+
+        public static DataTable updateGridViewTableWithDate(bool dateBefore, bool dateAfter,
+            DateTime before = new DateTime(), DateTime after = new DateTime())
+        {
+            string dbString = Properties.Settings.Default.Air3550DBConnectionString;
+
+            using (SqlConnection sqlConnection = new SqlConnection(dbString))
+            {
+                if (sqlConnection.State != ConnectionState.Open) sqlConnection.Open();
+
+                SqlDataAdapter adapter = new SqlDataAdapter();
+                DataTable newDataTable = new DataTable();
+
+                string requestString = null;
+                int option = 0;
+
+                if (dateBefore && dateAfter)
+                {
+                    requestString = "SELECT * FROM BookedFlights " +
+                        "WHERE departureTime >= @after " +
+                        "AND departureTime <= @before";
+                    option = 1;
+                }
+                else if (dateBefore && !dateAfter)
+                {
+                    requestString = "SELECT * FROM BookedFlights " +
+                        "WHERE departureTime <= @before";
+                    option = 2;
+                }
+                else if (!dateBefore && dateAfter)
+                {
+                    requestString = "SELECT * FROM BookedFlights " +
+                        "WHERE departureTime >= @after";
+                    option = 3;
+                }
+                else
+                {
+                    requestString = "SELECT * FROM BookedFlights";
+                    option = 4;
+                }
+
+                using (SqlCommand sqlCommand = new SqlCommand(requestString, sqlConnection))
+                {
+                    switch (option)
+                    {
+                        case 1: // origin only supplied
+                            sqlCommand.Parameters.AddWithValue("@after", after);
+                            sqlCommand.Parameters.AddWithValue("@before", before);
+
+                            break;
+                        case 2: // destination only supplied
+                            sqlCommand.Parameters.AddWithValue("@before", before);
+
+                            break;
+                        case 3: // origin and destination supplied
+                            sqlCommand.Parameters.AddWithValue("@after", after);
+
+                            break;
+                        case 4: // nothing supplied
+                                // nothing happens here
+                            break;
+                        default:
+                            return null;
+                            break;
+                    }
+
+                    adapter.SelectCommand = sqlCommand;
+                    adapter.Fill(newDataTable);
+
+                    return newDataTable;
+                }
+
+                return newDataTable;
+            }
+        }
+
+        public static DataTable returnFlightInformation(int flightID = -1)
+        {
+            string dbString = Properties.Settings.Default.Air3550DBConnectionString;
+
+            using (SqlConnection sqlConnection = new SqlConnection(dbString))
+            {
+                if (sqlConnection.State != ConnectionState.Open) sqlConnection.Open();
+
+                SqlDataAdapter adapter = new SqlDataAdapter();
+                DataTable newDataTable = new DataTable();
+
+                string requestString;
+                if (flightID == -1)
+                {
+                    requestString = "SELECT * FROM BookedFlights";
+                }
+                else
+                {
+                    requestString = "SELECT * FROM BookedFlights " +
+                            "WHERE id = @flightID";
+                }
+
+                using (SqlCommand sqlCommand = new SqlCommand(requestString, sqlConnection))
+                {
+                    if (flightID != -1)
+                    {
+                        sqlCommand.Parameters.AddWithValue("@flightID", flightID);
+                    }
+
+                    adapter.SelectCommand = sqlCommand;
+                    adapter.Fill(newDataTable);
+
+                    return newDataTable;
+                }
+
+                return newDataTable;
+            }
+        }
+
+        public static DataTable returnSingleFlightTransactions(int flightID)
+        {
+            string dbString = Properties.Settings.Default.Air3550DBConnectionString;
+
+            using (SqlConnection sqlConnection = new SqlConnection(dbString))
+            {
+                if (sqlConnection.State != ConnectionState.Open) sqlConnection.Open();
+
+                SqlDataAdapter adapter = new SqlDataAdapter();
+                DataTable newDataTable = new DataTable();
+
+                string requestString = "SELECT * FROM FlightTransactions " +
+                        "WHERE BookedFlightID = @flightID";
+
+
+                using (SqlCommand sqlCommand = new SqlCommand(requestString, sqlConnection))
+                {
+                    sqlCommand.Parameters.AddWithValue("@flightID", flightID);
+
+                    adapter.SelectCommand = sqlCommand;
+                    adapter.Fill(newDataTable);
+
+                    return newDataTable;
+                }
+
+                return newDataTable;
+            }
         }
     } 
 }

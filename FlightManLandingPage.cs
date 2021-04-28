@@ -17,7 +17,7 @@ namespace Air3550
         {
             InitializeComponent();
 
-            DataTable newEditTable = updateAccountGridViewTable();
+            DataTable newEditTable = FormDatabaseHelper.updateAccountGridViewTable();
             BindingSource SBind = new BindingSource();
             SBind.DataSource = newEditTable;
             flightsTableColumnSetup();
@@ -55,8 +55,8 @@ namespace Air3550
 
             int flightID = int.Parse(flights_dataview.CurrentRow.Cells["id"].Value.ToString());
 
-            DataTable bookedFlightInfo = returnFlightInformation(flightID);
-            DataTable flightTransactions = returnSingleFlightTransactions(flightID);
+            DataTable bookedFlightInfo = FormDatabaseHelper.returnFlightInformation(flightID);
+            DataTable flightTransactions = FormDatabaseHelper.returnSingleFlightTransactions(flightID);
 
             fillDataManifest(bookedFlightInfo, flightTransactions);
         }
@@ -193,19 +193,19 @@ namespace Air3550
 
                 if (origin_combobox.SelectedItem != null && dest_combobox.SelectedItem != null)
                 {
-                    newEditTable = updateAccountGridViewTable(origin, destination);
+                    newEditTable = FormDatabaseHelper.updateAccountGridViewTable(origin, destination);
                 }
                 else if (origin_combobox.SelectedItem != null && dest_combobox.SelectedItem == null)
                 {
-                    newEditTable = updateAccountGridViewTable(origin, null);
+                    newEditTable = FormDatabaseHelper.updateAccountGridViewTable(origin, null);
                 }
                 else if (origin_combobox.SelectedItem == null && dest_combobox.SelectedItem != null)
                 {
-                    newEditTable = updateAccountGridViewTable(null, destination);
+                    newEditTable = FormDatabaseHelper.updateAccountGridViewTable(null, destination);
                 }
                 else
                 {
-                    newEditTable = updateAccountGridViewTable(null, null);
+                    newEditTable = FormDatabaseHelper.updateAccountGridViewTable(null, null);
                 }
             }
             else if (date && !multiPassTableSort)
@@ -215,19 +215,19 @@ namespace Air3550
 
                 if (date_after_checkbox.Checked && date_before_checkbox.Checked)
                 {
-                    newEditTable = updateGridViewTableWithDate(true, true, before, after);
+                    newEditTable = FormDatabaseHelper.updateGridViewTableWithDate(true, true, before, after);
                 }
                 else if (!date_after_checkbox.Checked && date_before_checkbox.Checked)
                 {
-                    newEditTable = updateGridViewTableWithDate(true, false, before);
+                    newEditTable = FormDatabaseHelper.updateGridViewTableWithDate(true, false, before);
                 }
                 else if (date_after_checkbox.Checked && !date_before_checkbox.Checked)
                 {
-                    newEditTable = updateGridViewTableWithDate(false, true, default, after);
+                    newEditTable = FormDatabaseHelper.updateGridViewTableWithDate(false, true, default, after);
                 }
                 else
                 {
-                    newEditTable = updateGridViewTableWithDate(false, false);
+                    newEditTable = FormDatabaseHelper.updateGridViewTableWithDate(false, false);
                 }
             }
             else if (multiPassTableSort)
@@ -240,19 +240,19 @@ namespace Air3550
 
                     if (origin_combobox.SelectedItem != null && dest_combobox.SelectedItem != null)
                     {
-                        newEditTable = updateAccountGridViewTable(origin, destination);
+                        newEditTable = FormDatabaseHelper.updateAccountGridViewTable(origin, destination);
                     }
                     else if (origin_combobox.SelectedItem != null && dest_combobox.SelectedItem == null)
                     {
-                        newEditTable = updateAccountGridViewTable(origin, null);
+                        newEditTable = FormDatabaseHelper.updateAccountGridViewTable(origin, null);
                     }
                     else if (origin_combobox.SelectedItem == null && dest_combobox.SelectedItem != null)
                     {
-                        newEditTable = updateAccountGridViewTable(null, destination);
+                        newEditTable = FormDatabaseHelper.updateAccountGridViewTable(null, destination);
                     }
                     else
                     {
-                        newEditTable = updateAccountGridViewTable(null, null);
+                        newEditTable = FormDatabaseHelper.updateAccountGridViewTable(null, null);
                     }
 
                     tableInitialized = true;
@@ -265,19 +265,19 @@ namespace Air3550
 
                     if (date_after_checkbox.Checked && date_before_checkbox.Checked)
                     {
-                        newEditTable = updateGridViewTableWithDate(true, true, before, after);
+                        newEditTable = FormDatabaseHelper.updateGridViewTableWithDate(true, true, before, after);
                     }
                     else if (!date_after_checkbox.Checked && date_before_checkbox.Checked)
                     {
-                        newEditTable = updateGridViewTableWithDate(true, false, before);
+                        newEditTable = FormDatabaseHelper.updateGridViewTableWithDate(true, false, before);
                     }
                     else if (date_after_checkbox.Checked && !date_before_checkbox.Checked)
                     {
-                        newEditTable = updateGridViewTableWithDate(false, true, default, after);
+                        newEditTable = FormDatabaseHelper.updateGridViewTableWithDate(false, true, default, after);
                     }
                     else
                     {
-                        newEditTable = updateGridViewTableWithDate(false, false);
+                        newEditTable = FormDatabaseHelper.updateGridViewTableWithDate(false, false);
                     }
 
                     tableInitialized = true;
@@ -316,10 +316,10 @@ namespace Air3550
             }
             else
             {
-                newEditTable = updateAccountGridViewTable(null, null);
+                newEditTable = FormDatabaseHelper.updateAccountGridViewTable(null, null);
             }
 
-            SBind.DataSource = newEditTable;
+           SBind.DataSource = newEditTable;
             flights_dataview.Columns.Clear();
             flightsTableColumnSetup();
             flights_dataview.DataSource = SBind;
@@ -395,223 +395,6 @@ namespace Air3550
             flights_dataview.Columns[6].HeaderText = "Current Capacity";
             flights_dataview.Columns[6].DataPropertyName = "currCapacity";
             flights_dataview.Columns[6].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-        }
-
-        // ===================================================================================================
-        // METHODS TO BE MOVED TO FORMDATABASEHELPER LATER ===================================================
-        // ===================================================================================================
-
-
-        // may be same as what already exists in formdatabasehelper
-        public static DataTable updateAccountGridViewTable(string orig = null, string dest = null)
-        {
-            string dbString = Properties.Settings.Default.Air3550DBConnectionString;
-
-            using (SqlConnection sqlConnection = new SqlConnection(dbString))
-            {
-                if (sqlConnection.State != ConnectionState.Open) sqlConnection.Open();
-
-                SqlDataAdapter adapter = new SqlDataAdapter();
-                DataTable newDataTable = new DataTable();
-
-                string requestString;
-                int option = 0;
-                if (!(orig == null) && (dest == null))
-                {
-                    requestString = "SELECT * FROM BookedFlights WHERE originAbv LIKE @origin";
-                    option = 1;
-                }
-                else if ((orig == null) && !(dest == null))
-                {
-                    requestString = "SELECT * FROM BookedFlights WHERE destAbv LIKE @destination";
-                    option = 2;
-                }
-                else if (!(orig == null) && !(dest == null))
-                {
-                    requestString = "SELECT * FROM BookedFlights WHERE originAbv LIKE @origin AND destAbv LIKE @destination";
-                    option = 3;
-                }
-                else
-                {
-                    requestString = "SELECT * FROM BookedFlights";
-                    option = 4;
-                }
-
-                using (SqlCommand sqlCommand = new SqlCommand(requestString, sqlConnection))
-                {
-                    switch (option)
-                    {
-                        case 1: // origin only supplied
-                            sqlCommand.Parameters.AddWithValue("@origin", orig);
-
-                            break;
-                        case 2: // destination only supplied
-                            sqlCommand.Parameters.AddWithValue("@destination", dest);
-
-                            break;
-                        case 3: // origin and destination supplied
-                            sqlCommand.Parameters.AddWithValue("@origin", orig);
-                            sqlCommand.Parameters.AddWithValue("@destination", dest);
-
-                            break;
-                        case 4: // nothing supplied
-                                // nothing happens here
-                            break;
-                        default:
-                            return null;
-                            break;
-                    }
-
-                    adapter.SelectCommand = sqlCommand;
-                    adapter.Fill(newDataTable);
-
-                    return newDataTable;
-                }
-                return newDataTable;
-            }
-        }
-
-        public static DataTable updateGridViewTableWithDate(bool dateBefore, bool dateAfter,
-            DateTime before = new DateTime(), DateTime after = new DateTime())
-        {
-            string dbString = Properties.Settings.Default.Air3550DBConnectionString;
-
-            using (SqlConnection sqlConnection = new SqlConnection(dbString))
-            {
-                if (sqlConnection.State != ConnectionState.Open) sqlConnection.Open();
-
-                SqlDataAdapter adapter = new SqlDataAdapter();
-                DataTable newDataTable = new DataTable();
-
-                string requestString = null;
-                int option = 0;
-
-                if (dateBefore && dateAfter)
-                {
-                    requestString = "SELECT * FROM BookedFlights " +
-                        "WHERE departureTime >= @after " +
-                        "AND departureTime <= @before";
-                    option = 1;
-                }
-                else if (dateBefore && !dateAfter)
-                {
-                    requestString = "SELECT * FROM BookedFlights " +
-                        "WHERE departureTime <= @before";
-                    option = 2;
-                }
-                else if (!dateBefore && dateAfter)
-                {
-                    requestString = "SELECT * FROM BookedFlights " +
-                        "WHERE departureTime >= @after";
-                    option = 3;
-                }
-                else
-                {
-                    requestString = "SELECT * FROM BookedFlights";
-                    option = 4;
-                }
-
-                using (SqlCommand sqlCommand = new SqlCommand(requestString, sqlConnection))
-                {
-                    switch (option)
-                    {
-                        case 1: // origin only supplied
-                            sqlCommand.Parameters.AddWithValue("@after", after);
-                            sqlCommand.Parameters.AddWithValue("@before", before);
-
-                            break;
-                        case 2: // destination only supplied
-                            sqlCommand.Parameters.AddWithValue("@before", before);
-
-                            break;
-                        case 3: // origin and destination supplied
-                            sqlCommand.Parameters.AddWithValue("@after", after);
-
-                            break;
-                        case 4: // nothing supplied
-                                // nothing happens here
-                            break;
-                        default:
-                            return null;
-                            break;
-                    }
-
-                    adapter.SelectCommand = sqlCommand;
-                    adapter.Fill(newDataTable);
-
-                    return newDataTable;
-                }
-
-                return newDataTable;
-            }
-        }
-
-        public static DataTable returnFlightInformation(int flightID = -1)
-        {
-            string dbString = Properties.Settings.Default.Air3550DBConnectionString;
-
-            using (SqlConnection sqlConnection = new SqlConnection(dbString))
-            {
-                if (sqlConnection.State != ConnectionState.Open) sqlConnection.Open();
-
-                SqlDataAdapter adapter = new SqlDataAdapter();
-                DataTable newDataTable = new DataTable();
-
-                string requestString;
-                if (flightID == -1)
-                {
-                    requestString = "SELECT * FROM BookedFlights";
-                }
-                else
-                {
-                    requestString = "SELECT * FROM BookedFlights " +
-                            "WHERE id = @flightID";
-                }
-
-                using (SqlCommand sqlCommand = new SqlCommand(requestString, sqlConnection))
-                {
-                    if (flightID != -1)
-                    {
-                        sqlCommand.Parameters.AddWithValue("@flightID", flightID);
-                    }
-
-                    adapter.SelectCommand = sqlCommand;
-                    adapter.Fill(newDataTable);
-
-                    return newDataTable;
-                }
-
-                return newDataTable;
-            }
-        }
-
-        public static DataTable returnSingleFlightTransactions(int flightID)
-        {
-            string dbString = Properties.Settings.Default.Air3550DBConnectionString;
-
-            using (SqlConnection sqlConnection = new SqlConnection(dbString))
-            {
-                if (sqlConnection.State != ConnectionState.Open) sqlConnection.Open();
-
-                SqlDataAdapter adapter = new SqlDataAdapter();
-                DataTable newDataTable = new DataTable();
-
-                string requestString = "SELECT * FROM FlightTransactions " +
-                        "WHERE BookedFlightID = @flightID";
-
-
-                using (SqlCommand sqlCommand = new SqlCommand(requestString, sqlConnection))
-                {
-                    sqlCommand.Parameters.AddWithValue("@flightID", flightID);
-
-                    adapter.SelectCommand = sqlCommand;
-                    adapter.Fill(newDataTable);
-
-                    return newDataTable;
-                }
-
-                return newDataTable;
-            }
         }
     }
 }

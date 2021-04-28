@@ -21,6 +21,10 @@ namespace Air3550
             FormDatabaseHelper.FillPlaneModelsBox(planesModels_comboBox);
         }
 
+        private void MarketingLandingPage_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Application.Exit();
+        }
 
         private void marketing_datagrid_SelectionChanged(object sender, EventArgs e)
         {
