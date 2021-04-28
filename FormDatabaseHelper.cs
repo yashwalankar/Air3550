@@ -1614,6 +1614,38 @@ namespace Air3550
                 command.ExecuteNonQuery();
             }
         }
+
+        public static int getUserReward(int userId)
+        {
+            if (userId == 0)
+                return 0;
+            int rewardBalance = 0;
+            string dbString = Properties.Settings.Default.Air3550DBConnectionString;
+            using (SqlConnection sqlConnection = new SqlConnection(dbString))
+            {
+                if (sqlConnection.State != ConnectionState.Open) sqlConnection.Open();
+
+
+                using (SqlCommand sqlCommand = new SqlCommand("SELECT RewardBalance FROM UserAccountData WHERE UserID LIKE @id ", sqlConnection))
+                {
+                    sqlCommand.Parameters.AddWithValue("@id", userId);
+
+                    SqlDataReader sqlReader = sqlCommand.ExecuteReader();
+
+                    if (sqlReader.HasRows)
+                    {
+                        while (sqlReader.Read())
+                        {
+                            rewardBalance = Convert.ToInt32(sqlReader["RewardBalance"].ToString());
+
+                        }
+                    }
+
+                    sqlReader.Close();
+                }
+            }
+            return rewardBalance;
+        }
         
 
     } 

@@ -677,12 +677,19 @@ namespace Air3550
                 Console.WriteLine("cancelling the booking");
                 FormDatabaseHelper.cancelBooking(upcoming_selectedID_ufh);
                 populateUpcomingFlightsGrid(upcomingFlights_datagridview);
+
+                rewardBalance_value_label.Text = FormDatabaseHelper.getUserReward(USER.id).ToString();
             }
         }
 
         private void UserLandingPage_FormClosing(object sender, FormClosingEventArgs e)
         {
             Application.Exit();
+        }
+
+        private void refresh_rewards_btn_Click(object sender, EventArgs e)
+        {
+            rewardBalance_value_label.Text = FormDatabaseHelper.getUserReward(USER.id).ToString();
         }
     }
 }

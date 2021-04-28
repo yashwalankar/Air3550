@@ -120,6 +120,7 @@ namespace Air3550
             }
 
             this.Visible = false;
+            MessageBox.Show("Flight Booked Succesfully");
             this.Dispose();
         }
 

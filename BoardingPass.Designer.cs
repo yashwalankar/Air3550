@@ -32,28 +32,30 @@ namespace Air3550
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.leg1_groupbox = new System.Windows.Forms.GroupBox();
-            this.leg2_groupbox = new System.Windows.Forms.GroupBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.name_value_label = new System.Windows.Forms.Label();
-            this.account_value_label = new System.Windows.Forms.Label();
-            this.fullflight_value_label = new System.Windows.Forms.Label();
-            this.leg1_flight_label = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
-            this.leg1_dept_value_label = new System.Windows.Forms.Label();
+            this.leg1_flightid_label = new System.Windows.Forms.Label();
             this.leg1_arrival_value_label = new System.Windows.Forms.Label();
+            this.leg1_dept_value_label = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.leg1_flight_label = new System.Windows.Forms.Label();
+            this.leg2_groupbox = new System.Windows.Forms.GroupBox();
+            this.leg2_flightid_label = new System.Windows.Forms.Label();
             this.leg2_arrival_value_label = new System.Windows.Forms.Label();
             this.leg2_dept_value_label = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
             this.leg2_flight_label = new System.Windows.Forms.Label();
-            this.leg2_flightid_label = new System.Windows.Forms.Label();
-            this.leg1_flightid_label = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.name_value_label = new System.Windows.Forms.Label();
+            this.account_value_label = new System.Windows.Forms.Label();
+            this.fullflight_value_label = new System.Windows.Forms.Label();
             this.layover_label = new System.Windows.Forms.Label();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.leg1_groupbox.SuspendLayout();
             this.leg2_groupbox.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -91,6 +93,69 @@ namespace Air3550
             this.leg1_groupbox.TabStop = false;
             this.leg1_groupbox.Text = "Leg1";
             // 
+            // leg1_flightid_label
+            // 
+            this.leg1_flightid_label.AutoSize = true;
+            this.leg1_flightid_label.Location = new System.Drawing.Point(54, 16);
+            this.leg1_flightid_label.Name = "leg1_flightid_label";
+            this.leg1_flightid_label.Size = new System.Drawing.Size(13, 13);
+            this.leg1_flightid_label.TabIndex = 21;
+            this.leg1_flightid_label.Text = "_";
+            // 
+            // leg1_arrival_value_label
+            // 
+            this.leg1_arrival_value_label.AutoSize = true;
+            this.leg1_arrival_value_label.Location = new System.Drawing.Point(398, 48);
+            this.leg1_arrival_value_label.Name = "leg1_arrival_value_label";
+            this.leg1_arrival_value_label.Size = new System.Drawing.Size(13, 13);
+            this.leg1_arrival_value_label.TabIndex = 13;
+            this.leg1_arrival_value_label.Text = "_";
+            // 
+            // leg1_dept_value_label
+            // 
+            this.leg1_dept_value_label.AutoSize = true;
+            this.leg1_dept_value_label.Location = new System.Drawing.Point(206, 48);
+            this.leg1_dept_value_label.Name = "leg1_dept_value_label";
+            this.leg1_dept_value_label.Size = new System.Drawing.Size(13, 13);
+            this.leg1_dept_value_label.TabIndex = 12;
+            this.leg1_dept_value_label.Text = "_";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(6, 16);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(42, 13);
+            this.label8.TabIndex = 11;
+            this.label8.Text = "Flight #";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(385, 16);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(36, 13);
+            this.label7.TabIndex = 10;
+            this.label7.Text = "Arrival";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(187, 16);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(54, 13);
+            this.label6.TabIndex = 9;
+            this.label6.Text = "Departure";
+            // 
+            // leg1_flight_label
+            // 
+            this.leg1_flight_label.AutoSize = true;
+            this.leg1_flight_label.Location = new System.Drawing.Point(35, 48);
+            this.leg1_flight_label.Name = "leg1_flight_label";
+            this.leg1_flight_label.Size = new System.Drawing.Size(13, 13);
+            this.leg1_flight_label.TabIndex = 8;
+            this.leg1_flight_label.Text = "_";
+            // 
             // leg2_groupbox
             // 
             this.leg2_groupbox.Controls.Add(this.leg2_flightid_label);
@@ -107,95 +172,14 @@ namespace Air3550
             this.leg2_groupbox.TabStop = false;
             this.leg2_groupbox.Text = "Leg2";
             // 
-            // label3
+            // leg2_flightid_label
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(424, 49);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(57, 13);
-            this.label3.TabIndex = 4;
-            this.label3.Text = "Account #";
-            // 
-            // name_value_label
-            // 
-            this.name_value_label.AutoSize = true;
-            this.name_value_label.Location = new System.Drawing.Point(170, 49);
-            this.name_value_label.Name = "name_value_label";
-            this.name_value_label.Size = new System.Drawing.Size(13, 13);
-            this.name_value_label.TabIndex = 5;
-            this.name_value_label.Text = "_";
-            // 
-            // account_value_label
-            // 
-            this.account_value_label.AutoSize = true;
-            this.account_value_label.Location = new System.Drawing.Point(487, 49);
-            this.account_value_label.Name = "account_value_label";
-            this.account_value_label.Size = new System.Drawing.Size(13, 13);
-            this.account_value_label.TabIndex = 6;
-            this.account_value_label.Text = "_";
-            // 
-            // fullflight_value_label
-            // 
-            this.fullflight_value_label.AutoSize = true;
-            this.fullflight_value_label.Location = new System.Drawing.Point(120, 73);
-            this.fullflight_value_label.Name = "fullflight_value_label";
-            this.fullflight_value_label.Size = new System.Drawing.Size(13, 13);
-            this.fullflight_value_label.TabIndex = 7;
-            this.fullflight_value_label.Text = "_";
-            // 
-            // leg1_flight_label
-            // 
-            this.leg1_flight_label.AutoSize = true;
-            this.leg1_flight_label.Location = new System.Drawing.Point(35, 48);
-            this.leg1_flight_label.Name = "leg1_flight_label";
-            this.leg1_flight_label.Size = new System.Drawing.Size(13, 13);
-            this.leg1_flight_label.TabIndex = 8;
-            this.leg1_flight_label.Text = "_";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(187, 16);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(54, 13);
-            this.label6.TabIndex = 9;
-            this.label6.Text = "Departure";
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(385, 16);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(36, 13);
-            this.label7.TabIndex = 10;
-            this.label7.Text = "Arrival";
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(6, 16);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(42, 13);
-            this.label8.TabIndex = 11;
-            this.label8.Text = "Flight #";
-            // 
-            // leg1_dept_value_label
-            // 
-            this.leg1_dept_value_label.AutoSize = true;
-            this.leg1_dept_value_label.Location = new System.Drawing.Point(206, 48);
-            this.leg1_dept_value_label.Name = "leg1_dept_value_label";
-            this.leg1_dept_value_label.Size = new System.Drawing.Size(13, 13);
-            this.leg1_dept_value_label.TabIndex = 12;
-            this.leg1_dept_value_label.Text = "_";
-            // 
-            // leg1_arrival_value_label
-            // 
-            this.leg1_arrival_value_label.AutoSize = true;
-            this.leg1_arrival_value_label.Location = new System.Drawing.Point(398, 48);
-            this.leg1_arrival_value_label.Name = "leg1_arrival_value_label";
-            this.leg1_arrival_value_label.Size = new System.Drawing.Size(13, 13);
-            this.leg1_arrival_value_label.TabIndex = 13;
-            this.leg1_arrival_value_label.Text = "_";
+            this.leg2_flightid_label.AutoSize = true;
+            this.leg2_flightid_label.Location = new System.Drawing.Point(54, 16);
+            this.leg2_flightid_label.Name = "leg2_flightid_label";
+            this.leg2_flightid_label.Size = new System.Drawing.Size(13, 13);
+            this.leg2_flightid_label.TabIndex = 20;
+            this.leg2_flightid_label.Text = "_";
             // 
             // leg2_arrival_value_label
             // 
@@ -251,23 +235,41 @@ namespace Air3550
             this.leg2_flight_label.TabIndex = 14;
             this.leg2_flight_label.Text = "_";
             // 
-            // leg2_flightid_label
+            // label3
             // 
-            this.leg2_flightid_label.AutoSize = true;
-            this.leg2_flightid_label.Location = new System.Drawing.Point(54, 16);
-            this.leg2_flightid_label.Name = "leg2_flightid_label";
-            this.leg2_flightid_label.Size = new System.Drawing.Size(13, 13);
-            this.leg2_flightid_label.TabIndex = 20;
-            this.leg2_flightid_label.Text = "_";
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(424, 49);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(57, 13);
+            this.label3.TabIndex = 4;
+            this.label3.Text = "Account #";
             // 
-            // leg1_flightid_label
+            // name_value_label
             // 
-            this.leg1_flightid_label.AutoSize = true;
-            this.leg1_flightid_label.Location = new System.Drawing.Point(54, 16);
-            this.leg1_flightid_label.Name = "leg1_flightid_label";
-            this.leg1_flightid_label.Size = new System.Drawing.Size(13, 13);
-            this.leg1_flightid_label.TabIndex = 21;
-            this.leg1_flightid_label.Text = "_";
+            this.name_value_label.AutoSize = true;
+            this.name_value_label.Location = new System.Drawing.Point(170, 49);
+            this.name_value_label.Name = "name_value_label";
+            this.name_value_label.Size = new System.Drawing.Size(13, 13);
+            this.name_value_label.TabIndex = 5;
+            this.name_value_label.Text = "_";
+            // 
+            // account_value_label
+            // 
+            this.account_value_label.AutoSize = true;
+            this.account_value_label.Location = new System.Drawing.Point(487, 49);
+            this.account_value_label.Name = "account_value_label";
+            this.account_value_label.Size = new System.Drawing.Size(13, 13);
+            this.account_value_label.TabIndex = 6;
+            this.account_value_label.Text = "_";
+            // 
+            // fullflight_value_label
+            // 
+            this.fullflight_value_label.AutoSize = true;
+            this.fullflight_value_label.Location = new System.Drawing.Point(120, 73);
+            this.fullflight_value_label.Name = "fullflight_value_label";
+            this.fullflight_value_label.Size = new System.Drawing.Size(13, 13);
+            this.fullflight_value_label.TabIndex = 7;
+            this.fullflight_value_label.Text = "_";
             // 
             // layover_label
             // 
@@ -278,11 +280,23 @@ namespace Air3550
             this.layover_label.TabIndex = 8;
             this.layover_label.Text = "_";
             // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = global::Air3550.Properties.Resources.barcodeimg;
+            this.pictureBox1.Location = new System.Drawing.Point(191, 350);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(213, 68);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox1.TabIndex = 9;
+            this.pictureBox1.TabStop = false;
+            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
+            // 
             // BoardingPass
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(679, 404);
+            this.ClientSize = new System.Drawing.Size(678, 430);
+            this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.layover_label);
             this.Controls.Add(this.fullflight_value_label);
             this.Controls.Add(this.account_value_label);
@@ -298,6 +312,7 @@ namespace Air3550
             this.leg1_groupbox.PerformLayout();
             this.leg2_groupbox.ResumeLayout(false);
             this.leg2_groupbox.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -328,5 +343,6 @@ namespace Air3550
         private System.Windows.Forms.Label leg2_flight_label;
         private System.Windows.Forms.Label fullflight_value_label;
         private System.Windows.Forms.Label layover_label;
+        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }
