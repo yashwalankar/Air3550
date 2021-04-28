@@ -29,6 +29,7 @@ namespace Air3550
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Login));
             this.userID_label = new System.Windows.Forms.Label();
             this.pass_label = new System.Windows.Forms.Label();
             this.userID_textbox = new System.Windows.Forms.TextBox();
@@ -36,12 +37,14 @@ namespace Air3550
             this.login_btn = new System.Windows.Forms.Button();
             this.signup_btn = new System.Windows.Forms.Button();
             this.error_label = new System.Windows.Forms.Label();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // userID_label
             // 
             this.userID_label.AutoSize = true;
-            this.userID_label.Location = new System.Drawing.Point(200, 68);
+            this.userID_label.Location = new System.Drawing.Point(216, 122);
             this.userID_label.Name = "userID_label";
             this.userID_label.Size = new System.Drawing.Size(40, 13);
             this.userID_label.TabIndex = 0;
@@ -50,7 +53,7 @@ namespace Air3550
             // pass_label
             // 
             this.pass_label.AutoSize = true;
-            this.pass_label.Location = new System.Drawing.Point(200, 104);
+            this.pass_label.Location = new System.Drawing.Point(216, 158);
             this.pass_label.Name = "pass_label";
             this.pass_label.Size = new System.Drawing.Size(53, 13);
             this.pass_label.TabIndex = 1;
@@ -58,14 +61,14 @@ namespace Air3550
             // 
             // userID_textbox
             // 
-            this.userID_textbox.Location = new System.Drawing.Point(273, 65);
+            this.userID_textbox.Location = new System.Drawing.Point(289, 119);
             this.userID_textbox.Name = "userID_textbox";
             this.userID_textbox.Size = new System.Drawing.Size(100, 20);
             this.userID_textbox.TabIndex = 2;
             // 
             // pass_textbox
             // 
-            this.pass_textbox.Location = new System.Drawing.Point(273, 101);
+            this.pass_textbox.Location = new System.Drawing.Point(289, 155);
             this.pass_textbox.Name = "pass_textbox";
             this.pass_textbox.PasswordChar = '*';
             this.pass_textbox.Size = new System.Drawing.Size(100, 20);
@@ -73,7 +76,7 @@ namespace Air3550
             // 
             // login_btn
             // 
-            this.login_btn.Location = new System.Drawing.Point(273, 138);
+            this.login_btn.Location = new System.Drawing.Point(289, 192);
             this.login_btn.Name = "login_btn";
             this.login_btn.Size = new System.Drawing.Size(75, 23);
             this.login_btn.TabIndex = 4;
@@ -83,7 +86,7 @@ namespace Air3550
             // 
             // signup_btn
             // 
-            this.signup_btn.Location = new System.Drawing.Point(273, 167);
+            this.signup_btn.Location = new System.Drawing.Point(289, 221);
             this.signup_btn.Name = "signup_btn";
             this.signup_btn.Size = new System.Drawing.Size(75, 23);
             this.signup_btn.TabIndex = 5;
@@ -95,17 +98,28 @@ namespace Air3550
             // 
             this.error_label.AutoSize = true;
             this.error_label.ForeColor = System.Drawing.Color.Red;
-            this.error_label.Location = new System.Drawing.Point(200, 208);
+            this.error_label.Location = new System.Drawing.Point(216, 262);
             this.error_label.Name = "error_label";
             this.error_label.Size = new System.Drawing.Size(267, 13);
             this.error_label.TabIndex = 6;
             this.error_label.Text = "* error logging in please retype username and password";
             // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
+            this.pictureBox1.Location = new System.Drawing.Point(220, 12);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(196, 82);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox1.TabIndex = 7;
+            this.pictureBox1.TabStop = false;
+            // 
             // Login
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(655, 338);
+            this.ClientSize = new System.Drawing.Size(638, 338);
+            this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.error_label);
             this.Controls.Add(this.signup_btn);
             this.Controls.Add(this.login_btn);
@@ -116,6 +130,7 @@ namespace Air3550
             this.Name = "Login";
             this.Text = "Login";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Login_FormClosing);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -130,5 +145,6 @@ namespace Air3550
         private System.Windows.Forms.Button login_btn;
         private System.Windows.Forms.Button signup_btn;
         private System.Windows.Forms.Label error_label;
+        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }

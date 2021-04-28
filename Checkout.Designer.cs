@@ -30,7 +30,7 @@ namespace Air3550
         private void InitializeComponent()
         {
             this.flight2_label = new System.Windows.Forms.Label();
-            this.radioButton1 = new System.Windows.Forms.RadioButton();
+            this.point_payment_rbtn = new System.Windows.Forms.RadioButton();
             this.payemnt_groupBox = new System.Windows.Forms.GroupBox();
             this.card_payment_rbtn = new System.Windows.Forms.RadioButton();
             this.flight1_value_label = new System.Windows.Forms.Label();
@@ -41,6 +41,7 @@ namespace Air3550
             this.userreward_balance_label = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
+            this.notenoughpoints_label = new System.Windows.Forms.Label();
             this.payemnt_groupBox.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -53,20 +54,21 @@ namespace Air3550
             this.flight2_label.TabIndex = 1;
             this.flight2_label.Text = "Flight 2:";
             // 
-            // radioButton1
+            // point_payment_rbtn
             // 
-            this.radioButton1.AutoSize = true;
-            this.radioButton1.Location = new System.Drawing.Point(60, 19);
-            this.radioButton1.Name = "radioButton1";
-            this.radioButton1.Size = new System.Drawing.Size(100, 17);
-            this.radioButton1.TabIndex = 2;
-            this.radioButton1.Text = "Pay With Points";
-            this.radioButton1.UseVisualStyleBackColor = true;
+            this.point_payment_rbtn.AutoSize = true;
+            this.point_payment_rbtn.Location = new System.Drawing.Point(60, 19);
+            this.point_payment_rbtn.Name = "point_payment_rbtn";
+            this.point_payment_rbtn.Size = new System.Drawing.Size(100, 17);
+            this.point_payment_rbtn.TabIndex = 2;
+            this.point_payment_rbtn.Text = "Pay With Points";
+            this.point_payment_rbtn.UseVisualStyleBackColor = true;
             // 
             // payemnt_groupBox
             // 
             this.payemnt_groupBox.Controls.Add(this.card_payment_rbtn);
-            this.payemnt_groupBox.Controls.Add(this.radioButton1);
+            this.payemnt_groupBox.Controls.Add(this.point_payment_rbtn);
+            this.payemnt_groupBox.Controls.Add(this.notenoughpoints_label);
             this.payemnt_groupBox.Location = new System.Drawing.Point(122, 135);
             this.payemnt_groupBox.Name = "payemnt_groupBox";
             this.payemnt_groupBox.Size = new System.Drawing.Size(220, 70);
@@ -153,12 +155,21 @@ namespace Air3550
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(258, 44);
+            this.label2.Location = new System.Drawing.Point(246, 44);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(84, 13);
             this.label2.TabIndex = 10;
             this.label2.Text = "Departure Origin";
             this.label2.Click += new System.EventHandler(this.label2_Click);
+            // 
+            // notenoughpoints_label
+            // 
+            this.notenoughpoints_label.AutoSize = true;
+            this.notenoughpoints_label.Location = new System.Drawing.Point(37, 21);
+            this.notenoughpoints_label.Name = "notenoughpoints_label";
+            this.notenoughpoints_label.Size = new System.Drawing.Size(151, 13);
+            this.notenoughpoints_label.TabIndex = 11;
+            this.notenoughpoints_label.Text = "Not Enough Points to Redeem";
             // 
             // Checkout
             // 
@@ -187,7 +198,7 @@ namespace Air3550
 
         #endregion
         private System.Windows.Forms.Label flight2_label;
-        private System.Windows.Forms.RadioButton radioButton1;
+        private System.Windows.Forms.RadioButton point_payment_rbtn;
         private System.Windows.Forms.GroupBox payemnt_groupBox;
         private System.Windows.Forms.RadioButton card_payment_rbtn;
         private System.Windows.Forms.Label flight1_value_label;
@@ -198,5 +209,6 @@ namespace Air3550
         private System.Windows.Forms.Label userreward_balance_label;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label notenoughpoints_label;
     }
 }

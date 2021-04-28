@@ -39,7 +39,15 @@ namespace Air3550
             this.upComingFlights_btn = new System.Windows.Forms.Button();
             this.pastFlights_btn = new System.Windows.Forms.Button();
             this.pastFlights_groupBox = new System.Windows.Forms.GroupBox();
+            this.cancelled_datagridview = new System.Windows.Forms.DataGridView();
+            this.pastflights_datagridview = new System.Windows.Forms.DataGridView();
+            this.cancelledflights_label = new System.Windows.Forms.Label();
+            this.pastflights_label = new System.Windows.Forms.Label();
             this.upcomingFlights_groupBox = new System.Windows.Forms.GroupBox();
+            this.upcoming_selectedval_label = new System.Windows.Forms.Label();
+            this.upcoming_selectedIDlabel = new System.Windows.Forms.Label();
+            this.printboardingpass_btn = new System.Windows.Forms.Button();
+            this.cancelFlight_btn = new System.Windows.Forms.Button();
             this.upcomingFlights_datagridview = new System.Windows.Forms.DataGridView();
             this.bookFlights_groupBox = new System.Windows.Forms.GroupBox();
             this.checkout_btn = new System.Windows.Forms.Button();
@@ -88,8 +96,9 @@ namespace Air3550
             this.departureDate_label = new System.Windows.Forms.Label();
             this.currSysTime_DTP = new System.Windows.Forms.DateTimePicker();
             this.currSysTime_label = new System.Windows.Forms.Label();
-            this.rewardUsed_label = new System.Windows.Forms.Label();
-            this.rewardUsedValue_label = new System.Windows.Forms.Label();
+            this.pastFlights_groupBox.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.cancelled_datagridview)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pastflights_datagridview)).BeginInit();
             this.upcomingFlights_groupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.upcomingFlights_datagridview)).BeginInit();
             this.bookFlights_groupBox.SuspendLayout();
@@ -181,25 +190,75 @@ namespace Air3550
             // 
             // pastFlights_btn
             // 
-            this.pastFlights_btn.Location = new System.Drawing.Point(745, 126);
+            this.pastFlights_btn.Location = new System.Drawing.Point(818, 126);
             this.pastFlights_btn.Name = "pastFlights_btn";
             this.pastFlights_btn.Size = new System.Drawing.Size(75, 23);
             this.pastFlights_btn.TabIndex = 19;
-            this.pastFlights_btn.Text = "Past Flights";
+            this.pastFlights_btn.Text = "History";
             this.pastFlights_btn.UseVisualStyleBackColor = true;
             this.pastFlights_btn.Click += new System.EventHandler(this.pastFlights_btn_Click);
             // 
             // pastFlights_groupBox
             // 
+            this.pastFlights_groupBox.Controls.Add(this.cancelled_datagridview);
+            this.pastFlights_groupBox.Controls.Add(this.pastflights_datagridview);
+            this.pastFlights_groupBox.Controls.Add(this.cancelledflights_label);
+            this.pastFlights_groupBox.Controls.Add(this.pastflights_label);
             this.pastFlights_groupBox.Location = new System.Drawing.Point(46, 155);
             this.pastFlights_groupBox.Name = "pastFlights_groupBox";
-            this.pastFlights_groupBox.Size = new System.Drawing.Size(865, 405);
+            this.pastFlights_groupBox.Size = new System.Drawing.Size(859, 621);
             this.pastFlights_groupBox.TabIndex = 20;
             this.pastFlights_groupBox.TabStop = false;
-            this.pastFlights_groupBox.Text = "Past Flights";
+            this.pastFlights_groupBox.Text = "History";
+            // 
+            // cancelled_datagridview
+            // 
+            this.cancelled_datagridview.AllowUserToAddRows = false;
+            this.cancelled_datagridview.AllowUserToDeleteRows = false;
+            this.cancelled_datagridview.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.cancelled_datagridview.Location = new System.Drawing.Point(14, 281);
+            this.cancelled_datagridview.Name = "cancelled_datagridview";
+            this.cancelled_datagridview.ReadOnly = true;
+            this.cancelled_datagridview.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.cancelled_datagridview.Size = new System.Drawing.Size(639, 199);
+            this.cancelled_datagridview.TabIndex = 3;
+            // 
+            // pastflights_datagridview
+            // 
+            this.pastflights_datagridview.AllowUserToAddRows = false;
+            this.pastflights_datagridview.AllowUserToDeleteRows = false;
+            this.pastflights_datagridview.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.pastflights_datagridview.Location = new System.Drawing.Point(15, 44);
+            this.pastflights_datagridview.Name = "pastflights_datagridview";
+            this.pastflights_datagridview.ReadOnly = true;
+            this.pastflights_datagridview.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.pastflights_datagridview.Size = new System.Drawing.Size(639, 199);
+            this.pastflights_datagridview.TabIndex = 2;
+            // 
+            // cancelledflights_label
+            // 
+            this.cancelledflights_label.AutoSize = true;
+            this.cancelledflights_label.Location = new System.Drawing.Point(14, 262);
+            this.cancelledflights_label.Name = "cancelledflights_label";
+            this.cancelledflights_label.Size = new System.Drawing.Size(87, 13);
+            this.cancelledflights_label.TabIndex = 1;
+            this.cancelledflights_label.Text = "Cancelled Flights";
+            // 
+            // pastflights_label
+            // 
+            this.pastflights_label.AutoSize = true;
+            this.pastflights_label.Location = new System.Drawing.Point(12, 19);
+            this.pastflights_label.Name = "pastflights_label";
+            this.pastflights_label.Size = new System.Drawing.Size(61, 13);
+            this.pastflights_label.TabIndex = 0;
+            this.pastflights_label.Text = "Past Flights";
             // 
             // upcomingFlights_groupBox
             // 
+            this.upcomingFlights_groupBox.Controls.Add(this.upcoming_selectedval_label);
+            this.upcomingFlights_groupBox.Controls.Add(this.upcoming_selectedIDlabel);
+            this.upcomingFlights_groupBox.Controls.Add(this.printboardingpass_btn);
+            this.upcomingFlights_groupBox.Controls.Add(this.cancelFlight_btn);
             this.upcomingFlights_groupBox.Controls.Add(this.upcomingFlights_datagridview);
             this.upcomingFlights_groupBox.Location = new System.Drawing.Point(46, 155);
             this.upcomingFlights_groupBox.Name = "upcomingFlights_groupBox";
@@ -208,13 +267,56 @@ namespace Air3550
             this.upcomingFlights_groupBox.TabStop = false;
             this.upcomingFlights_groupBox.Text = "Upcoming Flights";
             // 
+            // upcoming_selectedval_label
+            // 
+            this.upcoming_selectedval_label.AutoSize = true;
+            this.upcoming_selectedval_label.Location = new System.Drawing.Point(743, 35);
+            this.upcoming_selectedval_label.Name = "upcoming_selectedval_label";
+            this.upcoming_selectedval_label.Size = new System.Drawing.Size(13, 13);
+            this.upcoming_selectedval_label.TabIndex = 4;
+            this.upcoming_selectedval_label.Text = "_";
+            // 
+            // upcoming_selectedIDlabel
+            // 
+            this.upcoming_selectedIDlabel.AutoSize = true;
+            this.upcoming_selectedIDlabel.Location = new System.Drawing.Point(671, 35);
+            this.upcoming_selectedIDlabel.Name = "upcoming_selectedIDlabel";
+            this.upcoming_selectedIDlabel.Size = new System.Drawing.Size(66, 13);
+            this.upcoming_selectedIDlabel.TabIndex = 3;
+            this.upcoming_selectedIDlabel.Text = "Selected ID:";
+            // 
+            // printboardingpass_btn
+            // 
+            this.printboardingpass_btn.Location = new System.Drawing.Point(699, 233);
+            this.printboardingpass_btn.Name = "printboardingpass_btn";
+            this.printboardingpass_btn.Size = new System.Drawing.Size(125, 23);
+            this.printboardingpass_btn.TabIndex = 2;
+            this.printboardingpass_btn.Text = "Print Boarding Pass";
+            this.printboardingpass_btn.UseVisualStyleBackColor = true;
+            this.printboardingpass_btn.Click += new System.EventHandler(this.printboardingpass_btn_Click);
+            // 
+            // cancelFlight_btn
+            // 
+            this.cancelFlight_btn.Location = new System.Drawing.Point(699, 184);
+            this.cancelFlight_btn.Name = "cancelFlight_btn";
+            this.cancelFlight_btn.Size = new System.Drawing.Size(125, 23);
+            this.cancelFlight_btn.TabIndex = 1;
+            this.cancelFlight_btn.Text = "Cancel Flight";
+            this.cancelFlight_btn.UseVisualStyleBackColor = true;
+            this.cancelFlight_btn.Click += new System.EventHandler(this.cancelFlight_btn_Click);
+            // 
             // upcomingFlights_datagridview
             // 
+            this.upcomingFlights_datagridview.AllowUserToAddRows = false;
+            this.upcomingFlights_datagridview.AllowUserToDeleteRows = false;
             this.upcomingFlights_datagridview.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.upcomingFlights_datagridview.Location = new System.Drawing.Point(15, 19);
             this.upcomingFlights_datagridview.Name = "upcomingFlights_datagridview";
-            this.upcomingFlights_datagridview.Size = new System.Drawing.Size(662, 286);
+            this.upcomingFlights_datagridview.ReadOnly = true;
+            this.upcomingFlights_datagridview.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.upcomingFlights_datagridview.Size = new System.Drawing.Size(639, 328);
             this.upcomingFlights_datagridview.TabIndex = 0;
+            this.upcomingFlights_datagridview.SelectionChanged += new System.EventHandler(this.upcomingFlights_datagridview_SelectionChanged);
             // 
             // bookFlights_groupBox
             // 
@@ -238,7 +340,6 @@ namespace Air3550
             this.bookFlights_groupBox.TabIndex = 22;
             this.bookFlights_groupBox.TabStop = false;
             this.bookFlights_groupBox.Text = "Book Flight";
-            this.bookFlights_groupBox.Enter += new System.EventHandler(this.bookFlights_groupBox_Enter);
             // 
             // checkout_btn
             // 
@@ -650,7 +751,6 @@ namespace Air3550
             this.deptDate_dtp.Name = "deptDate_dtp";
             this.deptDate_dtp.Size = new System.Drawing.Size(98, 20);
             this.deptDate_dtp.TabIndex = 27;
-            this.deptDate_dtp.ValueChanged += new System.EventHandler(this.dateTimePicker1_ValueChanged);
             // 
             // destination_label
             // 
@@ -696,6 +796,7 @@ namespace Air3550
             this.currSysTime_DTP.Name = "currSysTime_DTP";
             this.currSysTime_DTP.Size = new System.Drawing.Size(155, 20);
             this.currSysTime_DTP.TabIndex = 24;
+            this.currSysTime_DTP.ValueChanged += new System.EventHandler(this.currSysTime_DTP_ValueChanged);
             // 
             // currSysTime_label
             // 
@@ -706,31 +807,12 @@ namespace Air3550
             this.currSysTime_label.TabIndex = 23;
             this.currSysTime_label.Text = "System Time:";
             // 
-            // rewardUsed_label
-            // 
-            this.rewardUsed_label.AutoSize = true;
-            this.rewardUsed_label.Location = new System.Drawing.Point(661, 78);
-            this.rewardUsed_label.Name = "rewardUsed_label";
-            this.rewardUsed_label.Size = new System.Drawing.Size(75, 13);
-            this.rewardUsed_label.TabIndex = 25;
-            this.rewardUsed_label.Text = "Reward Used:";
-            // 
-            // rewardUsedValue_label
-            // 
-            this.rewardUsedValue_label.AutoSize = true;
-            this.rewardUsedValue_label.Location = new System.Drawing.Point(742, 78);
-            this.rewardUsedValue_label.Name = "rewardUsedValue_label";
-            this.rewardUsedValue_label.Size = new System.Drawing.Size(37, 13);
-            this.rewardUsedValue_label.TabIndex = 26;
-            this.rewardUsedValue_label.Text = "_____";
-            // 
             // UserLandingPage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(940, 1040);
-            this.Controls.Add(this.rewardUsedValue_label);
-            this.Controls.Add(this.rewardUsed_label);
             this.Controls.Add(this.currSysTime_DTP);
             this.Controls.Add(this.currSysTime_label);
             this.Controls.Add(this.pastFlights_btn);
@@ -742,12 +824,18 @@ namespace Air3550
             this.Controls.Add(this.userID_label);
             this.Controls.Add(this.welcome_label);
             this.Controls.Add(this.logout_button);
+            this.Controls.Add(this.upcomingFlights_groupBox);
             this.Controls.Add(this.pastFlights_groupBox);
             this.Controls.Add(this.bookFlights_groupBox);
-            this.Controls.Add(this.upcomingFlights_groupBox);
             this.Name = "UserLandingPage";
             this.Text = "UserLandingPage";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.UserLandingPage_FormClosing);
+            this.pastFlights_groupBox.ResumeLayout(false);
+            this.pastFlights_groupBox.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.cancelled_datagridview)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pastflights_datagridview)).EndInit();
             this.upcomingFlights_groupBox.ResumeLayout(false);
+            this.upcomingFlights_groupBox.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.upcomingFlights_datagridview)).EndInit();
             this.bookFlights_groupBox.ResumeLayout(false);
             this.bookFlights_groupBox.PerformLayout();
@@ -788,8 +876,6 @@ namespace Air3550
         private System.Windows.Forms.GroupBox bookFlights_groupBox;
         private System.Windows.Forms.DateTimePicker currSysTime_DTP;
         private System.Windows.Forms.Label currSysTime_label;
-        private System.Windows.Forms.Label rewardUsed_label;
-        private System.Windows.Forms.Label rewardUsedValue_label;
         private System.Windows.Forms.DataGridView upcomingFlights_datagridview;
         private System.Windows.Forms.ComboBox origin_comboBox;
         private System.Windows.Forms.ComboBox destination_comboBox;
@@ -835,5 +921,13 @@ namespace Air3550
         private System.Windows.Forms.Label return_leg1id_label;
         private System.Windows.Forms.Label oneway_leg2_id;
         private System.Windows.Forms.Label oneway_leg1id_label;
+        private System.Windows.Forms.DataGridView pastflights_datagridview;
+        private System.Windows.Forms.Label cancelledflights_label;
+        private System.Windows.Forms.Label pastflights_label;
+        private System.Windows.Forms.DataGridView cancelled_datagridview;
+        private System.Windows.Forms.Button printboardingpass_btn;
+        private System.Windows.Forms.Button cancelFlight_btn;
+        private System.Windows.Forms.Label upcoming_selectedval_label;
+        private System.Windows.Forms.Label upcoming_selectedIDlabel;
     }
 }
