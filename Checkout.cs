@@ -18,6 +18,7 @@ namespace Air3550
         public Checkout(bool tripTypeisReturn, User user, UserFlightHistory fh1, UserFlightHistory fh2)
         {
             USER = user;
+            USER.rewardBalance = FormDatabaseHelper.getUserReward(user.id);
             ticket1 = fh1;
             ticket2 = fh2;
             ROUNDTRIP = tripTypeisReturn;

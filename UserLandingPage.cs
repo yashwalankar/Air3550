@@ -128,39 +128,47 @@ namespace Air3550
 
                 oneway_groupBox.Text = originCity + "-->" + destCity;
                 return_groupBox.Text = destCity + "-->" + originCity;
-
-                if (originAbv != destAbv && (deptDate <= currSysTime.AddDays(60)))
+                if (deptDate > currSysTime)
                 {
-
-                    if (returnBooking)
+                    if (originAbv != destAbv && (deptDate <= currSysTime.AddDays(60)))
                     {
-                        returnDate = returnDate_dtp.Value;
-                        if (returnDate > deptDate)
+
+                        if (returnBooking)
                         {
-                            oneway_groupBox.Show();
-                            DataTable onewayOptionsTable = FormDatabaseHelper.getAvailableFlights(originAbv, destAbv, deptDate);
-                            populateDataGridView(oneway_datagridview, onewayOptionsTable);
-                            return_groupBox.Show();
-                            DataTable returnOptionsTable = FormDatabaseHelper.getAvailableFlights(destAbv, originAbv, returnDate);
-                            populateDataGridView(return_datagridview, returnOptionsTable);
+                            returnDate = returnDate_dtp.Value;
+                            if (returnDate > deptDate)
+                            {
+                                oneway_groupBox.Show();
+                                DataTable onewayOptionsTable = FormDatabaseHelper.getAvailableFlights(originAbv, destAbv, deptDate);
+                                populateDataGridView(oneway_datagridview, onewayOptionsTable);
+                                return_groupBox.Show();
+                                DataTable returnOptionsTable = FormDatabaseHelper.getAvailableFlights(destAbv, originAbv, returnDate);
+                                populateDataGridView(return_datagridview, returnOptionsTable);
+                            }
+                            else
+                            {
+                                MessageBox.Show("return should be after departure date");
+                            }
                         }
                         else
                         {
-                            Console.WriteLine("return should be after departure date");
+                            return_groupBox.Hide();
+                            oneway_groupBox.Show();
+                            DataTable onewayOptionsTable = FormDatabaseHelper.getAvailableFlights(originAbv, destAbv, deptDate);
+                            populateDataGridView(oneway_datagridview, onewayOptionsTable);
                         }
                     }
                     else
                     {
-                        return_groupBox.Hide();
-                        oneway_groupBox.Show();
-                        DataTable onewayOptionsTable = FormDatabaseHelper.getAvailableFlights(originAbv, destAbv, deptDate);
-                        populateDataGridView(oneway_datagridview, onewayOptionsTable);
+                        Console.WriteLine("Depature date should be within 6 months AND ");
+                        Console.WriteLine("origin and dest cannot be same");
+                        MessageBox.Show("Depature date should be within 6 months AND origin and dest cannot be same ");
+
                     }
                 }
                 else
                 {
-                    Console.WriteLine("Depature date should be within 6 months AND ");
-                    Console.WriteLine("origin and dest cannot be same");
+                    MessageBox.Show("Departure Date Should be greater than current system time");
                 }
             }
         }
@@ -331,6 +339,7 @@ namespace Air3550
             else
             {
                 Console.WriteLine("Confirm both flight");
+                MessageBox.Show("Confirm Both Flights");
             }
         }
 
