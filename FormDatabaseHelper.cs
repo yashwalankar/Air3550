@@ -1234,7 +1234,9 @@ namespace Air3550
             updateCurrCapacityByNegOne(fh.leg1bookingId);
             updateCurrCapacityByNegOne(fh.leg2bookingId);
 
-
+            //delete from flight transaction table fh.userid fh.leg1,fh.leg2
+            removeFlightTransaction(fh.userID, fh.leg1bookingId);
+            removeFlightTransaction(fh.userID, fh.leg2bookingId);
             //reward refund
             // User Payed by card
             if (fh.paymentType == 1)
@@ -1258,8 +1260,6 @@ namespace Air3550
         }
         public static void updateStatusUFH(int userFlightHistoryID)
         {
-
-
             string dbString = Properties.Settings.Default.Air3550DBConnectionString;
             using (SqlConnection sqlConnection = new SqlConnection(dbString))
             {
@@ -1591,5 +1591,62 @@ namespace Air3550
                 return newDataTable;
             }
         }
+
+        public static void removeFlightTransaction(int userId,int BookedFlightID)
+        {
+            if (BookedFlightID == 0)
+            {
+                return;
+            }
+            string dbString = Properties.Settings.Default.Air3550DBConnectionString;
+            using (SqlConnection sqlConnection = new SqlConnection(dbString))
+            {
+                if (sqlConnection.State != ConnectionState.Open) sqlConnection.Open();
+
+                string sqlString = "DELETE FROM FlightTransactions " +
+                    "WHERE userID = @userId AND BookedFlightID = @BookedFlightID";
+
+                SqlCommand command = new SqlCommand(sqlString, sqlConnection);
+
+                command.Parameters.AddWithValue("@userId", userId);
+                command.Parameters.AddWithValue("@BookedFlightID", BookedFlightID);
+
+                command.ExecuteNonQuery();
+            }
+        }
+
+        public static int getUserReward(int userId)
+        {
+            if (userId == 0)
+                return 0;
+            int rewardBalance = 0;
+            string dbString = Properties.Settings.Default.Air3550DBConnectionString;
+            using (SqlConnection sqlConnection = new SqlConnection(dbString))
+            {
+                if (sqlConnection.State != ConnectionState.Open) sqlConnection.Open();
+
+
+                using (SqlCommand sqlCommand = new SqlCommand("SELECT RewardBalance FROM UserAccountData WHERE UserID LIKE @id ", sqlConnection))
+                {
+                    sqlCommand.Parameters.AddWithValue("@id", userId);
+
+                    SqlDataReader sqlReader = sqlCommand.ExecuteReader();
+
+                    if (sqlReader.HasRows)
+                    {
+                        while (sqlReader.Read())
+                        {
+                            rewardBalance = Convert.ToInt32(sqlReader["RewardBalance"].ToString());
+
+                        }
+                    }
+
+                    sqlReader.Close();
+                }
+            }
+            return rewardBalance;
+        }
+        
+
     } 
 }

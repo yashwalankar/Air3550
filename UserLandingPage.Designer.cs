@@ -98,6 +98,7 @@ namespace Air3550
             this.departureDate_label = new System.Windows.Forms.Label();
             this.currSysTime_DTP = new System.Windows.Forms.DateTimePicker();
             this.currSysTime_label = new System.Windows.Forms.Label();
+            this.refresh_rewards_btn = new System.Windows.Forms.Button();
             this.pastFlights_groupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.cancelled_datagridview)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pastflights_datagridview)).BeginInit();
@@ -117,7 +118,7 @@ namespace Air3550
             // 
             // logout_button
             // 
-            this.logout_button.Location = new System.Drawing.Point(745, 13);
+            this.logout_button.Location = new System.Drawing.Point(818, 8);
             this.logout_button.Name = "logout_button";
             this.logout_button.Size = new System.Drawing.Size(75, 23);
             this.logout_button.TabIndex = 11;
@@ -829,12 +830,24 @@ namespace Air3550
             this.currSysTime_label.TabIndex = 23;
             this.currSysTime_label.Text = "System Time:";
             // 
+            // refresh_rewards_btn
+            // 
+            this.refresh_rewards_btn.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F);
+            this.refresh_rewards_btn.Location = new System.Drawing.Point(818, 65);
+            this.refresh_rewards_btn.Name = "refresh_rewards_btn";
+            this.refresh_rewards_btn.Size = new System.Drawing.Size(75, 23);
+            this.refresh_rewards_btn.TabIndex = 39;
+            this.refresh_rewards_btn.Text = "Refresh Rewards";
+            this.refresh_rewards_btn.UseVisualStyleBackColor = true;
+            this.refresh_rewards_btn.Click += new System.EventHandler(this.refresh_rewards_btn_Click);
+            // 
             // UserLandingPage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(940, 1040);
+            this.Controls.Add(this.refresh_rewards_btn);
             this.Controls.Add(this.currSysTime_DTP);
             this.Controls.Add(this.currSysTime_label);
             this.Controls.Add(this.pastFlights_btn);
@@ -846,9 +859,9 @@ namespace Air3550
             this.Controls.Add(this.userID_label);
             this.Controls.Add(this.welcome_label);
             this.Controls.Add(this.logout_button);
-            this.Controls.Add(this.upcomingFlights_groupBox);
             this.Controls.Add(this.pastFlights_groupBox);
             this.Controls.Add(this.bookFlights_groupBox);
+            this.Controls.Add(this.upcomingFlights_groupBox);
             this.Name = "UserLandingPage";
             this.Text = "UserLandingPage";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.UserLandingPage_FormClosing);
@@ -953,5 +966,6 @@ namespace Air3550
         private System.Windows.Forms.Label upcoming_selectedIDlabel;
         private System.Windows.Forms.Label print_pass_label2;
         private System.Windows.Forms.Label print_pass_label1;
+        private System.Windows.Forms.Button refresh_rewards_btn;
     }
 }
